@@ -1,0 +1,27 @@
+# Core training + export dependencies (phase 1: species ID only).
+#
+# Versions are pinned so that training runs are reproducible. Install with:
+#
+#     pip install -r requirements.txt
+#
+# On a CPU-only machine (or in CI) install torch from the CPU wheel index first
+# to avoid pulling ~2 GB of CUDA libraries:
+#
+#     pip install --index-url https://download.pytorch.org/whl/cpu torch==2.5.1
+#     pip install -r requirements.txt
+
+torch==2.5.1
+timm==1.0.11
+albumentations==1.4.21
+opencv-python==4.10.0.84
+onnx==1.17.0
+numpy==1.26.4
+PyYAML==6.0.2
+
+# NOTE: TensorFlow / onnx2tf are NOT listed here. The ONNX -> TFLite conversion
+# pulls in a large TensorFlow dependency tree that is not needed for training,
+# so it lives in requirements-export.txt and is installed only when you actually
+# build a model for the Flutter app.
+#
+# NOTE: Jetson / TensorRT dependencies are also intentionally absent. Those are
+# phase 2 (spearfishing compliance variant) and are not needed yet. See ROADMAP.md.

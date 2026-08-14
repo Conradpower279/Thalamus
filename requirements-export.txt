@@ -1,0 +1,15 @@
+# ONNX -> TFLite conversion dependencies, for building the model the Flutter app
+# consumes. Kept separate from requirements.txt because TensorFlow is a large
+# dependency tree that training does not need.
+#
+#     pip install -r requirements-export.txt
+#
+# Recommended in a dedicated virtualenv, since onnx2tf pins its own versions of
+# several packages that can conflict with the training environment.
+
+onnx==1.17.0
+onnx2tf==1.26.3
+tensorflow==2.18.0
+onnx-graphsurgeon==0.5.2
+sng4onnx==1.0.4
+onnxsim==0.4.36

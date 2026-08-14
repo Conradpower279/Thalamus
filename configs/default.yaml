@@ -1,0 +1,60 @@
+# Default training configuration for the phase-1 species classifier.
+#
+# Every key here maps to the CONFIG dict that used to live at the top of the
+# training script. Override any of them on the command line, e.g.:
+#
+#     python scripts/fish_classifier_train.py --config configs/default.yaml \
+#         --batch-size 64 --epochs-finetune 30
+#
+# To try a different backbone or image size, copy this file rather than editing
+# it, so the defaults stay a known-good baseline:
+#
+#     cp configs/default.yaml configs/mobilenetv3_large.yaml
+
+# ---- Model ----
+# Any timm classification backbone. mobilenetv3_small_100 is the phase-1 default
+# because it is small enough for real-time inference on a phone.
+model_name: mobilenetv3_small_100
+
+# Number of output classes. Leave as null - it is filled in at runtime from the
+# number of species directories found under <data_dir>/train.
+num_classes: null
+
+# Square input resolution, in pixels. Must match the value used at export time
+# and in the Flutter app's preprocessing.
+img_size: 224
+
+# ---- Data ----
+# Root of the split dataset. Expects <data_dir>/train and <data_dir>/val, each
+# containing one subdirectory per species. See data/README.md.
+data_dir: data
+
+# DataLoader worker processes. Raise this toward your CPU core count if the GPU
+# is idling between batches.
+num_workers: 2
+
+# ---- Optimisation ----
+batch_size: 32
+
+# Stage 1 trains only the classifier head on top of the frozen backbone.
+lr_head: 0.001
+epochs_head: 15
+
+# Stage 2 unfreezes the whole network and fine-tunes at a lower learning rate,
+# with a cosine schedule over epochs_finetune.
+lr_finetune: 0.0001
+epochs_finetune: 20
+
+# ---- Output ----
+# Where checkpoints and the exported ONNX graph are written. Gitignored.
+output_dir: models
+
+# Filenames written under output_dir.
+stage1_checkpoint: best_model_stage1.pth
+final_checkpoint: best_model_final.pth
+onnx_filename: fish_classifier.onnx
+
+# ONNX opset. Pinned rather than left to the torch default so that exports stay
+# reproducible across torch upgrades and remain in the range the downstream
+# TFLite converter supports.
+onnx_opset: 17
