@@ -35,15 +35,16 @@ data/
   species name, so keep it consistent: lowercase, underscores instead of spaces,
   no trailing whitespace. `black_rockfish` and `Black Rockfish` become two
   separate classes.
-- **`train/` and `val/` must contain the same species directories.** Class
-  indices are assigned by sorting directory names within each split
-  independently, so a species present in one split but not the other shifts the
-  indices and silently misaligns your labels. Include the directory even when a
-  species has no images in that split.
-- **Supported extensions.** The loader currently globs `*.jpg` and `*.png` only.
-  Files with other extensions — including `.jpeg` and uppercase `.JPG` — are
-  skipped without warning. Normalise extensions to lowercase `.jpg`/`.png`
-  before training, or you will quietly train on less data than you think.
+- **`val/` reuses `train/`'s class list.** Label indices come from sorting the
+  *training* species directories, and the validation split inherits that
+  mapping, so a species with no validation images no longer shifts the indices.
+  A species that appears in `val/` but not `train/` cannot be mapped at all and
+  raises an error rather than mislabelling data.
+- **Extensions.** `.jpg`, `.jpeg`, `.png`, `.bmp` and `.webp` are all read, in
+  any capitalisation. Other formats (`.tif`, `.heic`, RAW) are not — run
+  `scripts/prepare_images.py` to list them and convert them.
+- **Any pixel dimensions are fine.** Images are resized on load, so nothing
+  needs resizing by hand. See "Image sizes" below.
 - **`test/` is not read during training.** It exists so you have a split that
   model selection never touches. Hold it back until you are choosing a model to
   ship.
@@ -75,9 +76,59 @@ tens of points. The model then reads as excellent in the notebook and disappoint
 in the water.
 
 If your data looks like that, split by **group** — by clip, individual, dive, or
-day — so that no group appears in more than one split. Doing it by hand, or with
-a small script that maps a filename prefix to a group, is worth the effort;
-there is no way to recover a trustworthy number afterwards.
+day — so that no group appears in more than one split. When the group is
+identifiable from the filename, `--group-regex` does it for you:
+
+```bash
+# dive12_frame004.jpg, dive12_frame005.jpg ... -> whole dives stay together
+python scripts/split_data.py --source raw --output data --group-regex '^(dive\d+)'
+
+# IMG_4471_a.jpg, IMG_4471_b.jpg ... -> shots of one fish stay together
+python scripts/split_data.py --source raw --output data --group-regex '^(IMG_\d+)'
+```
+
+The first capturing group is the key. Files matching nothing become groups of
+one, so an imperfect pattern degrades to a random split rather than silently
+lumping everything together.
+
+Because whole groups are assigned, the image counts only approximate your
+requested ratios — that is the intended trade. You also need enough groups to
+divide: 5 groups at 80/10/10 rounds validation down to zero, and the script
+warns when a split comes out empty.
+
+## Image sizes
+
+Images can be any size and any aspect ratio. The training pipeline resizes every
+image as it loads, so mixed dimensions need no manual editing at all.
+
+What is worth doing once, up front:
+
+```bash
+# Report only - changes nothing
+python scripts/prepare_images.py --source data
+```
+
+This lists the dimension spread, files that cannot be decoded, files the loader
+would skip, images smaller than the model input, and the class-imbalance ratio.
+To act on it:
+
+```bash
+python scripts/prepare_images.py --source data --output data_prepared --max-size 640
+```
+
+That writes a cleaned copy — aspect ratio preserved, longest side capped, never
+upscaled, grayscale and RGBA converted to RGB, every format re-encoded to
+lowercase `.jpg` — and leaves your originals untouched. Point training at the
+copy with `--data-dir data_prepared`.
+
+The reason to bother: decoding 12-megapixel JPEGs down to 224×224 on every
+epoch, for every image, usually leaves the GPU waiting on the data loader.
+Capping the source resolution once removes that cost from all 35 epochs.
+
+The other choice is `resize_mode` in `configs/default.yaml`: `stretch` squashes
+non-square images to a square, `letterbox` preserves proportions and pads. Fish
+species differ in body elongation, so letterbox is worth testing — just make
+sure the app's preprocessing matches whichever you train with.
 
 ## Class balance
 
@@ -87,6 +138,8 @@ images each species has:
 ```bash
 for d in data/train/*/; do echo "$(ls "$d" | wc -l) $(basename "$d")"; done | sort -rn
 ```
+
+`scripts/prepare_images.py` reports the same counts plus the imbalance ratio.
 
 The training script currently uses unweighted cross-entropy and selects
 checkpoints on plain accuracy, both of which favour the common species. If the
