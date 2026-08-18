@@ -24,13 +24,22 @@ SAMPLE_SPECIES = {
 }
 
 
-def write_sample_image(path, size=64):
-    """Write a small random RGB image, creating parent directories as needed."""
+def write_sample_image(path, size=64, height=None, width=None):
+    """Write a small random RGB image, creating parent directories as needed.
+
+    ``height``/``width`` override the square default, so tests can build the
+    mixed-dimension datasets the loader has to cope with.
+    """
     import cv2
+
+    height = height if height is not None else size
+    width = width if width is not None else size
 
     path.parent.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(abs(hash(path.name)) % (2**32))
-    image = rng.integers(0, 256, size=(size, size, 3), dtype=np.uint8)
+    # Random noise gives every row and column non-zero variance, which lets
+    # tests tell real image content apart from letterbox padding.
+    image = rng.integers(0, 256, size=(height, width, 3), dtype=np.uint8)
     assert cv2.imwrite(str(path), image), f"failed to write {path}"
     return path
 

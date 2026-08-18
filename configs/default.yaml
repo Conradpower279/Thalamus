@@ -24,6 +24,20 @@ num_classes: null
 # and in the Flutter app's preprocessing.
 img_size: 224
 
+# How images that are not already square are fitted to img_size x img_size.
+# Source images can be any size and any aspect ratio - this happens on load, so
+# nothing needs resizing by hand.
+#
+#   stretch    Squash to a square. Fast, and matches the original prototype,
+#              but it distorts body proportions - and elongation is a real
+#              cue for telling fish species apart.
+#   letterbox  Scale the longest side to img_size and pad the rest with black,
+#              preserving aspect ratio at the cost of some border pixels.
+#
+# Whichever you pick has to be mirrored in the app's preprocessing. Worth
+# A/B-testing on your own data; letterbox often helps for elongated species.
+resize_mode: stretch
+
 # ---- Data ----
 # Root of the split dataset. Expects <data_dir>/train and <data_dir>/val, each
 # containing one subdirectory per species. See data/README.md.
@@ -35,6 +49,10 @@ num_workers: 2
 
 # ---- Optimisation ----
 batch_size: 32
+
+# Seeds Python, NumPy and torch so a run can be reproduced. Set to null to
+# leave every RNG unseeded.
+seed: 42
 
 # Stage 1 trains only the classifier head on top of the frozen backbone.
 lr_head: 0.001

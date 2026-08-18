@@ -43,10 +43,13 @@ Python returns nonsense on a phone. The exported graph expects:
   - mean `[0.485, 0.456, 0.406]`
   - std `[0.229, 0.224, 0.225]`
   - i.e. `pixel = (pixel / 255.0 - mean) / std`, per channel.
-- **Resize to a square**, matching `img_size` in `configs/default.yaml`. The
-  training pipeline uses a plain resize that does not preserve aspect ratio, so
-  the app must squash rather than letterbox — matching training is what matters,
-  not which is nicer.
+- **Resize to a square**, matching `img_size` **and `resize_mode`** in
+  `configs/default.yaml`. With `resize_mode: stretch` (the default) the app must
+  squash the frame to a square, ignoring aspect ratio. With
+  `resize_mode: letterbox` it must instead scale the longest side to `img_size`
+  and pad the remainder with black, centred. Matching training is what matters,
+  not which looks nicer — mismatching them degrades accuracy in a way that is
+  hard to spot, because the model still returns confident-looking answers.
 - **Output** is a `[1, num_classes]` vector of raw **logits**, not probabilities.
   Apply softmax in the app if you want a confidence score.
 
