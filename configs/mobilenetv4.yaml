@@ -1,0 +1,72 @@
+# MobileNetV4 (conv-small) training configuration.
+#
+# A standalone copy of default.yaml with the backbone swapped. Run it with:
+#
+#     python scripts/fish_classifier_train.py --config configs/mobilenetv4.yaml
+#
+# Why this backbone is worth trying over the mobilenetv3_small_100 default,
+# measured with scripts/benchmark_backbones.py (batch 1, 224px, 4 threads, on an
+# x86 dev machine - NOT the phone):
+#
+#   model                     params(M)  onnx(MB)  ms/img   SE  hard-swish
+#   mobilenetv3_small_100          1.54       5.9     5.7    9          19
+#   mobilenetv4_conv_small         2.53       9.6     6.9    0           0
+#
+# The last two columns are the point. Squeeze-excite blocks and hard-swish
+# activations are the two structures that quantize worst to int8 and that
+# underuse TensorRT's tensor cores; MobileNetV4's UIB blocks contain neither.
+# The quantization headache phase 2 would otherwise inherit simply is not there.
+#
+# The cost is roughly 20% more CPU latency here. That ordering may well not hold
+# on a phone: MobileNetV4 was NAS-optimised to sit on the Pareto frontier across
+# mobile CPU, GPU, EdgeTPU and Apple Neural Engine, whereas MobileNetV3 was tuned
+# mainly for mobile CPU. Measure on the target device before drawing conclusions.
+#
+# On ImageNet, MobileNetV4-Conv-Small scores substantially higher than
+# MobileNetV3-Small (roughly 73-74% vs 67% top-1, per the MobileNetV4 paper -
+# not measured here). ImageNet ranking does not always survive transfer to a
+# narrow domain like fish, which is exactly why this is a separate config rather
+# than a change to the default: train both, compare on your own validation
+# split, then pick.
+#
+# Avoid the mobilenetv4_hybrid_* variants for the phone build. They add
+# Mobile MQA attention blocks, which are the ops most likely to fall off a
+# TFLite delegate onto CPU or to quantize badly. The conv variants are plain
+# convolutions and convert cleanly.
+
+# ---- Model ----
+model_name: mobilenetv4_conv_small
+
+# Filled in at runtime from the number of species directories under <data_dir>/train.
+num_classes: null
+
+img_size: 224
+
+# See default.yaml for the full explanation of stretch vs letterbox.
+resize_mode: stretch
+
+# ---- Data ----
+data_dir: data
+num_workers: 2
+
+# ---- Optimisation ----
+batch_size: 32
+seed: 42
+
+# Stage 1 trains only the classifier head on the frozen backbone.
+lr_head: 0.001
+epochs_head: 15
+
+# Stage 2 unfreezes everything and fine-tunes with a cosine schedule.
+lr_finetune: 0.0001
+epochs_finetune: 20
+
+# ---- Output ----
+# Distinct filenames so a V4 run does not overwrite a V3 run's checkpoints and
+# the two can be compared side by side.
+output_dir: models
+stage1_checkpoint: mnv4_best_model_stage1.pth
+final_checkpoint: mnv4_best_model_final.pth
+onnx_filename: fish_classifier_mnv4.onnx
+
+onnx_opset: 17

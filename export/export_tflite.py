@@ -22,11 +22,12 @@ Then:
 Outputs land in export/output/ alongside a copy of models/classes.json, since
 the TFLite graph carries no species names of its own.
 
-A caution specific to this model: MobileNetV3's hard-swish activations and
-squeeze-excite blocks are among the harder structures to quantize to int8, so
-treat the accuracy drop as something to measure rather than assume. If int8
-costs more than you can afford, the timm '*_minimal_*' MobileNetV3 variants drop
-those two structures precisely to be quantization-friendly.
+A caution specific to MobileNetV3: its hard-swish activations and squeeze-excite
+blocks are among the harder structures to quantize to int8, so treat the accuracy
+drop as something to measure rather than assume. If int8 costs more than you can
+afford, the cleanest fix is a backbone without those structures - train with
+configs/mobilenetv4.yaml, whose mobilenetv4_conv_small contains neither. Compare
+candidates with scripts/benchmark_backbones.py.
 
 NOTE: this script is not exercised in CI - the TensorFlow dependency tree is too
 large for the test workflow - so it is verified only by running it locally.

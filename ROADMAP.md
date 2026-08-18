@@ -9,8 +9,11 @@ measurement, no catch, no legal logic.
 Phase 1 is where the classifier earns the trust phase 2 will depend on. The work
 is:
 
-- [x] Training pipeline: MobileNetV3 via timm, two-stage transfer learning,
+- [x] Training pipeline: MobileNet via timm, two-stage transfer learning,
       underwater-oriented augmentation, ONNX export
+- [ ] Settle the backbone: MobileNetV3-Small vs MobileNetV4-Conv-Small, compared
+      on real fish images rather than ImageNet ranking (both configs ship; see
+      `scripts/benchmark_backbones.py`)
 - [x] Repository structure, config, split utility, TFLite export, tests, CI
 - [ ] A real dataset, with group-aware splits that do not leak between train
       and val
@@ -139,6 +142,11 @@ For a dedicated dive-housing device rather than a phone.
   squeeze-excite blocks are memory-bandwidth-bound and underuse the tensor
   cores, so measured latency is often worse than the FLOP count suggests.
   ResNet18 or `efficientnet_lite0` frequently win on this hardware
+- `configs/mobilenetv4.yaml` already removes two of those three problems —
+  `mobilenetv4_conv_small` has no hard-swish and no squeeze-excite, and V4 was
+  NAS-optimised across GPU and accelerator targets rather than mobile CPU alone.
+  If phase 1 settles on it, this concern largely resolves itself. Depthwise
+  convolutions remain, so still measure on the Jetson rather than assuming
 - INT8 with TensorRT calibration, plus accuracy measured post-quantization
 - Power and thermal budget inside a sealed housing, where there is no airflow
   and the only heat path is conduction to the water

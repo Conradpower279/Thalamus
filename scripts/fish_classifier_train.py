@@ -320,12 +320,30 @@ def build_dataloaders(config, seed=None):
         generator = torch.Generator()
         generator.manual_seed(seed)
 
+    # Drop a trailing partial batch during training. A batch of exactly one
+    # sample crashes BatchNorm in train mode ("Expected more than 1 value per
+    # channel"), which bites whenever len(train) % batch_size == 1 - and it
+    # surfaces partway through an epoch, not at startup. MobileNetV4 is
+    # especially exposed because its head normalises after global pooling, at
+    # 1x1 spatial. Shuffling means a different handful is dropped each epoch, so
+    # no image is permanently excluded.
+    # Skipped when the training set is smaller than one batch, since dropping
+    # the only partial batch would leave nothing to train on.
+    drop_last = len(train_dataset) >= config["batch_size"]
+    if not drop_last:
+        print(
+            f"WARNING: only {len(train_dataset)} training images for batch size "
+            f"{config['batch_size']}. Training on a single partial batch; lower "
+            "--batch-size or collect more data."
+        )
+
     train_loader = DataLoader(
         train_dataset,
         batch_size=config["batch_size"],
         shuffle=True,
         num_workers=config["num_workers"],
         generator=generator,
+        drop_last=drop_last,
     )
     val_loader = DataLoader(
         val_dataset,

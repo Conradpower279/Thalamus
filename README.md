@@ -4,7 +4,7 @@ Real-time fish species identification from a phone camera, for logging what you
 see while swimming or diving.
 
 **Phase 1 (this repository, in progress): non-lethal species logging.** A
-MobileNetV3 classifier trained on fish imagery, exported to TFLite and run
+compact MobileNet classifier trained on fish imagery, exported to TFLite and run
 on-device by a Flutter app. Species identification only — no measurement, no
 catch, no compliance logic. Point the camera at a fish, get a name, log the
 sighting.
@@ -27,7 +27,7 @@ carry that weight.
 ```
 .
 ├── app/              Flutter app that runs the TFLite model (placeholder)
-├── configs/          Training configuration — default.yaml
+├── configs/          Training configurations — default.yaml, mobilenetv4.yaml
 ├── data/             Datasets (gitignored; see data/README.md for the layout)
 ├── export/           ONNX -> TFLite conversion for the phone app
 ├── models/           Checkpoints and exported graphs (gitignored)
@@ -162,6 +162,58 @@ python scripts/fish_classifier_train.py \
 `configs/default.yaml` to a new file and pass `--config` — that keeps the
 defaults as a known-good baseline.
 
+### Choosing a backbone
+
+Two configs ship. `configs/default.yaml` uses `mobilenetv3_small_100`, inherited
+from the original prototype. `configs/mobilenetv4.yaml` uses
+`mobilenetv4_conv_small`, and writes to its own checkpoint filenames so the two
+can be trained and compared side by side:
+
+```bash
+python scripts/fish_classifier_train.py --config configs/default.yaml
+python scripts/fish_classifier_train.py --config configs/mobilenetv4.yaml
+```
+
+Compare candidates on the numbers that matter for on-device use:
+
+```bash
+python scripts/benchmark_backbones.py
+```
+
+Measured on an x86 dev machine (batch 1, 224px, 4 threads — **not** a phone):
+
+| model | params (M) | ONNX (MB) | ms/img | SE blocks | hard-swish |
+|---|---|---|---|---|---|
+| mobilenetv3_small_100 | 1.54 | 5.9 | 5.7 | 9 | 19 |
+| mobilenetv4_conv_small | 2.53 | 9.6 | 6.9 | 0 | 0 |
+| tf_mobilenetv3_large_minimal_100 | 2.68 | 10.2 | 9.8 | 0 | 0 |
+| mobilenetv3_large_100 | 4.23 | 16.1 | 10.3 | 8 | 21 |
+| mobilenetv4_conv_medium | 8.47 | 32.1 | 15.6 | 0 | 0 |
+
+The last two columns drive the recommendation. Squeeze-excite blocks and
+hard-swish activations are the structures that quantize worst to int8 and that
+underuse TensorRT's tensor cores — the two problems that would otherwise follow
+you into the app and into phase 2. MobileNetV4's UIB blocks contain neither, so
+the problem is absent rather than mitigated.
+
+The trade-offs:
+
+- MobileNetV4-Conv-Small costs about **20% more CPU latency** than
+  MobileNetV3-Small here. That ordering may not hold on a phone — V4 was
+  NAS-optimised across mobile CPU, GPU, EdgeTPU and Apple Neural Engine, while
+  V3 was tuned mainly for mobile CPU. Only a measurement on the target device
+  settles it.
+- On ImageNet, MobileNetV4-Conv-Small scores substantially higher than
+  MobileNetV3-Small (roughly 73–74% vs 67% top-1, per the MobileNetV4 paper —
+  not measured here). ImageNet ranking does not always survive transfer to a
+  narrow domain, so verify on your own validation split.
+- **Avoid `mobilenetv4_hybrid_*` for the phone build.** Those add Mobile MQA
+  attention blocks, the ops most likely to fall off a TFLite delegate onto CPU
+  or to quantize badly. The conv variants are plain convolutions.
+
+The default is still MobileNetV3 because nothing has been compared on real fish
+images yet. Once it has, switch `model_name` in `configs/default.yaml`.
+
 Training runs in two stages:
 
 1. **Stage 1** freezes the backbone and trains the classifier head at
@@ -208,9 +260,10 @@ Two things to know before shipping a quantized model:
   species directory names — adding a species later shifts every index after it.
 - **Measure accuracy after quantizing.** MobileNetV3's hard-swish activations
   and squeeze-excite blocks are among the harder structures to quantize to int8,
-  so the drop is worth checking rather than assuming. If it costs too much,
-  timm's `*_minimal_*` MobileNetV3 variants drop both structures specifically to
-  be quantization-friendly.
+  so the drop is worth checking rather than assuming. If it costs too much, the
+  cleanest fix is switching backbone: `configs/mobilenetv4.yaml` uses
+  `mobilenetv4_conv_small`, which contains neither structure. See
+  [Choosing a backbone](#choosing-a-backbone).
 
 [app/README.md](app/README.md) documents the exact preprocessing contract the
 Flutter side has to match — channel order, normalisation constants, tensor
@@ -224,7 +277,7 @@ pytest              # everything
 pytest -v tests/test_dataset.py
 ```
 
-Five suites, all run by CI on every push:
+Six suites, all run by CI on every push:
 
 - `tests/test_dataset.py` — the loader parses a sample folder tree correctly:
   species from directory names, indices by sorted order, every extension and
@@ -242,6 +295,10 @@ Five suites, all run by CI on every push:
 - `tests/test_onnx_export.py` — an exported graph is structurally valid, pins
   the expected opset, keeps stable input/output names, loads in onnxruntime,
   runs on a dummy input, and returns the same numbers as PyTorch.
+- `tests/test_backbones.py` — every config in `configs/` carries the keys the
+  trainer reads, names a backbone that builds, and survives the whole
+  torch → ONNX → onnxruntime trip with matching numbers. Also asserts the
+  squeeze-excite and hard-swish counts the backbone recommendation rests on.
 
 The ONNX tests build an untrained model with `pretrained=False`, so they need no
 network access and no dataset.
