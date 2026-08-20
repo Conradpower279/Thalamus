@@ -36,6 +36,42 @@ carry that weight.
 └── tests/            Loader and export tests, run by CI
 ```
 
+## The pipeline, end to end
+
+Every route through this repo is the same five steps. Nothing is optional except
+where noted, and each step's output is the next step's input:
+
+```
+  raw images                  one folder per species, any size or format
+      |
+      |  scripts/prepare_images.py --source raw --output raw_prepared
+      v
+  cleaned images              corrupt files removed, sizes capped, formats normalised
+      |
+      |  scripts/split_data.py --source raw_prepared --output data
+      v
+  data/{train,val,test}/      what the training script reads
+      |
+      |  scripts/fish_classifier_train.py
+      v
+  models/                     checkpoints + fish_classifier.onnx + classes.json
+      |
+      |  export/export_tflite.py
+      v
+  export/output/              .tflite + classes.json for the Flutter app
+```
+
+The step people skip is the split. Training reads `data/train` and `data/val` —
+it does **not** read a folder of species directories directly. If you point it at
+raw images it fails with `Dataset directory not found`, because there is no
+`train/` subdirectory yet.
+
+In Colab, [notebooks/fish_classifier_colab.ipynb](notebooks/fish_classifier_colab.ipynb)
+walks the same sequence top to bottom. Run its sections in order; step 2 (clone
+and install) must run before everything else, and step 6 verifies the layout
+before training so a mistake surfaces immediately rather than as a confusing
+failure later.
+
 ## Setup
 
 Python 3.9+ (3.11 recommended).
