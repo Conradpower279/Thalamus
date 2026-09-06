@@ -75,4 +75,9 @@ onnx_filename: fish_classifier.onnx
 # ONNX opset. Pinned rather than left to the torch default so that exports stay
 # reproducible across torch upgrades and remain in the range the downstream
 # TFLite converter supports.
-onnx_opset: 17
+#
+# Set to 18 because torch 2.11's exporter has no opset-17 implementation: it
+# exports at 18 and its attempt to down-convert to 17 fails, leaving the graph
+# at 18 anyway. Targeting 18 directly skips that failed conversion and the
+# alarming (but non-fatal) traceback it printed.
+onnx_opset: 18

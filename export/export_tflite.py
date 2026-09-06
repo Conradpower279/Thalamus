@@ -79,7 +79,10 @@ def parse_args(argv=None):
     )
     parser.add_argument(
         "--img-size", type=int, default=224,
-        help="Input resolution. Must match img_size in the training config.",
+        help="Input resolution. Must match img_size in the training config - "
+             "pass --img-size 448 for a model trained with configs/"
+             "mobilenetv4_448.yaml, or the TFLite graph will expect the wrong "
+             "shape.",
     )
     parser.add_argument(
         "--classes",
@@ -119,6 +122,12 @@ def build_calibration_data(calib_dir, img_size, num_samples, output_path):
         step = len(images) / num_samples
         images = [images[int(i * step)] for i in range(num_samples)]
 
+    # NOTE: this resizes (stretches) to a square. If the model was trained with
+    # augmentation.val_center_crop set (configs/mobilenetv4_tuned.yaml and _448),
+    # its validation/inference preprocessing is resize-then-centre-crop instead.
+    # For the calibration set that mismatch only shifts int8 quantisation ranges
+    # slightly, but the APP's runtime preprocessing must match training exactly -
+    # centre-crop there too, or accuracy suffers regardless of quantisation.
     batch = []
     for path in images:
         image = cv2.imread(str(path))

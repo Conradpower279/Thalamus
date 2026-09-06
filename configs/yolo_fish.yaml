@@ -1,0 +1,22 @@
+# Ultralytics dataset config for the single-class "fish" detector.
+#
+# This detector localises fish so a busy frame can be cropped to the fish before
+# the species classifier runs. It learns ONE class - species ID stays with the
+# classifier. The labels are produced by scripts/autolabel_fish.py.
+#
+# Point `path` at the dataset root that autolabel_fish.py wrote (the folder that
+# contains images/ and labels/). Use an absolute path so training works from any
+# working directory - e.g. your D: drive:
+#
+#     path: D:/Thalamus/data/yolo_fish
+#
+# Ultralytics finds labels by swapping "images" -> "labels" in each image path,
+# so the train/val entries point at the image folders only.
+
+path: D:/Thalamus/data/yolo_fish   # <-- EDIT to your autolabel_fish.py --output
+train: images/train
+val: images/val
+
+# Single class. Index 0 must match the "0" written by autolabel_fish.py.
+names:
+  0: fish

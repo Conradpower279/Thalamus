@@ -1,0 +1,82 @@
+# MobileNetV4-Hybrid-Medium with the full regularisation stack (224px).
+#
+# Built to attack the overfitting the earlier hybrid_medium run showed: train
+# accuracy reached ~96% while validation plateaued near 73% and val loss rose -
+# a memorisation signature. Everything added here targets that gap rather than
+# model capacity (a bigger backbone would only memorise harder).
+#
+#     python scripts/fish_classifier_train.py --config configs/mobilenetv4_tuned.yaml \
+#         --data-dir <your data root>
+#
+# Every regularisation key below is read by scripts/fish_classifier_train.py and
+# defaults to off when absent, so the plain configs stay a clean baseline. Train
+# this alongside the baseline and compare on your own validation split.
+#
+# NOTE on the backbone: hybrid_medium was chosen because it was the best result
+# so far, but its Mobile MQA attention blocks are the ops most likely to fall
+# off a TFLite delegate onto CPU or quantise badly. Fine for research and for
+# picking the best recipe; if this becomes the shippable phone model, retrain
+# the winning recipe on mobilenetv4_conv_medium (no attention) and re-measure.
+
+# ---- Model ----
+model_name: mobilenetv4_hybrid_medium
+
+num_classes: null
+
+img_size: 224
+resize_mode: stretch
+
+# ---- Data ----
+data_dir: data
+num_workers: 2
+
+# ---- Optimisation ----
+batch_size: 16       # hybrid_medium is heavy; matches the earlier tuned run.
+seed: 42
+
+lr_head: 0.001
+epochs_head: 15
+
+lr_finetune: 0.0001
+epochs_finetune: 20
+
+# Unfreeze the backbone in thirds over stage 2 rather than all at once, which
+# was used in the earlier tuned run.
+progressive_unfreeze: true
+
+# ---- Regularisation (the point of this config) ----
+# Softens one-hot targets to curb the overconfident logits behind the rising
+# val loss. Also feeds the MixUp path.
+label_smoothing: 0.1
+
+# AdamW weight decay in stage 2. Raised from the 0.01 default to lean harder
+# against memorisation.
+weight_decay: 0.05
+
+# Oversample rare species so batches are ~class-balanced. Composes cleanly with
+# MixUp (changes which images are drawn, not the loss).
+balanced_sampler: true
+
+# Train-side augmentation. Absent keys default off (baseline pipeline).
+augmentation:
+  random_resized_crop: true     # different framing/scale every epoch
+  rrc_scale: [0.5, 1.0]         # crop keeps 50-100% of the image area
+  coarse_dropout: true          # mask a few small patches
+  val_center_crop: true         # resize-then-centre-crop for val/inference,
+                                # the standard partner to random_resized_crop.
+                                # MIRROR THIS IN THE APP'S PREPROCESSING.
+
+# MixUp/CutMix label mixing, applied in stage 2 only. alpha 0.2 is a moderate
+# setting; one of the two is chosen per batch (coin flip) when both are on.
+mixup:
+  alpha: 0.2
+  mixup: true
+  cutmix: true
+
+# ---- Output ----
+output_dir: models_v4/mobilenetv4_hybrid_medium_tuned2
+stage1_checkpoint: best_model_stage1.pth
+final_checkpoint: best_model_final.pth
+onnx_filename: fish_classifier.onnx
+
+onnx_opset: 18
