@@ -504,6 +504,70 @@ def build_dataloaders(config, seed=None):
     return train_dataset, val_dataset, train_loader, val_loader
 
 
+def build_test_loader(config, classes):
+    """A loader over <data_dir>/test, or None when there is no test split.
+
+    Uses the deterministic val-side transforms (no augmentation) and reuses the
+    training class list, so label indices line up with the trained model. Absent
+    or empty test/ returns None so older datasets and the baseline configs still
+    run - the test evaluation is simply skipped.
+    """
+    data_dir = resolve_path(config["data_dir"])
+    test_dir = data_dir / "test"
+    if not test_dir.is_dir():
+        return None
+
+    _, val_transform = build_transforms(
+        config["img_size"], config.get("resize_mode", "stretch"),
+        aug=config.get("augmentation"),
+    )
+    try:
+        test_dataset = FishDataset(test_dir, transform=val_transform, classes=classes)
+    except ValueError as exc:
+        # e.g. test/ holds a species absent from train, which would misalign
+        # label indices. Surface it rather than reporting a bogus accuracy.
+        print(f"WARNING: skipping test evaluation - {exc}")
+        return None
+
+    return DataLoader(
+        test_dataset,
+        batch_size=config["batch_size"],
+        shuffle=False,
+        num_workers=config["num_workers"],
+    )
+
+
+def run_test_evaluation(model, config, device, classes, output_dir):
+    """Evaluate ``model`` on the test split and write test_metrics.json.
+
+    The honest number: run once, at the end, on data never used for tuning or
+    checkpoint selection. ``model`` is expected to already hold the exported
+    best weights (export_onnx reloads them). Skipped cleanly with a note when
+    there is no test/ split.
+    """
+    test_loader = build_test_loader(config, classes)
+    if test_loader is None:
+        print(
+            "\nNo test/ split found under the data dir - skipping test "
+            "evaluation. Create one with scripts/split_data.py (default ratios "
+            "already hold out 10% for test)."
+        )
+        return None
+
+    metrics = evaluate_test(model, test_loader, device, classes, progress_label="Test")
+    print(
+        f"\nTest set ({metrics['test_samples']} images, "
+        f"{metrics['classes_present']}/{len(classes)} species present):\n"
+        f"  top-1 {metrics['top1']:.4f} | top-5 {metrics['top5']:.4f} | "
+        f"macro {metrics['macro']:.4f}"
+    )
+    metrics_path = Path(output_dir) / "test_metrics.json"
+    with open(metrics_path, "w") as f:
+        json.dump(metrics, f, indent=2)
+    print(f"Wrote test metrics to {metrics_path}")
+    return metrics
+
+
 def write_class_index(classes, path):
     """Write the index -> species-name mapping next to the model artifacts.
 
@@ -703,6 +767,69 @@ def validate(model, loader, criterion, device, progress_label=None):
     return total_loss / total, correct / total
 
 
+def evaluate_test(model, loader, device, classes, progress_label=None):
+    """Score the model on the held-out test split.
+
+    Reports three numbers, because top-1 alone is misleading for a many-class,
+    imbalanced ID problem:
+
+        top-1   the headline accuracy.
+        top-5   whether the true species is in the model's top five guesses.
+                For an ID app this is what the user experiences - a shortlist -
+                and it reads far higher than top-1 across hundreds of classes.
+        macro   mean of the per-class accuracies. Unweighted top-1 is dominated
+                by the common species; macro tells you whether the rare ones are
+                being identified at all or are effectively dead.
+
+    Unlike validation, this runs once at the very end on data never used for
+    tuning or model selection, so it is the honest estimate of real-world
+    accuracy - the whole reason the split exists.
+    """
+    model.eval()
+    correct1 = correct5 = total = 0
+    num_classes = len(classes)
+    per_class_correct = np.zeros(num_classes, dtype=np.int64)
+    per_class_total = np.zeros(num_classes, dtype=np.int64)
+
+    k = min(5, num_classes)
+    with torch.no_grad():
+        for batch_index, (images, labels) in enumerate(loader, start=1):
+            images, labels = images.to(device), labels.to(device)
+            outputs = model(images)
+
+            top1 = outputs.argmax(1)
+            correct1 += (top1 == labels).sum().item()
+            topk = outputs.topk(k, dim=1).indices
+            correct5 += (topk == labels.unsqueeze(1)).any(dim=1).sum().item()
+            total += labels.size(0)
+
+            for label, pred in zip(labels.cpu().numpy(), top1.cpu().numpy()):
+                per_class_total[label] += 1
+                if label == pred:
+                    per_class_correct[label] += 1
+
+            if progress_label and (
+                batch_index % 100 == 0 or batch_index == len(loader)
+            ):
+                print(f"{progress_label} | batch {batch_index}/{len(loader)}",
+                      flush=True)
+
+    # Macro accuracy averages only over classes that actually appear in the test
+    # split, so a species with no test images does not count as a zero.
+    present = per_class_total > 0
+    per_class_acc = np.zeros(num_classes, dtype=float)
+    per_class_acc[present] = per_class_correct[present] / per_class_total[present]
+    macro = float(per_class_acc[present].mean()) if present.any() else 0.0
+
+    return {
+        "test_samples": int(total),
+        "classes_present": int(present.sum()),
+        "top1": correct1 / total if total else 0.0,
+        "top5": correct5 / total if total else 0.0,
+        "macro": macro,
+    }
+
+
 # ============ CHECKPOINTS ============
 def ensure_final_checkpoint(stage1_path, final_path):
     """Guarantee a final checkpoint exists before export.
@@ -806,6 +933,7 @@ def main(argv=None):
             model, onnx_path, config["img_size"], config["onnx_opset"], device,
             checkpoint_path=ensure_final_checkpoint(stage1_path, final_path),
         )
+        run_test_evaluation(model, config, device, train_dataset.classes, output_dir)
         return
 
     # Label smoothing softens the one-hot targets, which curbs the overconfident
@@ -927,10 +1055,15 @@ def main(argv=None):
     print(f"Best validation accuracy: {best_val_acc:.4f}")
 
     # ---- Export to ONNX (next step: export/export_tflite.py) ----
+    # This reloads the best checkpoint into `model` and puts it in eval mode, so
+    # the test evaluation below runs on exactly the exported weights.
     export_onnx(
         model, onnx_path, config["img_size"], config["onnx_opset"], device,
         checkpoint_path=ensure_final_checkpoint(stage1_path, final_path),
     )
+
+    # ---- Held-out test evaluation ----
+    run_test_evaluation(model, config, device, train_dataset.classes, output_dir)
 
 
 if __name__ == "__main__":

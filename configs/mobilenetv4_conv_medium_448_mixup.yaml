@@ -1,0 +1,67 @@
+# MobileNetV4-Conv-Medium at 448px, light recipe + MixUp/CutMix (alpha 0.1).
+#
+# Second pass on the sweep's shipping candidate. conv_medium @ 448 with the light
+# recipe reached test top-1 0.739 / top-5 0.886, but overfit (train ~0.92 vs test
+# ~0.74, a ~18pt gap) with an exploding validation loss - the calibration/
+# overconfidence signature. This config adds ONE lever, gentle MixUp+CutMix, to
+# close that gap. Everything else is identical to
+# mobilenetv4_conv_medium_448.yaml, so the comparison is clean.
+#
+#     python scripts/fish_classifier_train.py --config configs/mobilenetv4_conv_medium_448_mixup.yaml \
+#         --data-dir D:\Thalamus\data\split_capped
+#
+# alpha 0.1 is deliberately gentle: most mixes stay close to one dominant image.
+# MixUp is applied in stage 2 only. With mixing on, the reported TRAIN accuracy
+# is approximate (prints 'acc~') because labels are blended - judge on
+# validation/test accuracy. This is added ALONE on top of the working light
+# recipe (not stacked with CoarseDropout etc.), which is what caused the earlier
+# underfitting collapse. See the 'classifier over-regularization' note.
+
+# ---- Model ----
+model_name: mobilenetv4_conv_medium
+
+num_classes: null
+
+img_size: 448
+resize_mode: stretch
+
+# ---- Data ----
+data_dir: data
+num_workers: 2
+
+# ---- Optimisation ----
+batch_size: 8
+seed: 42
+
+lr_head: 0.001
+epochs_head: 10
+
+lr_finetune: 0.0001
+epochs_finetune: 20
+
+progressive_unfreeze: true
+
+# ---- Regularisation (light + gentle MixUp) ----
+label_smoothing: 0.1
+weight_decay: 0.05
+balanced_sampler: true
+
+augmentation:
+  random_resized_crop: true
+  rrc_scale: [0.65, 1.0]
+  coarse_dropout: false
+  val_center_crop: true         # MIRROR THIS IN THE APP'S PREPROCESSING
+
+# The one change vs the light baseline: gentle label mixing to fight overfitting.
+mixup:
+  alpha: 0.1
+  mixup: true
+  cutmix: true
+
+# ---- Output ----
+output_dir: models_v4/mobilenetv4_conv_medium_448_mixup
+stage1_checkpoint: best_model_stage1.pth
+final_checkpoint: best_model_final.pth
+onnx_filename: fish_classifier.onnx
+
+onnx_opset: 18

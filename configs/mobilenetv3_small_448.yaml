@@ -1,0 +1,74 @@
+# MobileNetV3-Small at 448px, LIGHT recipe.
+#
+# First entry in a 448px backbone COMPARISON set. The goal is an apples-to-apples
+# comparison across backbones, so every 448 config in the set is identical except
+# for model_name and output_dir - same data, same resolution, same recipe. Vary
+# only the backbone, compare test_metrics.json (top-1 / top-5 / macro) across
+# runs. Planned siblings: conv_small, conv_medium, hybrid_medium.
+#
+#     python scripts/fish_classifier_train.py --config configs/mobilenetv3_small_448.yaml \
+#         --data-dir D:\Thalamus\data\split_capped
+#
+# Recipe is the LIGHT one that actually learned (mobilenetv4_light224 -> test
+# top-1 0.662 / top-5 0.848 / macro 0.661). The full regulariser stack UNDERFIT
+# badly, so this deliberately keeps MixUp/CutMix and CoarseDropout OFF. See the
+# 'classifier over-regularization' note.
+#
+# BACKBONE NOTE: mobilenetv3_small_100 is a tiny (~1.5M param) phone prototype -
+# the smallest backbone here. At 448 it pays ~4x the compute of 224 while having
+# the lowest capacity to exploit the extra pixels, so expect the lowest ceiling
+# of the comparison set. It is included precisely to bracket the low end.
+
+# ---- Model ----
+model_name: mobilenetv3_small_100
+
+num_classes: null
+
+img_size: 448
+resize_mode: stretch
+
+# ---- Data ----
+data_dir: data
+num_workers: 2
+
+# ---- Optimisation ----
+# V3-small is light, so it fits a larger batch than hybrid_medium did at 448
+# (which used 8). Start at 16; drop to 8 if the first epoch OOMs on the 4GB GPU.
+batch_size: 16
+seed: 42
+
+# Stage 1 (frozen backbone, head only) plateaus early - in the V3-small run val
+# accuracy had flattened by ~epoch 8-9 while later epochs barely moved it. 10 is
+# enough to fit the head before Stage 2 does the real work.
+lr_head: 0.001
+epochs_head: 10
+
+lr_finetune: 0.0001
+epochs_finetune: 20
+
+progressive_unfreeze: true
+
+# ---- Regularisation (light - the recipe that learned) ----
+label_smoothing: 0.1
+weight_decay: 0.05
+balanced_sampler: true
+
+augmentation:
+  random_resized_crop: true
+  rrc_scale: [0.65, 1.0]        # gentle crop; 0.5 was too aggressive cold-start
+  coarse_dropout: false         # OFF - underfit when stacked
+  val_center_crop: true         # MIRROR THIS IN THE APP'S PREPROCESSING
+
+# MixUp/CutMix OFF. Re-enable (alpha ~0.1) later only if a run overfits.
+mixup:
+  alpha: 0.0
+  mixup: false
+  cutmix: false
+
+# ---- Output ----
+output_dir: models_v4/mobilenetv3_small_448
+stage1_checkpoint: best_model_stage1.pth
+final_checkpoint: best_model_final.pth
+onnx_filename: fish_classifier.onnx
+
+onnx_opset: 18

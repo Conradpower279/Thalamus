@@ -1,0 +1,63 @@
+# MobileNetV4-Conv-Medium at 448px, light recipe, on DETECTOR-CROPPED data.
+#
+# Detect->crop->classify experiment on the shipping candidate. Identical to
+# mobilenetv4_conv_medium_448.yaml (the 0.739 top-1 light baseline) except for
+# output_dir - the only real variable is that training runs on fish crops
+# produced by scripts/crop_dataset.py rather than whole frames. Point --data-dir
+# at the cropped split:
+#
+#     python scripts/fish_classifier_train.py --config configs/mobilenetv4_conv_medium_448_cropped.yaml \
+#         --data-dir D:\Thalamus\data\split_capped_cropped
+#
+# Baseline to beat: whole-frame conv_medium@448 = 0.739 / 0.886 / 0.739.
+# DEPLOY CONTRACT: the app must run the same detector + crop (same conf/pad/
+# fallback as crop_dataset.py) before this classifier, or training and serving
+# diverge.
+
+# ---- Model ----
+model_name: mobilenetv4_conv_medium
+
+num_classes: null
+
+img_size: 448
+resize_mode: stretch
+
+# ---- Data ----
+data_dir: data
+num_workers: 2
+
+# ---- Optimisation ----
+batch_size: 8
+seed: 42
+
+lr_head: 0.001
+epochs_head: 10
+
+lr_finetune: 0.0001
+epochs_finetune: 20
+
+progressive_unfreeze: true
+
+# ---- Regularisation (light - the recipe that learned) ----
+label_smoothing: 0.1
+weight_decay: 0.05
+balanced_sampler: true
+
+augmentation:
+  random_resized_crop: true
+  rrc_scale: [0.65, 1.0]
+  coarse_dropout: false
+  val_center_crop: true         # MIRROR THIS IN THE APP'S PREPROCESSING
+
+mixup:
+  alpha: 0.0
+  mixup: false
+  cutmix: false
+
+# ---- Output ----
+output_dir: models_v4/mobilenetv4_conv_medium_448_cropped
+stage1_checkpoint: best_model_stage1.pth
+final_checkpoint: best_model_final.pth
+onnx_filename: fish_classifier.onnx
+
+onnx_opset: 18

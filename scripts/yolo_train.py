@@ -51,6 +51,12 @@ def parse_args(argv=None):
     )
     parser.add_argument("--epochs", type=int, default=100)
     parser.add_argument(
+        "--patience", type=int, default=15,
+        help="Early-stopping patience: stop if validation has not improved for "
+             "this many epochs. Keeps a run from burning hours after it has "
+             "plateaued; set to 0 to disable and always run all --epochs.",
+    )
+    parser.add_argument(
         "--imgsz", type=int, default=640,
         help="Training image size. Detection typically wants more than the "
              "classifier's 224 - a small fish in a wide frame needs the pixels.",
@@ -61,6 +67,13 @@ def parse_args(argv=None):
         help="Run name; output goes to runs/detect/<name>/.",
     )
     parser.add_argument("--device", default=None, help="e.g. 0, cpu. Auto if unset.")
+    parser.add_argument(
+        "--workers", type=int, default=0,
+        help="DataLoader worker processes. Defaults to 0 (single-process) "
+             "because on Windows spawn-based workers can crash or deadlock in a "
+             "respawn loop - the same reason scripts/train_v4_sweep.py disables "
+             "them. Raise it on Linux, or if your Windows setup is known stable.",
+    )
     parser.add_argument(
         "--close-mosaic", type=int, default=10,
         help="Disable mosaic for the final N epochs, so final boxes are learnt "
@@ -99,6 +112,8 @@ def main(argv=None):
         batch=args.batch,
         name=args.name,
         device=args.device,
+        workers=args.workers,
+        patience=args.patience,
         close_mosaic=args.close_mosaic,
         hsv_h=0.02,     # slightly wider hue jitter for the colour cast
         hsv_s=0.7,

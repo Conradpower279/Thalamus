@@ -1,0 +1,275 @@
+Random seed: 42
+Using device: cuda
+Found 380 species: ['Abudefduf_saxatilis', 'Abudefduf_taurus', 'Acantharchus_pomotis', 'Acanthemblemaria_aspera', 'Acanthostracion_polygonium', 'Acanthostracion_quadricornis', 'Acanthurus_chirurgus', 'Acanthurus_coeruleus', 'Acanthurus_tractus', 'Achirus_lineatus', 'Albula_vulpes', 'Alburnops_chalybaeus', 'Alburnops_petersoni', 'Alburnops_texanus', 'Aluterus_schoepfii', 'Aluterus_scriptus', 'Amatitlania_nigrofasciata', 'Ameiurus_catus', 'Ameiurus_natalis', 'Ameiurus_nebulosus', 'Amia_calva', 'Amphilophus_citrinellus', 'Anarchopterus_criniger', 'Anchoa_hepsetus', 'Anchoa_mitchilli', 'Ancylopsetta_quadrocellata', 'Anguilla_rostrata', 'Anisotremus_surinamensis', 'Anisotremus_virginicus', 'Antennarius_scaber', 'Aphredoderus_gibbosus', 'Aphredoderus_mesotrema', 'Apogon_binotatus', 'Apogon_maculatus', 'Archosargus_probatocephalus', 'Archosargus_rhomboidalis', 'Ariopsis_felis', 'Astronotus_ocellatus', 'Astroscopus_y-graecum', 'Atherinomorus_stipes', 'Aulostomus_maculatus', 'Azurina_cyanea', 'Azurina_multilineata', 'Bagre_marinus', 'Bairdiella_chrysoura', 'Balistes_capriscus', 'Bascanichthys_bascanium', 'Bathygobius_lacertus', 'Bathygobius_soporator', 'Belonesox_belizanus', 'Bodianus_parrae', 'Bodianus_rufus', 'Bothus_ocellatus', 'Brachygenys_chrysargyrea', 'Brevoortia_patronus', 'Calamus_arctifrons', 'Calamus_bajonado', 'Calamus_penna', 'Calamus_proridens', 'Callionymus_bairdi', 'Cantherhines_macrocerus', 'Cantherhines_pullus', 'Canthigaster_rostrata', 'Caranx_bartholomaei', 'Caranx_crysos', 'Caranx_hippos', 'Caranx_latus', 'Caranx_ruber', 'Centrarchus_macropterus', 'Centropomus_parallelus', 'Centropomus_undecimalis', 'Centropristis_striata', 'Cephalopholis_cruentata', 'Chaenopsis_ocellata', 'Chaetodipterus_faber', 'Chaetodon_capistratus', 'Chaetodon_ocellatus', 'Chaetodon_sedentarius', 'Chaetodon_striatus', 'Channa_aurolineata', 'Chasmodes_saburrae', 'Chilomycterus_reticulatus', 'Chilomycterus_schoepfii', 'Chitala_ornata', 'Chloroscombrus_chrysurus', 'Cichla_ocellaris', 'Cichlasoma_bimaculatum', 'Cichlasoma_dimerus', 'Clarias_batrachus', 'Coryphaena_hippurus', 'Coryphopterus_dicrus', 'Coryphopterus_glaucofraenum', 'Cosmocampus_elucens', 'Ctenopharyngodon_idella', 'Cynoscion_arenarius', 'Cynoscion_nebulosus', 'Cyprinella_eurystoma', 'Cyprinodon_variegatus', 'Cyprinus_rubrofuscus', 'Decapterus_punctatus', 'Diapterus_auratus', 'Diodon_holocanthus', 'Diodon_hystrix', 'Diplectrum_formosum', 'Diplodus_caudimacula', 'Diplodus_holbrookii', 'Dormitator_maculatus', 'Dorosoma_cepedianum', 'Dorosoma_petenense', 'Echeneis_naucrates', 'Echeneis_neucratoides', 'Echiophis_intertinctus', 'Elacatinus_oceanops', 'Elassoma_evergladei', 'Elassoma_gilberti', 'Elassoma_okefenokee', 'Elassoma_zonatum', 'Eleotris_amblyopsis', 'Elops_saurus', 'Emblemaria_pandionis', 'Enneacanthus_gloriosus', 'Enneacanthus_obesus', 'Epinephelus_itajara', 'Epinephelus_morio', 'Eques_lanceolatus', 'Eques_punctatus', 'Erimyzon_sucetta', 'Esox_americanus', 'Esox_niger', 'Etheostoma_colorosum', 'Etheostoma_edwini', 'Etheostoma_fusiforme', 'Eucinostomus_gula', 'Eucinostomus_harengulus', 'Eucinostomus_jonesii', 'Eugerres_plumieri', 'Euthynnus_alletteratus', 'Floridichthys_carpio', 'Fundulus_chrysotus', 'Fundulus_cingulatus', 'Fundulus_confluentus', 'Fundulus_escambiae', 'Fundulus_grandis', 'Fundulus_lineolatus', 'Fundulus_olivaceus', 'Fundulus_rubrifrons', 'Fundulus_seminolis', 'Fundulus_similis', 'Fundulus_xenicus', 'Gambusia_holbrooki', 'Gambusia_rhizophorae', 'Gerres_cinereus', 'Gnatholepis_thompsoni', 'Gobiesox_strumosus', 'Gobioclinus_kalisherae', 'Gobiomorus_dormitor', 'Gobiosoma_bosc', 'Gobiosoma_robustum', 'Gymnothorax_funebris', 'Gymnothorax_moringa', 'Gymnothorax_vicinus', 'Haemulon_aurolineatum', 'Haemulon_carbonarium', 'Haemulon_flavolineatum', 'Haemulon_macrostoma', 'Haemulon_melanurum', 'Haemulon_parra', 'Haemulon_plumierii', 'Haemulon_sciurus', 'Halichoeres_bivittatus', 'Halichoeres_garnoti', 'Halichoeres_maculipinna', 'Halichoeres_poeyi', 'Halichoeres_radiatus', 'Harengula_humeralis', 'Harengula_jaguana', 'Hemiramphus_brasiliensis', 'Heterandria_formosa', 'Heteroconger_luteolus', 'Heterotilapia_buettikoferi', 'Hippocampus_erectus', 'Hippocampus_reidi', 'Hippocampus_zosterae', 'Histrio_histrio', 'Holacanthus_bermudensis', 'Holacanthus_ciliaris', 'Holacanthus_tricolor', 'Holocentrus_adscensionis', 'Holocentrus_rufus', 'Hoplosternum_littorale', 'Hypleurochilus_bermudensis', 'Hypleurochilus_pseudoaequipinnis', 'Hypoplectrus_puella', 'Hypoplectrus_unicolor', 'Ictalurus_punctatus', 'Jordanella_floridae', 'Kyphosus_sectatrix', 'Kyphosus_vaigiensis', 'Labidesthes_vanhyningi', 'Labrisomus_conditus', 'Labrisomus_nuchipinnis', 'Lachnolaimus_maximus', 'Lactophrys_bicaudalis', 'Lactophrys_trigonus', 'Lactophrys_triqueter', 'Lagocephalus_laevigatus', 'Lagodon_rhomboides', 'Leiostomus_xanthurus', 'Lepisosteus_osseus', 'Lepisosteus_platyrhincus', 'Lepomis_auritus', 'Lepomis_gulosus', 'Lepomis_macrochirus', 'Lepomis_marginatus', 'Lepomis_microlophus', 'Lepomis_punctatus', 'Lepomis_solis', 'Leptolucania_ommata', 'Lobotes_surinamensis', 'Lophogobius_cyprinoides', 'Lucania_goodei', 'Lucania_parva', 'Lutjanus_analis', 'Lutjanus_apodus', 'Lutjanus_campechanus', 'Lutjanus_griseus', 'Lutjanus_jocu', 'Lutjanus_mahogoni', 'Lutjanus_synagris', 'Macrognathus_siamensis', 'Malacanthus_plumieri', 'Malacoctenus_macropus', 'Malacoctenus_triangulatus', 'Mayaheros_urophthalmus', 'Megalops_atlanticus', 'Menidia_beryllina', 'Menidia_peninsulae', 'Menticirrhus_americanus', 'Menticirrhus_littoralis', 'Menticirrhus_saxatilis', 'Microgobius_gulosus', 'Microphis_lineatus', 'Micropogonias_undulatus', 'Micropterus_nigricans', 'Micropterus_notius', 'Micropterus_salmoides', 'Microspathodon_chrysurus', 'Miniellus_longirostris', 'Minytrema_melanops', 'Misgurnus_anguillicaudatus', 'Monacanthus_ciliatus', 'Mugil_cephalus', 'Mugil_curema', 'Mulloidichthys_martinicus', 'Mycteroperca_bonaci', 'Mycteroperca_microlepis', 'Myrichthys_breviceps', 'Myrophis_punctatus', 'Neopomacentrus_cyanomos', 'Nes_longus', 'Nicholsina_usta', 'Nomeus_gronovii', 'Notemigonus_crysoleucas', 'Noturus_gyrinus', 'Noturus_leptacanthus', 'Ocyurus_chrysurus', 'Odontoscion_dentex', 'Ogcocephalus_cubifrons', 'Ogcocephalus_nasutus', 'Oligoplites_saurus', 'Ophichthus_gomesii', 'Opisthonema_oglinum', 'Opistognathus_aurifrons', 'Opistognathus_macrognathus', 'Opistognathus_robinsi', 'Opistognathus_whitehursti', 'Opsanus_beta', 'Opsanus_pardus', 'Opsanus_tau', 'Oreochromis_aureus', 'Oreochromis_niloticus', 'Orthopristis_chrysoptera', 'Parablennius_marmoreus', 'Parachromis_managuensis', 'Paraclinus_fasciatus', 'Paraclinus_marmoratus', 'Paralichthys_albigutta', 'Paralichthys_lethostigma', 'Pareques_acuminatus', 'Pelmatolapia_mariae', 'Pempheris_schomburgkii', 'Percina_nigrofasciata', 'Percina_westfalli', 'Piaractus_brachypomus', 'Poecilia_latipinna', 'Pogonias_cromis', 'Pomacanthus_arcuatus', 'Pomacanthus_paru', 'Pomatomus_saltatrix', 'Pomoxis_nigromaculatus', 'Priacanthus_arenatus', 'Prionotus_ophryas', 'Prionotus_rubio', 'Prionotus_scitulus', 'Prionotus_tribulus', 'Pseudupeneus_maculatus', 'Pterois_volitans', 'Pteronotropis_harperi', 'Pteronotropis_hypselopterus', 'Pteronotropis_metallicus', 'Pteronotropis_signipinnis', 'Rachycentron_canadum', 'Rhomboplites_aurorubens', 'Rocio_octofasciata', 'Rubricatochromis_letourneuxi', 'Sardinella_aurita', 'Sarotherodon_melanotheron', 'Scartella_cristata', 'Scarus_coelestinus', 'Scarus_coeruleus', 'Scarus_guacamaia', 'Scarus_iseri', 'Scarus_taeniopterus', 'Scarus_vetula', 'Sciaenops_ocellatus', 'Scomberomorus_cavalla', 'Scomberomorus_maculatus', 'Scomberomorus_regalis', 'Scorpaena_brasiliensis', 'Scorpaena_plumieri', 'Selene_vomer', 'Seriola_dumerili', 'Seriola_rivoliana', 'Seriola_zonata', 'Serraniculus_pumilio', 'Serranus_baldwini', 'Serranus_subligarius', 'Serranus_tigrinus', 'Sparisoma_aurofrenatum', 'Sparisoma_chrysopterum', 'Sparisoma_radians', 'Sparisoma_rubripinne', 'Sparisoma_viride', 'Sphoeroides_nephelus', 'Sphoeroides_spengleri', 'Sphoeroides_testudineus', 'Sphyraena_barracuda', 'Sphyraena_borealis', 'Stegastes_adustus', 'Stegastes_diencaeus', 'Stegastes_leucostictus', 'Stegastes_partitus', 'Stegastes_planifrons', 'Stegastes_xanthurus', 'Stephanolepis_hispida', 'Strongylura_marina', 'Strongylura_notata', 'Strongylura_timucu', 'Symphurus_plagiusa', 'Syngnathus_floridae', 'Syngnathus_louisianae', 'Syngnathus_scovelli', 'Synodus_foetens', 'Synodus_intermedius', 'Thalassoma_bifasciatum', 'Tigrigobius_macrodon', 'Trachinocephalus_myops', 'Trachinotus_carolinus', 'Trachinotus_falcatus', 'Trachinotus_goodei', 'Trichromis_salvini', 'Trinectes_maculatus', 'Tylosurus_crocodilus', 'Umbrina_coroides', 'Urophycis_floridana', 'Vieja_melanurus', 'Xiphophorus_hellerii', 'Xiphophorus_variatus', 'Xyrichtys_novacula', 'Xyrichtys_splendens']
+Train samples: 63221, Val samples: 7736
+Class balancing: WeightedRandomSampler (rare species oversampled)
+Wrote class index to C:\Users\cpoco\Thalamus\Thalamus\models_v4\mobilenetv4_hybrid_medium_448_light\classes.json
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Label smoothing: 0.1
+=== Stage 1: Training classifier head ===
+Stage 1 epoch 1/10 | batch 250/7902 | loss 8.1103 acc 0.0625
+Stage 1 epoch 1/10 | batch 500/7902 | loss 8.0070 acc 0.0938
+Stage 1 epoch 1/10 | batch 750/7902 | loss 7.9706 acc 0.1127
+Stage 1 epoch 1/10 | batch 1000/7902 | loss 7.8541 acc 0.1315
+Stage 1 epoch 1/10 | batch 1250/7902 | loss 7.7254 acc 0.1516
+Stage 1 epoch 1/10 | batch 1500/7902 | loss 7.6050 acc 0.1693
+Stage 1 epoch 1/10 | batch 1750/7902 | loss 7.5511 acc 0.1811
+Stage 1 epoch 1/10 | batch 2000/7902 | loss 7.5109 acc 0.1929
+Stage 1 epoch 1/10 | batch 2250/7902 | loss 7.4393 acc 0.2037
+Stage 1 epoch 1/10 | batch 2500/7902 | loss 7.4003 acc 0.2128
+Stage 1 epoch 1/10 | batch 2750/7902 | loss 7.3517 acc 0.2207
+Stage 1 epoch 1/10 | batch 3000/7902 | loss 7.3203 acc 0.2280
+Stage 1 epoch 1/10 | batch 3250/7902 | loss 7.2915 acc 0.2346
+Stage 1 epoch 1/10 | batch 3500/7902 | loss 7.2650 acc 0.2418
+Stage 1 epoch 1/10 | batch 3750/7902 | loss 7.2275 acc 0.2482
+Stage 1 epoch 1/10 | batch 4000/7902 | loss 7.2017 acc 0.2542
+Stage 1 epoch 1/10 | batch 4250/7902 | loss 7.1800 acc 0.2599
+Stage 1 epoch 1/10 | batch 4500/7902 | loss 7.1675 acc 0.2648
+Stage 1 epoch 1/10 | batch 4750/7902 | loss 7.1464 acc 0.2697
+Stage 1 epoch 1/10 | batch 5000/7902 | loss 7.1278 acc 0.2749
+Stage 1 epoch 1/10 | batch 5250/7902 | loss 7.1090 acc 0.2794
+Stage 1 epoch 1/10 | batch 5500/7902 | loss 7.0983 acc 0.2833
+Stage 1 epoch 1/10 | batch 5750/7902 | loss 7.0859 acc 0.2878
+Stage 1 epoch 1/10 | batch 6000/7902 | loss 7.0763 acc 0.2920
+Stage 1 epoch 1/10 | batch 6250/7902 | loss 7.0553 acc 0.2967
+Stage 1 epoch 1/10 | batch 6500/7902 | loss 7.0418 acc 0.3003
+Stage 1 epoch 1/10 | batch 6750/7902 | loss 7.0252 acc 0.3042
+Stage 1 epoch 1/10 | batch 7000/7902 | loss 7.0195 acc 0.3075
+Stage 1 epoch 1/10 | batch 7250/7902 | loss 7.0118 acc 0.3100
+Stage 1 epoch 1/10 | batch 7500/7902 | loss 7.0082 acc 0.3131
+Stage 1 epoch 1/10 | batch 7750/7902 | loss 6.9986 acc 0.3162
+Stage 1 epoch 1/10 | batch 7902/7902 | loss 6.9964 acc 0.3173
+Stage 1 validation 1/10 | batch 100/967
+Stage 1 validation 1/10 | batch 200/967
+Stage 1 validation 1/10 | batch 300/967
+Stage 1 validation 1/10 | batch 400/967
+Stage 1 validation 1/10 | batch 500/967
+Stage 1 validation 1/10 | batch 600/967
+Stage 1 validation 1/10 | batch 700/967
+Stage 1 validation 1/10 | batch 800/967
+Stage 1 validation 1/10 | batch 900/967
+Stage 1 validation 1/10 | batch 967/967
+Epoch 1/10 | Train Loss: 6.9964 Acc: 0.3173 | Val Loss: 6.8467 Acc: 0.2969
+Stage 1 epoch 2/10 | batch 250/7902 | loss 6.4792 acc 0.4315
+Stage 1 epoch 2/10 | batch 500/7902 | loss 6.5178 acc 0.4210
+Stage 1 epoch 2/10 | batch 750/7902 | loss 6.6079 acc 0.4252
+Stage 1 epoch 2/10 | batch 1000/7902 | loss 6.6286 acc 0.4281
+Stage 1 epoch 2/10 | batch 1250/7902 | loss 6.6291 acc 0.4252
+Stage 1 epoch 2/10 | batch 1500/7902 | loss 6.6176 acc 0.4259
+Stage 1 epoch 2/10 | batch 1750/7902 | loss 6.6102 acc 0.4275
+Stage 1 epoch 2/10 | batch 2000/7902 | loss 6.6027 acc 0.4286
+Stage 1 epoch 2/10 | batch 2250/7902 | loss 6.5999 acc 0.4308
+Stage 1 epoch 2/10 | batch 2500/7902 | loss 6.5952 acc 0.4307
+Stage 1 epoch 2/10 | batch 2750/7902 | loss 6.5942 acc 0.4317
+Stage 1 epoch 2/10 | batch 3000/7902 | loss 6.5985 acc 0.4330
+Stage 1 epoch 2/10 | batch 3250/7902 | loss 6.5939 acc 0.4343
+Stage 1 epoch 2/10 | batch 3500/7902 | loss 6.6044 acc 0.4351
+Stage 1 epoch 2/10 | batch 3750/7902 | loss 6.6084 acc 0.4354
+Stage 1 epoch 2/10 | batch 4000/7902 | loss 6.6130 acc 0.4354
+Stage 1 epoch 2/10 | batch 4250/7902 | loss 6.6076 acc 0.4361
+Stage 1 epoch 2/10 | batch 4500/7902 | loss 6.6205 acc 0.4359
+Stage 1 epoch 2/10 | batch 4750/7902 | loss 6.6090 acc 0.4374
+Stage 1 epoch 2/10 | batch 5000/7902 | loss 6.5989 acc 0.4395
+Stage 1 epoch 2/10 | batch 5250/7902 | loss 6.6042 acc 0.4399
+Stage 1 epoch 2/10 | batch 5500/7902 | loss 6.6064 acc 0.4405
+Stage 1 epoch 2/10 | batch 5750/7902 | loss 6.5900 acc 0.4425
+Stage 1 epoch 2/10 | batch 6000/7902 | loss 6.5967 acc 0.4429
+Stage 1 epoch 2/10 | batch 6250/7902 | loss 6.5893 acc 0.4444
+Stage 1 epoch 2/10 | batch 6500/7902 | loss 6.5910 acc 0.4449
+Stage 1 epoch 2/10 | batch 6750/7902 | loss 6.5982 acc 0.4459
+Stage 1 epoch 2/10 | batch 7000/7902 | loss 6.5977 acc 0.4471
+Stage 1 epoch 2/10 | batch 7250/7902 | loss 6.5946 acc 0.4486
+Stage 1 epoch 2/10 | batch 7500/7902 | loss 6.5936 acc 0.4495
+Stage 1 epoch 2/10 | batch 7750/7902 | loss 6.5905 acc 0.4509
+Stage 1 epoch 2/10 | batch 7902/7902 | loss 6.5925 acc 0.4509
+Stage 1 validation 2/10 | batch 100/967
+Stage 1 validation 2/10 | batch 200/967
+Stage 1 validation 2/10 | batch 300/967
+Stage 1 validation 2/10 | batch 400/967
+Stage 1 validation 2/10 | batch 500/967
+Stage 1 validation 2/10 | batch 600/967
+Stage 1 validation 2/10 | batch 700/967
+Stage 1 validation 2/10 | batch 800/967
+Stage 1 validation 2/10 | batch 900/967
+Stage 1 validation 2/10 | batch 967/967
+Epoch 2/10 | Train Loss: 6.5925 Acc: 0.4509 | Val Loss: 6.6460 Acc: 0.3401
+Stage 1 epoch 3/10 | batch 250/7902 | loss 6.6438 acc 0.4695
+Stage 1 epoch 3/10 | batch 500/7902 | loss 6.6995 acc 0.4700
+Stage 1 epoch 3/10 | batch 750/7902 | loss 6.5447 acc 0.4780
+Stage 1 epoch 3/10 | batch 1000/7902 | loss 6.5128 acc 0.4839
+Stage 1 epoch 3/10 | batch 1250/7902 | loss 6.5210 acc 0.4784
+Stage 1 epoch 3/10 | batch 1500/7902 | loss 6.4955 acc 0.4820
+Stage 1 epoch 3/10 | batch 1750/7902 | loss 6.5317 acc 0.4793
+Stage 1 epoch 3/10 | batch 2000/7902 | loss 6.5395 acc 0.4781
+Stage 1 epoch 3/10 | batch 2250/7902 | loss 6.5410 acc 0.4788
+Stage 1 epoch 3/10 | batch 2500/7902 | loss 6.5526 acc 0.4780
+Stage 1 epoch 3/10 | batch 2750/7902 | loss 6.5403 acc 0.4803
+Stage 1 epoch 3/10 | batch 3000/7902 | loss 6.5459 acc 0.4809
+Stage 1 epoch 3/10 | batch 3250/7902 | loss 6.5410 acc 0.4815
+Stage 1 epoch 3/10 | batch 3500/7902 | loss 6.5237 acc 0.4831
+Stage 1 epoch 3/10 | batch 3750/7902 | loss 6.5069 acc 0.4844
+Stage 1 epoch 3/10 | batch 4000/7902 | loss 6.5115 acc 0.4857
+Stage 1 epoch 3/10 | batch 4250/7902 | loss 6.4978 acc 0.4870
+Stage 1 epoch 3/10 | batch 4500/7902 | loss 6.5059 acc 0.4865
+Stage 1 epoch 3/10 | batch 4750/7902 | loss 6.5008 acc 0.4870
+Stage 1 epoch 3/10 | batch 5000/7902 | loss 6.5013 acc 0.4879
+Stage 1 epoch 3/10 | batch 5250/7902 | loss 6.5053 acc 0.4881
+Stage 1 epoch 3/10 | batch 5500/7902 | loss 6.5015 acc 0.4885
+Stage 1 epoch 3/10 | batch 5750/7902 | loss 6.5013 acc 0.4891
+Stage 1 epoch 3/10 | batch 6000/7902 | loss 6.5061 acc 0.4893
+Stage 1 epoch 3/10 | batch 6250/7902 | loss 6.5091 acc 0.4899
+Stage 1 epoch 3/10 | batch 6500/7902 | loss 6.5075 acc 0.4904
+Stage 1 epoch 3/10 | batch 6750/7902 | loss 6.5082 acc 0.4913
+Stage 1 epoch 3/10 | batch 7000/7902 | loss 6.5022 acc 0.4918
+Stage 1 epoch 3/10 | batch 7250/7902 | loss 6.5100 acc 0.4914
+Stage 1 epoch 3/10 | batch 7500/7902 | loss 6.5097 acc 0.4919
+Stage 1 epoch 3/10 | batch 7750/7902 | loss 6.5122 acc 0.4927
+Stage 1 epoch 3/10 | batch 7902/7902 | loss 6.5084 acc 0.4933
+Stage 1 validation 3/10 | batch 100/967
+Stage 1 validation 3/10 | batch 200/967
+Stage 1 validation 3/10 | batch 300/967
+Stage 1 validation 3/10 | batch 400/967
+Stage 1 validation 3/10 | batch 500/967
+Stage 1 validation 3/10 | batch 600/967
+Stage 1 validation 3/10 | batch 700/967
+Stage 1 validation 3/10 | batch 800/967
+Stage 1 validation 3/10 | batch 900/967
+Stage 1 validation 3/10 | batch 967/967
+Epoch 3/10 | Train Loss: 6.5084 Acc: 0.4933 | Val Loss: 6.3784 Acc: 0.3903
+Stage 1 epoch 4/10 | batch 250/7902 | loss 6.3883 acc 0.5305
+Stage 1 epoch 4/10 | batch 500/7902 | loss 6.5695 acc 0.5155
+Stage 1 epoch 4/10 | batch 750/7902 | loss 6.5954 acc 0.5112
+Stage 1 epoch 4/10 | batch 1000/7902 | loss 6.5177 acc 0.5132
+Stage 1 epoch 4/10 | batch 1250/7902 | loss 6.5022 acc 0.5130
+Stage 1 epoch 4/10 | batch 1500/7902 | loss 6.4792 acc 0.5133
+Stage 1 epoch 4/10 | batch 1750/7902 | loss 6.5228 acc 0.5104
+Stage 1 epoch 4/10 | batch 2000/7902 | loss 6.4879 acc 0.5118
+Stage 1 epoch 4/10 | batch 2250/7902 | loss 6.4598 acc 0.5146
+Stage 1 epoch 4/10 | batch 2500/7902 | loss 6.4654 acc 0.5138
+Stage 1 epoch 4/10 | batch 2750/7902 | loss 6.4467 acc 0.5159
+Stage 1 epoch 4/10 | batch 3000/7902 | loss 6.4394 acc 0.5183
+Stage 1 epoch 4/10 | batch 3250/7902 | loss 6.4296 acc 0.5163
+Stage 1 epoch 4/10 | batch 3500/7902 | loss 6.4401 acc 0.5163
+Stage 1 epoch 4/10 | batch 3750/7902 | loss 6.4467 acc 0.5156
+Stage 1 epoch 4/10 | batch 4000/7902 | loss 6.4565 acc 0.5158
+Stage 1 epoch 4/10 | batch 4250/7902 | loss 6.4487 acc 0.5168
+Stage 1 epoch 4/10 | batch 4500/7902 | loss 6.4503 acc 0.5174
+Stage 1 epoch 4/10 | batch 4750/7902 | loss 6.4501 acc 0.5183
+Stage 1 epoch 4/10 | batch 5000/7902 | loss 6.4536 acc 0.5184
+Stage 1 epoch 4/10 | batch 5250/7902 | loss 6.4671 acc 0.5184
+Stage 1 epoch 4/10 | batch 5500/7902 | loss 6.4760 acc 0.5179
+Stage 1 epoch 4/10 | batch 5750/7902 | loss 6.4709 acc 0.5182
+Stage 1 epoch 4/10 | batch 6000/7902 | loss 6.4635 acc 0.5189
+Stage 1 epoch 4/10 | batch 6250/7902 | loss 6.4647 acc 0.5188
+Stage 1 epoch 4/10 | batch 6500/7902 | loss 6.4622 acc 0.5191
+Stage 1 epoch 4/10 | batch 6750/7902 | loss 6.4635 acc 0.5194
+Stage 1 epoch 4/10 | batch 7000/7902 | loss 6.4593 acc 0.5200
+Stage 1 epoch 4/10 | batch 7250/7902 | loss 6.4590 acc 0.5203
+Stage 1 epoch 4/10 | batch 7500/7902 | loss 6.4528 acc 0.5208
+Stage 1 epoch 4/10 | batch 7750/7902 | loss 6.4570 acc 0.5212
+Stage 1 epoch 4/10 | batch 7902/7902 | loss 6.4527 acc 0.5222
+Stage 1 validation 4/10 | batch 100/967
+Stage 1 validation 4/10 | batch 200/967
+Stage 1 validation 4/10 | batch 300/967
+Stage 1 validation 4/10 | batch 400/967
+Stage 1 validation 4/10 | batch 500/967
+Stage 1 validation 4/10 | batch 600/967
+Stage 1 validation 4/10 | batch 700/967
+Stage 1 validation 4/10 | batch 800/967
+Stage 1 validation 4/10 | batch 900/967
+Stage 1 validation 4/10 | batch 967/967
+Epoch 4/10 | Train Loss: 6.4527 Acc: 0.5222 | Val Loss: 6.5280 Acc: 0.3855
+Stage 1 epoch 5/10 | batch 250/7902 | loss 6.4999 acc 0.5170
+Stage 1 epoch 5/10 | batch 500/7902 | loss 6.5315 acc 0.5230
+Stage 1 epoch 5/10 | batch 750/7902 | loss 6.4784 acc 0.5322
+Stage 1 epoch 5/10 | batch 1000/7902 | loss 6.4667 acc 0.5292
+Stage 1 epoch 5/10 | batch 1250/7902 | loss 6.4341 acc 0.5333
+Stage 1 epoch 5/10 | batch 1500/7902 | loss 6.4367 acc 0.5340
+Stage 1 epoch 5/10 | batch 1750/7902 | loss 6.4271 acc 0.5348
+Stage 1 epoch 5/10 | batch 2000/7902 | loss 6.4071 acc 0.5364
+Stage 1 epoch 5/10 | batch 2250/7902 | loss 6.4075 acc 0.5353
+Stage 1 epoch 5/10 | batch 2500/7902 | loss 6.4342 acc 0.5343
+Stage 1 epoch 5/10 | batch 2750/7902 | loss 6.4343 acc 0.5349
+Stage 1 epoch 5/10 | batch 3000/7902 | loss 6.4235 acc 0.5355
+Stage 1 epoch 5/10 | batch 3250/7902 | loss 6.4042 acc 0.5376
+Stage 1 epoch 5/10 | batch 3500/7902 | loss 6.3974 acc 0.5384
+Stage 1 epoch 5/10 | batch 3750/7902 | loss 6.4060 acc 0.5387
+Stage 1 epoch 5/10 | batch 4000/7902 | loss 6.4030 acc 0.5384
+Stage 1 epoch 5/10 | batch 4250/7902 | loss 6.4143 acc 0.5373
+Stage 1 epoch 5/10 | batch 4500/7902 | loss 6.4026 acc 0.5383
+Stage 1 epoch 5/10 | batch 4750/7902 | loss 6.4165 acc 0.5371
+Stage 1 epoch 5/10 | batch 5000/7902 | loss 6.4227 acc 0.5370
+Stage 1 epoch 5/10 | batch 5250/7902 | loss 6.4285 acc 0.5370
+Stage 1 epoch 5/10 | batch 5500/7902 | loss 6.4132 acc 0.5385
+Stage 1 epoch 5/10 | batch 5750/7902 | loss 6.4056 acc 0.5391
+Stage 1 epoch 5/10 | batch 6000/7902 | loss 6.4034 acc 0.5393
+Stage 1 epoch 5/10 | batch 6250/7902 | loss 6.4039 acc 0.5399
+Stage 1 epoch 5/10 | batch 6500/7902 | loss 6.3943 acc 0.5399
+Stage 1 epoch 5/10 | batch 6750/7902 | loss 6.3960 acc 0.5396
+Stage 1 epoch 5/10 | batch 7000/7902 | loss 6.3959 acc 0.5398
+Stage 1 epoch 5/10 | batch 7250/7902 | loss 6.4000 acc 0.5395
+Stage 1 epoch 5/10 | batch 7500/7902 | loss 6.3989 acc 0.5389
+Stage 1 epoch 5/10 | batch 7750/7902 | loss 6.3990 acc 0.5391
+Stage 1 epoch 5/10 | batch 7902/7902 | loss 6.3989 acc 0.5394
+Stage 1 validation 5/10 | batch 100/967
+Stage 1 validation 5/10 | batch 200/967
+Stage 1 validation 5/10 | batch 300/967
+Stage 1 validation 5/10 | batch 400/967
+Stage 1 validation 5/10 | batch 500/967
+Stage 1 validation 5/10 | batch 600/967
+Stage 1 validation 5/10 | batch 700/967
+Stage 1 validation 5/10 | batch 800/967
+Stage 1 validation 5/10 | batch 900/967
+Stage 1 validation 5/10 | batch 967/967
+Epoch 5/10 | Train Loss: 6.3989 Acc: 0.5394 | Val Loss: 6.9675 Acc: 0.3749
+Stage 1 epoch 6/10 | batch 250/7902 | loss 6.4355 acc 0.5430
+Stage 1 epoch 6/10 | batch 500/7902 | loss 6.3500 acc 0.5450
+Stage 1 epoch 6/10 | batch 750/7902 | loss 6.2954 acc 0.5488
+Stage 1 epoch 6/10 | batch 1000/7902 | loss 6.3123 acc 0.5467
+Stage 1 epoch 6/10 | batch 1250/7902 | loss 6.3257 acc 0.5478
+Stage 1 epoch 6/10 | batch 1500/7902 | loss 6.3456 acc 0.5478
+Stage 1 epoch 6/10 | batch 1750/7902 | loss 6.3435 acc 0.5486
+Stage 1 epoch 6/10 | batch 2000/7902 | loss 6.3561 acc 0.5498
+Stage 1 epoch 6/10 | batch 2250/7902 | loss 6.3363 acc 0.5494
+Stage 1 epoch 6/10 | batch 2500/7902 | loss 6.3261 acc 0.5500
+Stage 1 epoch 6/10 | batch 2750/7902 | loss 6.3360 acc 0.5505
+Stage 1 epoch 6/10 | batch 3000/7902 | loss 6.3497 acc 0.5479
+Stage 1 epoch 6/10 | batch 3250/7902 | loss 6.3593 acc 0.5482
+Stage 1 epoch 6/10 | batch 3500/7902 | loss 6.3625 acc 0.5481
+Stage 1 epoch 6/10 | batch 3750/7902 | loss 6.3570 acc 0.5489
+Stage 1 epoch 6/10 | batch 4000/7902 | loss 6.3537 acc 0.5496
+Stage 1 epoch 6/10 | batch 4250/7902 | loss 6.3617 acc 0.5492
+Stage 1 epoch 6/10 | batch 4500/7902 | loss 6.3555 acc 0.5499
+Stage 1 epoch 6/10 | batch 4750/7902 | loss 6.3523 acc 0.5496
+Stage 1 epoch 6/10 | batch 5000/7902 | loss 6.3435 acc 0.5504
+Stage 1 epoch 6/10 | batch 5250/7902 | loss 6.3563 acc 0.5499
+Stage 1 epoch 6/10 | batch 5500/7902 | loss 6.3665 acc 0.5500
+Stage 1 epoch 6/10 | batch 5750/7902 | loss 6.3705 acc 0.5505
+Stage 1 epoch 6/10 | batch 6000/7902 | loss 6.3795 acc 0.5504
+Stage 1 epoch 6/10 | batch 6250/7902 | loss 6.3756 acc 0.5509
+Stage 1 epoch 6/10 | batch 6500/7902 | loss 6.3762 acc 0.5510
+Stage 1 epoch 6/10 | batch 6750/7902 | loss 6.3735 acc 0.5512
+Stage 1 epoch 6/10 | batch 7000/7902 | loss 6.3701 acc 0.5516
+Stage 1 epoch 6/10 | batch 7250/7902 | loss 6.3693 acc 0.5515
+Stage 1 epoch 6/10 | batch 7500/7902 | loss 6.3770 acc 0.5509
+Stage 1 epoch 6/10 | batch 7750/7902 | loss 6.3723 acc 0.5514
+Stage 1 epoch 6/10 | batch 7902/7902 | loss 6.3677 acc 0.5515
+Stage 1 validation 6/10 | batch 100/967
+Stage 1 validation 6/10 | batch 200/967
+Stage 1 validation 6/10 | batch 300/967
+Stage 1 validation 6/10 | batch 400/967
+Stage 1 validation 6/10 | batch 500/967
+Stage 1 validation 6/10 | batch 600/967
+Stage 1 validation 6/10 | batch 700/967
+Stage 1 validation 6/10 | batch 800/967
+Stage 1 validation 6/10 | batch 900/967
+Stage 1 validation 6/10 | batch 967/967
+Epoch 6/10 | Train Loss: 6.3677 Acc: 0.5515 | Val Loss: 6.8893 Acc: 0.3921
+Stage 1 epoch 7/10 | batch 250/7902 | loss 6.3164 acc 0.5720
+Stage 1 epoch 7/10 | batch 500/7902 | loss 6.3031 acc 0.5665
+Stage 1 epoch 7/10 | batch 750/7902 | loss 6.3710 acc 0.5558
+Stage 1 epoch 7/10 | batch 1000/7902 | loss 6.3597 acc 0.5605
+Stage 1 epoch 7/10 | batch 1250/7902 | loss 6.3409 acc 0.5640
+Stage 1 epoch 7/10 | batch 1500/7902 | loss 6.3754 acc 0.5633
+Stage 1 epoch 7/10 | batch 1750/7902 | loss 6.3687 acc 0.5631
+Stage 1 epoch 7/10 | batch 2000/7902 | loss 6.3512 acc 0.5644

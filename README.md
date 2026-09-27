@@ -27,38 +27,66 @@ carry that weight.
 ```
 .
 ├── app/              Flutter app that runs the TFLite model (placeholder)
-├── configs/          Training configurations — default.yaml, mobilenetv4.yaml
+├── configs/          Training configurations (classifier + YOLO detector)
 ├── data/             Datasets (gitignored; see data/README.md for the layout)
 ├── export/           ONNX -> TFLite conversion for the phone app
-├── models/           Checkpoints and exported graphs (gitignored)
+├── models/           MobileNetV3 checkpoints and exported graphs (gitignored)
+├── models_v4/        MobileNetV4 / comparison-run outputs (gitignored)
 ├── notebooks/        Colab-friendly training notebook
-├── scripts/          Training, splitting and image-preparation utilities
+├── scripts/          Data collection, prep, training, and detector utilities
 └── tests/            Loader and export tests, run by CI
 ```
 
+The `scripts/` utilities, in the order a full run uses them:
+
+| script | purpose |
+|---|---|
+| `download_florida_fish.py` | Build the dataset from the iNaturalist Open Dataset — filter to Florida ray-finned fish (bounding box + research-grade + species rank) and download the photos, with unsigned boto3 (no AWS CLI). |
+| `cap_species.py` | Down-select an on-disk dataset to per-species min/max caps (by whole observation, to preserve leakage protection). No re-download. |
+| `prepare_images.py` | Audit and standardise images: drop corrupt files, cap size, normalise formats. |
+| `split_data.py` | Stratified, reproducible, group-aware 80/10/10 train/val/test split. |
+| `fish_classifier_train.py` | Two-stage transfer-learning trainer with the full regularisation stack; exports ONNX and runs held-out test evaluation. |
+| `run_448_sweep.py` | Train several backbone configs sequentially for an apples-to-apples comparison. |
+| `benchmark_backbones.py` | Compare backbone size/latency/quantisation-friendliness. |
+| `autolabel_fish.py` | Bootstrap single-class "fish" bounding boxes for the detector (YOLO-World prompted with "fish", whole-image fallback). |
+| `yolo_train.py` | Train the single-class fish detector (Ultralytics YOLO). |
+| `export/export_tflite.py` | Convert the exported ONNX classifier to TFLite for the app. |
+
 ## The pipeline, end to end
 
-Every route through this repo is the same five steps. Nothing is optional except
-where noted, and each step's output is the next step's input:
+Each step's output is the next step's input. The first two steps are only needed
+if you are building the dataset from iNaturalist; bring your own images and you
+start at prepare:
 
 ```
+  (optional) scripts/download_florida_fish.py    build from iNaturalist Open Dataset
+      v
   raw images                  one folder per species, any size or format
       |
-      |  scripts/prepare_images.py --source raw --output raw_prepared
+      |  (optional) scripts/cap_species.py        min/max per species, by observation
+      v
+      |  scripts/prepare_images.py --source raw --output raw_prepared --max-size 1024
       v
   cleaned images              corrupt files removed, sizes capped, formats normalised
       |
-      |  scripts/split_data.py --source raw_prepared --output data
+      |  scripts/split_data.py --source raw_prepared --output data --group-regex '^([0-9a-f-]{36})_'
       v
   data/{train,val,test}/      what the training script reads
       |
-      |  scripts/fish_classifier_train.py
+      |  scripts/fish_classifier_train.py --config configs/<name>.yaml
       v
-  models/                     checkpoints + fish_classifier.onnx + classes.json
+  models_v4/<run>/            checkpoints + fish_classifier.onnx + classes.json + test_metrics.json
       |
       |  export/export_tflite.py
       v
   export/output/              .tflite + classes.json for the Flutter app
+```
+
+A separate, optional track builds a **fish detector** that crops fish out of a
+busy frame before the classifier runs (see [Fish detector](#fish-detector-optional)):
+
+```
+  raw images -> scripts/autolabel_fish.py -> YOLO dataset -> scripts/yolo_train.py -> best.pt
 ```
 
 The step people skip is the split. Training reads `data/train` and `data/val` —
@@ -126,6 +154,37 @@ class-consistency rules, and — importantly — **how to split your data withou
 leaking near-duplicate frames between train and val**. Read that section before
 you trust any accuracy number.
 
+### Building the dataset from iNaturalist
+
+You can bring your own images, or build a Florida fish dataset from the
+[iNaturalist Open Dataset](https://github.com/inaturalist/inaturalist-open-data):
+
+```bash
+pip install duckdb pandas boto3
+python scripts/download_florida_fish.py --data-root D:/Thalamus/data
+```
+
+This downloads the iNaturalist metadata and photos with unsigned boto3 (no AWS
+CLI needed), filters to ray-finned fish (Actinopterygii) inside a Florida
+bounding box, research-grade only, at species rank, and writes one folder per
+species with filenames `<observation_uuid>_<photo_id>.<ext>`. The observation
+UUID in the filename is what the split later groups on. By default it downloads
+every matching photo (no caps); `--min-per-species` / `--max-per-species` cap it
+at download time. `--help` for the bounding box, size and worker options.
+
+Downloading everything gives a large, heavily imbalanced set with a long tail of
+rare species. To rebalance without re-downloading, cap an on-disk copy:
+
+```bash
+# keep species with >=50 images, cap the rest at ~300, by whole observation
+python scripts/cap_species.py --source D:/Thalamus/data/raw_florida_fish \
+    --output D:/Thalamus/data/raw_capped --min-images 50 --max-images 300
+```
+
+Capping by **whole observation** (not individual photo) keeps an observation's
+near-duplicate frames together so the group-aware split still protects against
+leakage. `--dry-run` previews which species are kept or dropped.
+
 If your images start as one flat folder per species with no split:
 
 ```bash
@@ -166,16 +225,22 @@ trains as-is. Two knobs matter:
   Then produce a cleaned copy, leaving your originals untouched:
 
   ```bash
-  python scripts/prepare_images.py --source data --output data_prepared --max-size 640
+  python scripts/prepare_images.py --source data --output data_prepared --max-size 1024
   python scripts/fish_classifier_train.py --data-dir data_prepared
   ```
 
-  That caps the longest side at 640px while preserving aspect ratio, never
-  upscales, converts grayscale and RGBA to RGB, and re-encodes every format —
-  including ones the loader cannot read, such as `.tif` — to lowercase `.jpg`.
-  On a real dataset this typically cuts tens of gigabytes to a fraction of that
-  and removes the per-epoch cost of decoding full-resolution photographs down to
-  224×224.
+  That caps the longest side while preserving aspect ratio, never upscales,
+  converts grayscale and RGBA to RGB, and re-encodes every format — including
+  ones the loader cannot read, such as `.tif` — to lowercase `.jpg`. On a real
+  dataset this cuts the per-epoch cost of decoding full-resolution photographs.
+
+  **Set `--max-size` for the resolution you will train at.** It caps the
+  *longest* side, and fish photos are often ~4:3, so a cap of N leaves a shortest
+  side of only ~0.75·N. Training at 448 with centre-crop needs a ~512px short
+  side plus headroom for random-crop zoom, so `--max-size 640` is too small and
+  throws away resolution — use **1024** for 448 training (or ~768 if you will
+  never train above 224). Undersized sources are upscaled to the model input and
+  stay soft, which negates the point of a higher resolution.
 
 ## Training
 
@@ -195,20 +260,139 @@ python scripts/fish_classifier_train.py \
 ```
 
 `--help` lists every override. To try a different backbone or resolution, copy
-`configs/default.yaml` to a new file and pass `--config` — that keeps the
-defaults as a known-good baseline.
+an existing config to a new file and pass `--config` — that keeps the shipped
+ones as known-good baselines.
 
-### Choosing a backbone
+### Configs
 
-Two configs ship. `configs/default.yaml` uses `mobilenetv3_small_100`, inherited
-from the original prototype. `configs/mobilenetv4.yaml` uses
-`mobilenetv4_conv_small`, and writes to its own checkpoint filenames so the two
-can be trained and compared side by side:
+| config | backbone | img | recipe |
+|---|---|---|---|
+| `default.yaml` | mobilenetv3_small_100 | 224 | baseline (no extra regularisation) |
+| `mobilenetv4.yaml` | mobilenetv4_conv_small | 224 | baseline |
+| `mobilenetv4_light224.yaml` | mobilenetv4_hybrid_medium | 224 | **light** stack |
+| `mobilenetv4_tuned.yaml` | mobilenetv4_hybrid_medium | 224 | **full** stack |
+| `mobilenetv4_448.yaml` | mobilenetv4_hybrid_medium | 448 | full stack |
+| `mobilenetv3_small_448.yaml` | mobilenetv3_small_100 | 448 | light |
+| `mobilenetv4_conv_small_448.yaml` | mobilenetv4_conv_small | 448 | light |
+| `mobilenetv4_conv_medium_448.yaml` | mobilenetv4_conv_medium | 448 | light |
+| `mobilenetv4_hybrid_medium_448_light.yaml` | mobilenetv4_hybrid_medium | 448 | light |
+
+The `_448` configs are an apples-to-apples comparison set: identical light recipe
+and data, varying only the backbone. Run them back to back with the sequential
+sweep (one at a time, so they share the single GPU rather than fight over its
+memory):
 
 ```bash
-python scripts/fish_classifier_train.py --config configs/default.yaml
-python scripts/fish_classifier_train.py --config configs/mobilenetv4.yaml
+python scripts/run_448_sweep.py --data-dir D:/Thalamus/data/split_capped
 ```
+
+### Regularisation stack
+
+The trainer reads several optional, config-gated regularisers. All default off,
+so a config without them reproduces the plain baseline. They exist because the
+first real run overfit badly (train ~96%, val ~73%, val loss rising):
+
+- **`augmentation.random_resized_crop`** — a different random crop/zoom each
+  epoch instead of the same fixed framing; the strongest single lever.
+  `rrc_scale` sets how much of the image the crop keeps.
+- **`augmentation.coarse_dropout`** — masks small patches so no one region
+  carries the prediction.
+- **`augmentation.val_center_crop`** — resize-then-centre-crop for
+  validation/inference, the standard partner to random-resized-crop.
+  **This must be mirrored in the app's preprocessing.**
+- **`label_smoothing`** — softens one-hot targets; counters the overconfident
+  logits behind a rising val loss.
+- **`weight_decay`** — AdamW weight decay in stage 2.
+- **`balanced_sampler`** — a `WeightedRandomSampler` that oversamples rare
+  species so batches are roughly class-balanced.
+- **`mixup`** — MixUp/CutMix label mixing in stage 2 (with a mixup-aware loss).
+  When on, the reported *train* accuracy is approximate (prints `acc~`) because
+  labels are mixed — judge on validation accuracy.
+
+**Add levers one at a time.** Turning the whole stack on at once — MixUp + CutMix
++ CoarseDropout + aggressive crop + smoothing — swung the model straight from
+overfitting into severe **underfitting** (stage-2 accuracy collapsed and barely
+recovered). The "light" recipe (smoothing + gentle crop + weighted sampler, no
+MixUp/CoarseDropout) is the one that trains cleanly; escalate from there only if
+a run overfits again.
+
+### Held-out test evaluation
+
+After training and export, the script evaluates the exported best checkpoint on
+the `test/` split and writes `test_metrics.json` next to the model. It reports
+**top-1, top-5, and macro (per-class) accuracy** — top-5 is what an ID app's
+shortlist delivers, and macro reveals whether rare species are actually being
+identified rather than averaged away. With no `test/` split it skips cleanly.
+
+### Results so far (380-species capped Florida set)
+
+Honest held-out test numbers, light recipe unless noted:
+
+| run | backbone | img | top-1 | top-5 | macro | phone-clean? |
+|---|---|---|---|---|---|---|
+| `mobilenetv4_hybrid_medium_448_light` | hybrid_medium | 448 | **0.758** | **0.904** | **0.757** | attention blocks |
+| `mobilenetv4_conv_medium_448` | conv_medium | 448 | 0.739 | 0.886 | 0.739 | ✅ plain conv |
+| `mobilenetv4_hybrid_medium_light224` | hybrid_medium | 224 | 0.662 | 0.848 | 0.661 | attention blocks |
+| `mobilenetv4_conv_small_448` | conv_small | 448 | 0.661 | 0.833 | 0.659 | ✅ plain conv |
+| `mobilenetv3_small_448` | mobilenetv3_small | 448 | 0.636 | 0.822 | 0.634 | ✅ plain conv |
+| `mobilenetv4_conv_medium_448_mixup` | conv_medium | 448 | 0.678 | 0.848 | 0.678 | ✅ plain conv |
+| `mobilenetv4_hybrid_medium_448_mixup` | hybrid_medium | 448 | 0.618 | 0.821 | 0.636 | attention blocks |
+
+Findings:
+
+- **Capacity dominates resolution.** At 448, top-1 climbs monotonically with
+  backbone size: 0.636 → 0.661 → 0.739 → 0.758. Doubling resolution on the small
+  backbones barely beats a bigger backbone at 224; the medium backbones are the
+  real contenders.
+- **hybrid @ 448 is the accuracy ceiling (0.758 / 0.904)** but carries Mobile MQA
+  attention blocks that may quantize badly or fall off the TFLite delegate. It
+  beats **conv_medium @ 448 (0.739 / 0.886)** by only ~1.9 pts — and conv_medium
+  is plain convolutions, so it quantizes cleanly. **conv_medium @ 448 is the
+  shipping recommendation; hybrid is the ceiling reference.**
+- **macro ≈ top-1 in every run** — the weighted sampler works, rare species are
+  not dead.
+- **MixUp (α 0.1) made both models worse, not better** — conv_medium −6.1 pts
+  (0.739 → 0.678), hybrid −14.0 pts (0.758 → 0.618). Despite the ~18 pt
+  train/test gap, there was no regularisation headroom: the gap reflects **data
+  quantity** (~300 images/species, many near the 50 floor), not under-
+  regularisation, and stacking MixUp on top of the existing label smoothing
+  pushed into under-confidence. The bigger model was hurt more, consistent with
+  the constraint being data rather than overfitting. **The next lever is more
+  data per species, not more regularisation.** The light recipe is at this
+  dataset's ceiling.
+
+(Do not compare these against the older ~0.73 *validation* figure from an earlier
+different split — these are held-out test numbers.)
+
+### Detect → crop → classify (in progress)
+
+**What we are trying:** the classifier trains on whole iNaturalist frames, where
+the fish often occupies a fraction of the image and the discriminative detail
+(fins, spots, lateral line) is only a few pixels wide. This experiment crops each
+image to the fish first — using the trained **YOLO11-nano** fish detector
+(`runs/detect/fish_detector/weights/best.pt`) — so the fish fills more of the
+448px input. On fine-grained tasks this can beat pure tuning, and it is the main
+accuracy lever left after regularisation was shown to be exhausted (see above).
+
+**Pipeline:** `scripts/crop_dataset.py` runs the detector over `split_capped`
+and writes a parallel `split_capped_cropped/{train,val,test}/<species>/` dataset,
+using a confidence gate + size floor + padding, and **falling back to the whole
+image** when no confident box is found (so a missed detection never crops the
+fish away). Training configs `mobilenetv4_conv_medium_448_cropped.yaml` and
+`mobilenetv4_hybrid_medium_448_cropped.yaml` are identical to their whole-frame
+light baselines except they point at the cropped data — so the only variable is
+cropped vs. whole-frame. Baselines to beat: conv_medium 0.739, hybrid 0.758.
+
+**This commits the deploy contract to detect → crop → classify:** the app must
+run the same YOLO11-nano detector and the same crop/pad/fallback before the
+classifier, or training and serving diverge. That is a second on-device model
+(~5 MB) and extra latency, to be measured in the packaging/inference-time phase.
+
+**Reverting to whole-frame:** nothing here is destructive — the whole-frame
+dataset (`split_capped`), configs (`mobilenetv4_conv_medium_448.yaml`,
+`mobilenetv4_hybrid_medium_448_light.yaml`) and results (0.739 / 0.758) are all
+untouched. To go back, simply train/ship those and drop the detector from the
+runtime; no re-cropping or re-download needed.
 
 Compare candidates on the numbers that matter for on-device use:
 
@@ -247,8 +431,12 @@ The trade-offs:
   attention blocks, the ops most likely to fall off a TFLite delegate onto CPU
   or to quantize badly. The conv variants are plain convolutions.
 
-The default is still MobileNetV3 because nothing has been compared on real fish
-images yet. Once it has, switch `model_name` in `configs/default.yaml`.
+`configs/default.yaml` still names MobileNetV3 for backward compatibility, but
+the real comparison now runs on fish images — see [Configs](#configs) and
+[Results so far](#results-so-far-380-species-capped-florida-set). Hybrid-medium
+leads on accuracy but carries the attention blocks flagged above; the conv
+variants are the phone-shippable candidates. The comparison across backbones and
+resolutions is still in progress.
 
 Training runs in two stages:
 
@@ -306,6 +494,34 @@ Flutter side has to match — channel order, normalisation constants, tensor
 layout — plus the confidence-thresholding behaviour the app needs so it can
 decline to guess.
 
+## Fish detector (optional)
+
+A separate, single-class **"fish" detector** locates and crops the fish out of a
+busy frame before the classifier identifies it — a two-stage pipeline where the
+detector answers *where* and the classifier answers *which species*. It reuses
+the classifier's images and needs no per-species bounding boxes.
+
+```bash
+pip install ultralytics
+
+# 1. bootstrap boxes: an open-vocabulary detector prompted with "fish" proposes
+#    a box per image, falling back to a whole-image box for single-fish photos.
+python scripts/autolabel_fish.py --source D:/Thalamus/data/raw_prepared \
+    --output D:/Thalamus/data/yolo_fish --limit 10000
+
+# 2. point configs/yolo_fish.yaml 'path:' at that dataset, then train:
+python scripts/yolo_train.py
+```
+
+`yolo_train.py` trains an Ultralytics nano detector with underwater-tuned
+augmentation (raised HSV jitter for the colour cast, horizontal flips only,
+`close_mosaic` for tighter final boxes) and `--workers 0` by default — Windows
+spawn-based DataLoader workers can crash the run, the same reason the sweep
+disables them. Weights land in `runs/detect/<name>/weights/best.pt`. A first run
+on ~10k bootstrapped labels reached mAP50 ≈ 0.88 / mAP50-95 ≈ 0.78, which is
+already usable for cropping; spot-check the boxes and hand-fix busy multi-fish
+frames before trusting the labels wholesale.
+
 ## Tests
 
 ```bash
@@ -344,15 +560,11 @@ network access and no dataset.
 These are design gaps rather than defects, and each needs a decision or data
 rather than a fix:
 
-- **Validation doubles as test.** Checkpoints are selected on the validation
-  split and its accuracy is reported as the final number, which biases that
-  number upward. The `test/` split exists for an honest estimate but nothing
-  reads it yet.
-- **No class-imbalance handling.** Unweighted cross-entropy plus accuracy-based
-  checkpoint selection favours common species, and there are no per-class
-  metrics to reveal it. `prepare_images.py` reports the imbalance ratio so at
-  least you can see it. Fixing it properly means class weighting or a balanced
-  sampler, plus macro-F1 as the checkpoint criterion.
+- **Checkpoints are still selected on validation top-1.** The held-out `test/`
+  split is now evaluated at the end (top-1/top-5/macro in `test_metrics.json`),
+  so the reported number is honest — but *checkpoint selection* during training
+  still uses validation top-1, not macro. For the imbalanced case, selecting on
+  macro (or macro-F1) would better serve rare species.
 - **No open-set handling.** The classifier must pick one of its known species,
   so debris, kelp and untrained species get confidently misclassified. The app
   needs a calibrated confidence threshold — see [app/README.md](app/README.md).
@@ -362,8 +574,14 @@ rather than a fix:
 
 ### Fixed
 
-Previously documented defects, now corrected and covered by tests:
+Previously documented defects, now corrected:
 
+- **Held-out test evaluation exists.** The `test/` split is scored at the end of
+  training (top-1/top-5/macro, written to `test_metrics.json`), so the reported
+  number is no longer the validation figure the model was tuned against.
+- **Class imbalance is handled.** A `balanced_sampler` oversamples rare species,
+  and macro (per-class) accuracy is reported so their performance is visible
+  rather than averaged away.
 - Export no longer fails when fine-tuning does not improve on the head-only
   model — stage 1's checkpoint is promoted, since in that case it genuinely is
   the best model.

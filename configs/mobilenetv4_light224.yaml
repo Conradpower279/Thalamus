@@ -1,0 +1,73 @@
+# MobileNetV4-Hybrid-Medium, 224px, LIGHT regularisation.
+#
+# Why this exists: the full-stack configs (mobilenetv4_tuned / _448) turned on
+# every regulariser at once - RandomResizedCrop(0.5-1.0) + CoarseDropout +
+# label smoothing + MixUp + CutMix + weighted sampler - and the model UNDERFIT
+# badly. On the 380-class split, stage-1 train loss stuck near ln(380) ~= 5.94
+# (i.e. barely above random) and stage-2 collapsed to ~1% accuracy and crawled.
+# Too much label/image noise to bootstrap a cold model.
+#
+# This config isolates variables: establish a working baseline at 224px with
+# only the *cheap, safe* regularisers, confirm it learns, THEN add stronger
+# levers (MixUp/CutMix, heavier crop) one at a time in follow-up configs.
+#
+#     python scripts/fish_classifier_train.py --config configs/mobilenetv4_light224.yaml \
+#         --data-dir D:\Thalamus\data\split_capped
+#
+# What changed vs mobilenetv4_tuned.yaml:
+#   - MixUp/CutMix OFF (alpha 0) - the main cause of the stage-2 collapse.
+#   - CoarseDropout OFF - removed from stage-1, where it hurt head fitting.
+#   - rrc_scale 0.65-1.0 (was 0.5-1.0) - gentler crop so the whole fish is
+#     usually visible; 0.5 was cropping away too much for a cold start.
+#   - Kept: label smoothing 0.1, weighted sampler, weight decay 0.05,
+#     val_center_crop (cheap, and not implicated in the underfitting).
+
+# ---- Model ----
+model_name: mobilenetv4_hybrid_medium
+
+num_classes: null
+
+img_size: 224
+resize_mode: stretch
+
+# ---- Data ----
+data_dir: data
+num_workers: 2
+
+# ---- Optimisation ----
+batch_size: 16
+seed: 42
+
+lr_head: 0.001
+epochs_head: 15
+
+lr_finetune: 0.0001
+epochs_finetune: 20
+
+progressive_unfreeze: true
+
+# ---- Regularisation (light) ----
+label_smoothing: 0.1
+weight_decay: 0.05
+balanced_sampler: true
+
+augmentation:
+  random_resized_crop: true
+  rrc_scale: [0.65, 1.0]        # gentler than the full-stack 0.5
+  coarse_dropout: false         # OFF for the baseline pass
+  val_center_crop: true         # MIRROR THIS IN THE APP'S PREPROCESSING
+
+# MixUp/CutMix OFF for this baseline. Re-enable (alpha ~0.1 first) only if this
+# run overfits (train acc >> val acc again).
+mixup:
+  alpha: 0.0
+  mixup: false
+  cutmix: false
+
+# ---- Output ----
+output_dir: models_v4/mobilenetv4_hybrid_medium_light224
+stage1_checkpoint: best_model_stage1.pth
+final_checkpoint: best_model_final.pth
+onnx_filename: fish_classifier.onnx
+
+onnx_opset: 18

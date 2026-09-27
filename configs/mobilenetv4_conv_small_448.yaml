@@ -1,0 +1,67 @@
+# MobileNetV4-Conv-Small at 448px, LIGHT recipe.
+#
+# Part of the 448px backbone COMPARISON set - identical to
+# mobilenetv3_small_448.yaml except model_name, output_dir and batch_size, so the
+# only variable across the set is the backbone. Compare test_metrics.json
+# (top-1 / top-5 / macro) across runs.
+#
+#     python scripts/fish_classifier_train.py --config configs/mobilenetv4_conv_small_448.yaml \
+#         --data-dir D:\Thalamus\data\split_capped
+#
+# Recipe is the LIGHT one that learned (see mobilenetv4_light224). Full stack
+# underfit, so MixUp/CutMix and CoarseDropout stay OFF - see the 'classifier
+# over-regularization' note.
+#
+# BACKBONE NOTE: mobilenetv4_conv_small (~2.5M params) has no attention or
+# squeeze-excite blocks, so it converts cleanly to TFLite - a strong phone
+# candidate. Slightly larger than v3_small; expect a modest step up in accuracy.
+
+# ---- Model ----
+model_name: mobilenetv4_conv_small
+
+num_classes: null
+
+img_size: 448
+resize_mode: stretch
+
+# ---- Data ----
+data_dir: data
+num_workers: 2
+
+# ---- Optimisation ----
+# Conv-small is light; 16 fits the 4GB GPU at 448 (as v3_small did). Drop to 8
+# if the first epoch OOMs.
+batch_size: 16
+seed: 42
+
+lr_head: 0.001
+epochs_head: 10
+
+lr_finetune: 0.0001
+epochs_finetune: 20
+
+progressive_unfreeze: true
+
+# ---- Regularisation (light - the recipe that learned) ----
+label_smoothing: 0.1
+weight_decay: 0.05
+balanced_sampler: true
+
+augmentation:
+  random_resized_crop: true
+  rrc_scale: [0.65, 1.0]
+  coarse_dropout: false
+  val_center_crop: true         # MIRROR THIS IN THE APP'S PREPROCESSING
+
+mixup:
+  alpha: 0.0
+  mixup: false
+  cutmix: false
+
+# ---- Output ----
+output_dir: models_v4/mobilenetv4_conv_small_448
+stage1_checkpoint: best_model_stage1.pth
+final_checkpoint: best_model_final.pth
+onnx_filename: fish_classifier.onnx
+
+onnx_opset: 18

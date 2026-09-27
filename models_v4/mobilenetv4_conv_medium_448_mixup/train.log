@@ -1,0 +1,1342 @@
+Random seed: 42
+Using device: cuda
+Found 380 species: ['Abudefduf_saxatilis', 'Abudefduf_taurus', 'Acantharchus_pomotis', 'Acanthemblemaria_aspera', 'Acanthostracion_polygonium', 'Acanthostracion_quadricornis', 'Acanthurus_chirurgus', 'Acanthurus_coeruleus', 'Acanthurus_tractus', 'Achirus_lineatus', 'Albula_vulpes', 'Alburnops_chalybaeus', 'Alburnops_petersoni', 'Alburnops_texanus', 'Aluterus_schoepfii', 'Aluterus_scriptus', 'Amatitlania_nigrofasciata', 'Ameiurus_catus', 'Ameiurus_natalis', 'Ameiurus_nebulosus', 'Amia_calva', 'Amphilophus_citrinellus', 'Anarchopterus_criniger', 'Anchoa_hepsetus', 'Anchoa_mitchilli', 'Ancylopsetta_quadrocellata', 'Anguilla_rostrata', 'Anisotremus_surinamensis', 'Anisotremus_virginicus', 'Antennarius_scaber', 'Aphredoderus_gibbosus', 'Aphredoderus_mesotrema', 'Apogon_binotatus', 'Apogon_maculatus', 'Archosargus_probatocephalus', 'Archosargus_rhomboidalis', 'Ariopsis_felis', 'Astronotus_ocellatus', 'Astroscopus_y-graecum', 'Atherinomorus_stipes', 'Aulostomus_maculatus', 'Azurina_cyanea', 'Azurina_multilineata', 'Bagre_marinus', 'Bairdiella_chrysoura', 'Balistes_capriscus', 'Bascanichthys_bascanium', 'Bathygobius_lacertus', 'Bathygobius_soporator', 'Belonesox_belizanus', 'Bodianus_parrae', 'Bodianus_rufus', 'Bothus_ocellatus', 'Brachygenys_chrysargyrea', 'Brevoortia_patronus', 'Calamus_arctifrons', 'Calamus_bajonado', 'Calamus_penna', 'Calamus_proridens', 'Callionymus_bairdi', 'Cantherhines_macrocerus', 'Cantherhines_pullus', 'Canthigaster_rostrata', 'Caranx_bartholomaei', 'Caranx_crysos', 'Caranx_hippos', 'Caranx_latus', 'Caranx_ruber', 'Centrarchus_macropterus', 'Centropomus_parallelus', 'Centropomus_undecimalis', 'Centropristis_striata', 'Cephalopholis_cruentata', 'Chaenopsis_ocellata', 'Chaetodipterus_faber', 'Chaetodon_capistratus', 'Chaetodon_ocellatus', 'Chaetodon_sedentarius', 'Chaetodon_striatus', 'Channa_aurolineata', 'Chasmodes_saburrae', 'Chilomycterus_reticulatus', 'Chilomycterus_schoepfii', 'Chitala_ornata', 'Chloroscombrus_chrysurus', 'Cichla_ocellaris', 'Cichlasoma_bimaculatum', 'Cichlasoma_dimerus', 'Clarias_batrachus', 'Coryphaena_hippurus', 'Coryphopterus_dicrus', 'Coryphopterus_glaucofraenum', 'Cosmocampus_elucens', 'Ctenopharyngodon_idella', 'Cynoscion_arenarius', 'Cynoscion_nebulosus', 'Cyprinella_eurystoma', 'Cyprinodon_variegatus', 'Cyprinus_rubrofuscus', 'Decapterus_punctatus', 'Diapterus_auratus', 'Diodon_holocanthus', 'Diodon_hystrix', 'Diplectrum_formosum', 'Diplodus_caudimacula', 'Diplodus_holbrookii', 'Dormitator_maculatus', 'Dorosoma_cepedianum', 'Dorosoma_petenense', 'Echeneis_naucrates', 'Echeneis_neucratoides', 'Echiophis_intertinctus', 'Elacatinus_oceanops', 'Elassoma_evergladei', 'Elassoma_gilberti', 'Elassoma_okefenokee', 'Elassoma_zonatum', 'Eleotris_amblyopsis', 'Elops_saurus', 'Emblemaria_pandionis', 'Enneacanthus_gloriosus', 'Enneacanthus_obesus', 'Epinephelus_itajara', 'Epinephelus_morio', 'Eques_lanceolatus', 'Eques_punctatus', 'Erimyzon_sucetta', 'Esox_americanus', 'Esox_niger', 'Etheostoma_colorosum', 'Etheostoma_edwini', 'Etheostoma_fusiforme', 'Eucinostomus_gula', 'Eucinostomus_harengulus', 'Eucinostomus_jonesii', 'Eugerres_plumieri', 'Euthynnus_alletteratus', 'Floridichthys_carpio', 'Fundulus_chrysotus', 'Fundulus_cingulatus', 'Fundulus_confluentus', 'Fundulus_escambiae', 'Fundulus_grandis', 'Fundulus_lineolatus', 'Fundulus_olivaceus', 'Fundulus_rubrifrons', 'Fundulus_seminolis', 'Fundulus_similis', 'Fundulus_xenicus', 'Gambusia_holbrooki', 'Gambusia_rhizophorae', 'Gerres_cinereus', 'Gnatholepis_thompsoni', 'Gobiesox_strumosus', 'Gobioclinus_kalisherae', 'Gobiomorus_dormitor', 'Gobiosoma_bosc', 'Gobiosoma_robustum', 'Gymnothorax_funebris', 'Gymnothorax_moringa', 'Gymnothorax_vicinus', 'Haemulon_aurolineatum', 'Haemulon_carbonarium', 'Haemulon_flavolineatum', 'Haemulon_macrostoma', 'Haemulon_melanurum', 'Haemulon_parra', 'Haemulon_plumierii', 'Haemulon_sciurus', 'Halichoeres_bivittatus', 'Halichoeres_garnoti', 'Halichoeres_maculipinna', 'Halichoeres_poeyi', 'Halichoeres_radiatus', 'Harengula_humeralis', 'Harengula_jaguana', 'Hemiramphus_brasiliensis', 'Heterandria_formosa', 'Heteroconger_luteolus', 'Heterotilapia_buettikoferi', 'Hippocampus_erectus', 'Hippocampus_reidi', 'Hippocampus_zosterae', 'Histrio_histrio', 'Holacanthus_bermudensis', 'Holacanthus_ciliaris', 'Holacanthus_tricolor', 'Holocentrus_adscensionis', 'Holocentrus_rufus', 'Hoplosternum_littorale', 'Hypleurochilus_bermudensis', 'Hypleurochilus_pseudoaequipinnis', 'Hypoplectrus_puella', 'Hypoplectrus_unicolor', 'Ictalurus_punctatus', 'Jordanella_floridae', 'Kyphosus_sectatrix', 'Kyphosus_vaigiensis', 'Labidesthes_vanhyningi', 'Labrisomus_conditus', 'Labrisomus_nuchipinnis', 'Lachnolaimus_maximus', 'Lactophrys_bicaudalis', 'Lactophrys_trigonus', 'Lactophrys_triqueter', 'Lagocephalus_laevigatus', 'Lagodon_rhomboides', 'Leiostomus_xanthurus', 'Lepisosteus_osseus', 'Lepisosteus_platyrhincus', 'Lepomis_auritus', 'Lepomis_gulosus', 'Lepomis_macrochirus', 'Lepomis_marginatus', 'Lepomis_microlophus', 'Lepomis_punctatus', 'Lepomis_solis', 'Leptolucania_ommata', 'Lobotes_surinamensis', 'Lophogobius_cyprinoides', 'Lucania_goodei', 'Lucania_parva', 'Lutjanus_analis', 'Lutjanus_apodus', 'Lutjanus_campechanus', 'Lutjanus_griseus', 'Lutjanus_jocu', 'Lutjanus_mahogoni', 'Lutjanus_synagris', 'Macrognathus_siamensis', 'Malacanthus_plumieri', 'Malacoctenus_macropus', 'Malacoctenus_triangulatus', 'Mayaheros_urophthalmus', 'Megalops_atlanticus', 'Menidia_beryllina', 'Menidia_peninsulae', 'Menticirrhus_americanus', 'Menticirrhus_littoralis', 'Menticirrhus_saxatilis', 'Microgobius_gulosus', 'Microphis_lineatus', 'Micropogonias_undulatus', 'Micropterus_nigricans', 'Micropterus_notius', 'Micropterus_salmoides', 'Microspathodon_chrysurus', 'Miniellus_longirostris', 'Minytrema_melanops', 'Misgurnus_anguillicaudatus', 'Monacanthus_ciliatus', 'Mugil_cephalus', 'Mugil_curema', 'Mulloidichthys_martinicus', 'Mycteroperca_bonaci', 'Mycteroperca_microlepis', 'Myrichthys_breviceps', 'Myrophis_punctatus', 'Neopomacentrus_cyanomos', 'Nes_longus', 'Nicholsina_usta', 'Nomeus_gronovii', 'Notemigonus_crysoleucas', 'Noturus_gyrinus', 'Noturus_leptacanthus', 'Ocyurus_chrysurus', 'Odontoscion_dentex', 'Ogcocephalus_cubifrons', 'Ogcocephalus_nasutus', 'Oligoplites_saurus', 'Ophichthus_gomesii', 'Opisthonema_oglinum', 'Opistognathus_aurifrons', 'Opistognathus_macrognathus', 'Opistognathus_robinsi', 'Opistognathus_whitehursti', 'Opsanus_beta', 'Opsanus_pardus', 'Opsanus_tau', 'Oreochromis_aureus', 'Oreochromis_niloticus', 'Orthopristis_chrysoptera', 'Parablennius_marmoreus', 'Parachromis_managuensis', 'Paraclinus_fasciatus', 'Paraclinus_marmoratus', 'Paralichthys_albigutta', 'Paralichthys_lethostigma', 'Pareques_acuminatus', 'Pelmatolapia_mariae', 'Pempheris_schomburgkii', 'Percina_nigrofasciata', 'Percina_westfalli', 'Piaractus_brachypomus', 'Poecilia_latipinna', 'Pogonias_cromis', 'Pomacanthus_arcuatus', 'Pomacanthus_paru', 'Pomatomus_saltatrix', 'Pomoxis_nigromaculatus', 'Priacanthus_arenatus', 'Prionotus_ophryas', 'Prionotus_rubio', 'Prionotus_scitulus', 'Prionotus_tribulus', 'Pseudupeneus_maculatus', 'Pterois_volitans', 'Pteronotropis_harperi', 'Pteronotropis_hypselopterus', 'Pteronotropis_metallicus', 'Pteronotropis_signipinnis', 'Rachycentron_canadum', 'Rhomboplites_aurorubens', 'Rocio_octofasciata', 'Rubricatochromis_letourneuxi', 'Sardinella_aurita', 'Sarotherodon_melanotheron', 'Scartella_cristata', 'Scarus_coelestinus', 'Scarus_coeruleus', 'Scarus_guacamaia', 'Scarus_iseri', 'Scarus_taeniopterus', 'Scarus_vetula', 'Sciaenops_ocellatus', 'Scomberomorus_cavalla', 'Scomberomorus_maculatus', 'Scomberomorus_regalis', 'Scorpaena_brasiliensis', 'Scorpaena_plumieri', 'Selene_vomer', 'Seriola_dumerili', 'Seriola_rivoliana', 'Seriola_zonata', 'Serraniculus_pumilio', 'Serranus_baldwini', 'Serranus_subligarius', 'Serranus_tigrinus', 'Sparisoma_aurofrenatum', 'Sparisoma_chrysopterum', 'Sparisoma_radians', 'Sparisoma_rubripinne', 'Sparisoma_viride', 'Sphoeroides_nephelus', 'Sphoeroides_spengleri', 'Sphoeroides_testudineus', 'Sphyraena_barracuda', 'Sphyraena_borealis', 'Stegastes_adustus', 'Stegastes_diencaeus', 'Stegastes_leucostictus', 'Stegastes_partitus', 'Stegastes_planifrons', 'Stegastes_xanthurus', 'Stephanolepis_hispida', 'Strongylura_marina', 'Strongylura_notata', 'Strongylura_timucu', 'Symphurus_plagiusa', 'Syngnathus_floridae', 'Syngnathus_louisianae', 'Syngnathus_scovelli', 'Synodus_foetens', 'Synodus_intermedius', 'Thalassoma_bifasciatum', 'Tigrigobius_macrodon', 'Trachinocephalus_myops', 'Trachinotus_carolinus', 'Trachinotus_falcatus', 'Trachinotus_goodei', 'Trichromis_salvini', 'Trinectes_maculatus', 'Tylosurus_crocodilus', 'Umbrina_coroides', 'Urophycis_floridana', 'Vieja_melanurus', 'Xiphophorus_hellerii', 'Xiphophorus_variatus', 'Xyrichtys_novacula', 'Xyrichtys_splendens']
+Train samples: 63221, Val samples: 7736
+Class balancing: WeightedRandomSampler (rare species oversampled)
+Wrote class index to C:\Users\cpoco\Thalamus\Thalamus\models_v4\mobilenetv4_conv_medium_448_mixup\classes.json
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Label smoothing: 0.1
+=== Stage 1: Training classifier head ===
+Stage 1 epoch 1/10 | batch 250/7902 | loss 6.0920 acc 0.0360
+Stage 1 epoch 1/10 | batch 500/7902 | loss 5.7542 acc 0.0508
+Stage 1 epoch 1/10 | batch 750/7902 | loss 5.5541 acc 0.0643
+Stage 1 epoch 1/10 | batch 1000/7902 | loss 5.4027 acc 0.0779
+Stage 1 epoch 1/10 | batch 1250/7902 | loss 5.2631 acc 0.0903
+Stage 1 epoch 1/10 | batch 1500/7902 | loss 5.1503 acc 0.1016
+Stage 1 epoch 1/10 | batch 1750/7902 | loss 5.0603 acc 0.1116
+Stage 1 epoch 1/10 | batch 2000/7902 | loss 4.9804 acc 0.1206
+Stage 1 epoch 1/10 | batch 2250/7902 | loss 4.9074 acc 0.1286
+Stage 1 epoch 1/10 | batch 2500/7902 | loss 4.8441 acc 0.1371
+Stage 1 epoch 1/10 | batch 2750/7902 | loss 4.7889 acc 0.1434
+Stage 1 epoch 1/10 | batch 3000/7902 | loss 4.7409 acc 0.1496
+Stage 1 epoch 1/10 | batch 3250/7902 | loss 4.6956 acc 0.1555
+Stage 1 epoch 1/10 | batch 3500/7902 | loss 4.6510 acc 0.1623
+Stage 1 epoch 1/10 | batch 3750/7902 | loss 4.6088 acc 0.1676
+Stage 1 epoch 1/10 | batch 4000/7902 | loss 4.5683 acc 0.1733
+Stage 1 epoch 1/10 | batch 4250/7902 | loss 4.5334 acc 0.1781
+Stage 1 epoch 1/10 | batch 4500/7902 | loss 4.5006 acc 0.1834
+Stage 1 epoch 1/10 | batch 4750/7902 | loss 4.4667 acc 0.1889
+Stage 1 epoch 1/10 | batch 5000/7902 | loss 4.4356 acc 0.1936
+Stage 1 epoch 1/10 | batch 5250/7902 | loss 4.4078 acc 0.1988
+Stage 1 epoch 1/10 | batch 5500/7902 | loss 4.3782 acc 0.2038
+Stage 1 epoch 1/10 | batch 5750/7902 | loss 4.3522 acc 0.2083
+Stage 1 epoch 1/10 | batch 6000/7902 | loss 4.3302 acc 0.2123
+Stage 1 epoch 1/10 | batch 6250/7902 | loss 4.3043 acc 0.2170
+Stage 1 epoch 1/10 | batch 6500/7902 | loss 4.2825 acc 0.2211
+Stage 1 epoch 1/10 | batch 6750/7902 | loss 4.2574 acc 0.2263
+Stage 1 epoch 1/10 | batch 7000/7902 | loss 4.2371 acc 0.2295
+Stage 1 epoch 1/10 | batch 7250/7902 | loss 4.2182 acc 0.2333
+Stage 1 epoch 1/10 | batch 7500/7902 | loss 4.1991 acc 0.2365
+Stage 1 epoch 1/10 | batch 7750/7902 | loss 4.1803 acc 0.2397
+Stage 1 epoch 1/10 | batch 7902/7902 | loss 4.1704 acc 0.2413
+Stage 1 validation 1/10 | batch 100/967
+Stage 1 validation 1/10 | batch 200/967
+Stage 1 validation 1/10 | batch 300/967
+Stage 1 validation 1/10 | batch 400/967
+Stage 1 validation 1/10 | batch 500/967
+Stage 1 validation 1/10 | batch 600/967
+Stage 1 validation 1/10 | batch 700/967
+Stage 1 validation 1/10 | batch 800/967
+Stage 1 validation 1/10 | batch 900/967
+Stage 1 validation 1/10 | batch 967/967
+Epoch 1/10 | Train Loss: 4.1704 Acc: 0.2413 | Val Loss: 3.5212 Acc: 0.2342
+Stage 1 epoch 2/10 | batch 250/7902 | loss 3.6271 acc 0.3285
+Stage 1 epoch 2/10 | batch 500/7902 | loss 3.6632 acc 0.3325
+Stage 1 epoch 2/10 | batch 750/7902 | loss 3.6332 acc 0.3378
+Stage 1 epoch 2/10 | batch 1000/7902 | loss 3.6063 acc 0.3424
+Stage 1 epoch 2/10 | batch 1250/7902 | loss 3.5982 acc 0.3438
+Stage 1 epoch 2/10 | batch 1500/7902 | loss 3.5993 acc 0.3440
+Stage 1 epoch 2/10 | batch 1750/7902 | loss 3.5798 acc 0.3472
+Stage 1 epoch 2/10 | batch 2000/7902 | loss 3.5670 acc 0.3486
+Stage 1 epoch 2/10 | batch 2250/7902 | loss 3.5595 acc 0.3507
+Stage 1 epoch 2/10 | batch 2500/7902 | loss 3.5512 acc 0.3531
+Stage 1 epoch 2/10 | batch 2750/7902 | loss 3.5459 acc 0.3535
+Stage 1 epoch 2/10 | batch 3000/7902 | loss 3.5426 acc 0.3552
+Stage 1 epoch 2/10 | batch 3250/7902 | loss 3.5321 acc 0.3572
+Stage 1 epoch 2/10 | batch 3500/7902 | loss 3.5305 acc 0.3580
+Stage 1 epoch 2/10 | batch 3750/7902 | loss 3.5216 acc 0.3606
+Stage 1 epoch 2/10 | batch 4000/7902 | loss 3.5174 acc 0.3623
+Stage 1 epoch 2/10 | batch 4250/7902 | loss 3.5111 acc 0.3645
+Stage 1 epoch 2/10 | batch 4500/7902 | loss 3.5089 acc 0.3653
+Stage 1 epoch 2/10 | batch 4750/7902 | loss 3.5015 acc 0.3665
+Stage 1 epoch 2/10 | batch 5000/7902 | loss 3.4948 acc 0.3685
+Stage 1 epoch 2/10 | batch 5250/7902 | loss 3.4896 acc 0.3701
+Stage 1 epoch 2/10 | batch 5500/7902 | loss 3.4841 acc 0.3715
+Stage 1 epoch 2/10 | batch 5750/7902 | loss 3.4762 acc 0.3733
+Stage 1 epoch 2/10 | batch 6000/7902 | loss 3.4713 acc 0.3746
+Stage 1 epoch 2/10 | batch 6250/7902 | loss 3.4653 acc 0.3760
+Stage 1 epoch 2/10 | batch 6500/7902 | loss 3.4591 acc 0.3776
+Stage 1 epoch 2/10 | batch 6750/7902 | loss 3.4526 acc 0.3791
+Stage 1 epoch 2/10 | batch 7000/7902 | loss 3.4475 acc 0.3806
+Stage 1 epoch 2/10 | batch 7250/7902 | loss 3.4424 acc 0.3818
+Stage 1 epoch 2/10 | batch 7500/7902 | loss 3.4385 acc 0.3830
+Stage 1 epoch 2/10 | batch 7750/7902 | loss 3.4330 acc 0.3846
+Stage 1 epoch 2/10 | batch 7902/7902 | loss 3.4297 acc 0.3851
+Stage 1 validation 2/10 | batch 100/967
+Stage 1 validation 2/10 | batch 200/967
+Stage 1 validation 2/10 | batch 300/967
+Stage 1 validation 2/10 | batch 400/967
+Stage 1 validation 2/10 | batch 500/967
+Stage 1 validation 2/10 | batch 600/967
+Stage 1 validation 2/10 | batch 700/967
+Stage 1 validation 2/10 | batch 800/967
+Stage 1 validation 2/10 | batch 900/967
+Stage 1 validation 2/10 | batch 967/967
+Epoch 2/10 | Train Loss: 3.4297 Acc: 0.3851 | Val Loss: 3.2907 Acc: 0.2920
+Stage 1 epoch 3/10 | batch 250/7902 | loss 3.2587 acc 0.4285
+Stage 1 epoch 3/10 | batch 500/7902 | loss 3.3136 acc 0.4123
+Stage 1 epoch 3/10 | batch 750/7902 | loss 3.3176 acc 0.4170
+Stage 1 epoch 3/10 | batch 1000/7902 | loss 3.3002 acc 0.4208
+Stage 1 epoch 3/10 | batch 1250/7902 | loss 3.2922 acc 0.4219
+Stage 1 epoch 3/10 | batch 1500/7902 | loss 3.2897 acc 0.4220
+Stage 1 epoch 3/10 | batch 1750/7902 | loss 3.2928 acc 0.4216
+Stage 1 epoch 3/10 | batch 2000/7902 | loss 3.2892 acc 0.4237
+Stage 1 epoch 3/10 | batch 2250/7902 | loss 3.2832 acc 0.4237
+Stage 1 epoch 3/10 | batch 2500/7902 | loss 3.2818 acc 0.4233
+Stage 1 epoch 3/10 | batch 2750/7902 | loss 3.2745 acc 0.4249
+Stage 1 epoch 3/10 | batch 3000/7902 | loss 3.2715 acc 0.4263
+Stage 1 epoch 3/10 | batch 3250/7902 | loss 3.2689 acc 0.4275
+Stage 1 epoch 3/10 | batch 3500/7902 | loss 3.2643 acc 0.4290
+Stage 1 epoch 3/10 | batch 3750/7902 | loss 3.2613 acc 0.4296
+Stage 1 epoch 3/10 | batch 4000/7902 | loss 3.2546 acc 0.4315
+Stage 1 epoch 3/10 | batch 4250/7902 | loss 3.2508 acc 0.4319
+Stage 1 epoch 3/10 | batch 4500/7902 | loss 3.2478 acc 0.4335
+Stage 1 epoch 3/10 | batch 4750/7902 | loss 3.2437 acc 0.4341
+Stage 1 epoch 3/10 | batch 5000/7902 | loss 3.2403 acc 0.4356
+Stage 1 epoch 3/10 | batch 5250/7902 | loss 3.2400 acc 0.4355
+Stage 1 epoch 3/10 | batch 5500/7902 | loss 3.2352 acc 0.4364
+Stage 1 epoch 3/10 | batch 5750/7902 | loss 3.2319 acc 0.4373
+Stage 1 epoch 3/10 | batch 6000/7902 | loss 3.2303 acc 0.4374
+Stage 1 epoch 3/10 | batch 6250/7902 | loss 3.2285 acc 0.4381
+Stage 1 epoch 3/10 | batch 6500/7902 | loss 3.2259 acc 0.4389
+Stage 1 epoch 3/10 | batch 6750/7902 | loss 3.2251 acc 0.4392
+Stage 1 epoch 3/10 | batch 7000/7902 | loss 3.2220 acc 0.4400
+Stage 1 epoch 3/10 | batch 7250/7902 | loss 3.2198 acc 0.4408
+Stage 1 epoch 3/10 | batch 7500/7902 | loss 3.2174 acc 0.4411
+Stage 1 epoch 3/10 | batch 7750/7902 | loss 3.2131 acc 0.4424
+Stage 1 epoch 3/10 | batch 7902/7902 | loss 3.2114 acc 0.4429
+Stage 1 validation 3/10 | batch 100/967
+Stage 1 validation 3/10 | batch 200/967
+Stage 1 validation 3/10 | batch 300/967
+Stage 1 validation 3/10 | batch 400/967
+Stage 1 validation 3/10 | batch 500/967
+Stage 1 validation 3/10 | batch 600/967
+Stage 1 validation 3/10 | batch 700/967
+Stage 1 validation 3/10 | batch 800/967
+Stage 1 validation 3/10 | batch 900/967
+Stage 1 validation 3/10 | batch 967/967
+Epoch 3/10 | Train Loss: 3.2114 Acc: 0.4429 | Val Loss: 3.1630 Acc: 0.3216
+Stage 1 epoch 4/10 | batch 250/7902 | loss 3.1347 acc 0.4510
+Stage 1 epoch 4/10 | batch 500/7902 | loss 3.1683 acc 0.4557
+Stage 1 epoch 4/10 | batch 750/7902 | loss 3.1799 acc 0.4593
+Stage 1 epoch 4/10 | batch 1000/7902 | loss 3.1479 acc 0.4637
+Stage 1 epoch 4/10 | batch 1250/7902 | loss 3.1319 acc 0.4668
+Stage 1 epoch 4/10 | batch 1500/7902 | loss 3.1306 acc 0.4677
+Stage 1 epoch 4/10 | batch 1750/7902 | loss 3.1256 acc 0.4673
+Stage 1 epoch 4/10 | batch 2000/7902 | loss 3.1169 acc 0.4688
+Stage 1 epoch 4/10 | batch 2250/7902 | loss 3.1176 acc 0.4679
+Stage 1 epoch 4/10 | batch 2500/7902 | loss 3.1222 acc 0.4674
+Stage 1 epoch 4/10 | batch 2750/7902 | loss 3.1113 acc 0.4693
+Stage 1 epoch 4/10 | batch 3000/7902 | loss 3.1055 acc 0.4705
+Stage 1 epoch 4/10 | batch 3250/7902 | loss 3.1043 acc 0.4699
+Stage 1 epoch 4/10 | batch 3500/7902 | loss 3.1007 acc 0.4714
+Stage 1 epoch 4/10 | batch 3750/7902 | loss 3.1019 acc 0.4714
+Stage 1 epoch 4/10 | batch 4000/7902 | loss 3.1017 acc 0.4711
+Stage 1 epoch 4/10 | batch 4250/7902 | loss 3.0948 acc 0.4730
+Stage 1 epoch 4/10 | batch 4500/7902 | loss 3.0893 acc 0.4743
+Stage 1 epoch 4/10 | batch 4750/7902 | loss 3.0909 acc 0.4746
+Stage 1 epoch 4/10 | batch 5000/7902 | loss 3.0915 acc 0.4747
+Stage 1 epoch 4/10 | batch 5250/7902 | loss 3.0929 acc 0.4743
+Stage 1 epoch 4/10 | batch 5500/7902 | loss 3.0905 acc 0.4751
+Stage 1 epoch 4/10 | batch 5750/7902 | loss 3.0889 acc 0.4753
+Stage 1 epoch 4/10 | batch 6000/7902 | loss 3.0867 acc 0.4762
+Stage 1 epoch 4/10 | batch 6250/7902 | loss 3.0835 acc 0.4772
+Stage 1 epoch 4/10 | batch 6500/7902 | loss 3.0785 acc 0.4783
+Stage 1 epoch 4/10 | batch 6750/7902 | loss 3.0815 acc 0.4778
+Stage 1 epoch 4/10 | batch 7000/7902 | loss 3.0774 acc 0.4786
+Stage 1 epoch 4/10 | batch 7250/7902 | loss 3.0778 acc 0.4786
+Stage 1 epoch 4/10 | batch 7500/7902 | loss 3.0762 acc 0.4792
+Stage 1 epoch 4/10 | batch 7750/7902 | loss 3.0763 acc 0.4793
+Stage 1 epoch 4/10 | batch 7902/7902 | loss 3.0748 acc 0.4794
+Stage 1 validation 4/10 | batch 100/967
+Stage 1 validation 4/10 | batch 200/967
+Stage 1 validation 4/10 | batch 300/967
+Stage 1 validation 4/10 | batch 400/967
+Stage 1 validation 4/10 | batch 500/967
+Stage 1 validation 4/10 | batch 600/967
+Stage 1 validation 4/10 | batch 700/967
+Stage 1 validation 4/10 | batch 800/967
+Stage 1 validation 4/10 | batch 900/967
+Stage 1 validation 4/10 | batch 967/967
+Epoch 4/10 | Train Loss: 3.0748 Acc: 0.4794 | Val Loss: 3.0938 Acc: 0.3429
+Stage 1 epoch 5/10 | batch 250/7902 | loss 2.9743 acc 0.5050
+Stage 1 epoch 5/10 | batch 500/7902 | loss 3.0168 acc 0.4933
+Stage 1 epoch 5/10 | batch 750/7902 | loss 3.0226 acc 0.4957
+Stage 1 epoch 5/10 | batch 1000/7902 | loss 3.0168 acc 0.4956
+Stage 1 epoch 5/10 | batch 1250/7902 | loss 3.0127 acc 0.4974
+Stage 1 epoch 5/10 | batch 1500/7902 | loss 3.0295 acc 0.4954
+Stage 1 epoch 5/10 | batch 1750/7902 | loss 3.0288 acc 0.4956
+Stage 1 epoch 5/10 | batch 2000/7902 | loss 3.0274 acc 0.4958
+Stage 1 epoch 5/10 | batch 2250/7902 | loss 3.0257 acc 0.4966
+Stage 1 epoch 5/10 | batch 2500/7902 | loss 3.0277 acc 0.4960
+Stage 1 epoch 5/10 | batch 2750/7902 | loss 3.0255 acc 0.4955
+Stage 1 epoch 5/10 | batch 3000/7902 | loss 3.0208 acc 0.4948
+Stage 1 epoch 5/10 | batch 3250/7902 | loss 3.0190 acc 0.4955
+Stage 1 epoch 5/10 | batch 3500/7902 | loss 3.0142 acc 0.4962
+Stage 1 epoch 5/10 | batch 3750/7902 | loss 3.0079 acc 0.4981
+Stage 1 epoch 5/10 | batch 4000/7902 | loss 3.0076 acc 0.4986
+Stage 1 epoch 5/10 | batch 4250/7902 | loss 3.0090 acc 0.4981
+Stage 1 epoch 5/10 | batch 4500/7902 | loss 3.0076 acc 0.4989
+Stage 1 epoch 5/10 | batch 4750/7902 | loss 3.0077 acc 0.4992
+Stage 1 epoch 5/10 | batch 5000/7902 | loss 3.0083 acc 0.4995
+Stage 1 epoch 5/10 | batch 5250/7902 | loss 3.0054 acc 0.4999
+Stage 1 epoch 5/10 | batch 5500/7902 | loss 3.0042 acc 0.4997
+Stage 1 epoch 5/10 | batch 5750/7902 | loss 3.0004 acc 0.5009
+Stage 1 epoch 5/10 | batch 6000/7902 | loss 2.9973 acc 0.5015
+Stage 1 epoch 5/10 | batch 6250/7902 | loss 2.9974 acc 0.5020
+Stage 1 epoch 5/10 | batch 6500/7902 | loss 2.9956 acc 0.5025
+Stage 1 epoch 5/10 | batch 6750/7902 | loss 2.9951 acc 0.5027
+Stage 1 epoch 5/10 | batch 7000/7902 | loss 2.9929 acc 0.5029
+Stage 1 epoch 5/10 | batch 7250/7902 | loss 2.9923 acc 0.5031
+Stage 1 epoch 5/10 | batch 7500/7902 | loss 2.9914 acc 0.5037
+Stage 1 epoch 5/10 | batch 7750/7902 | loss 2.9894 acc 0.5040
+Stage 1 epoch 5/10 | batch 7902/7902 | loss 2.9897 acc 0.5040
+Stage 1 validation 5/10 | batch 100/967
+Stage 1 validation 5/10 | batch 200/967
+Stage 1 validation 5/10 | batch 300/967
+Stage 1 validation 5/10 | batch 400/967
+Stage 1 validation 5/10 | batch 500/967
+Stage 1 validation 5/10 | batch 600/967
+Stage 1 validation 5/10 | batch 700/967
+Stage 1 validation 5/10 | batch 800/967
+Stage 1 validation 5/10 | batch 900/967
+Stage 1 validation 5/10 | batch 967/967
+Epoch 5/10 | Train Loss: 2.9897 Acc: 0.5040 | Val Loss: 3.0604 Acc: 0.3488
+Stage 1 epoch 6/10 | batch 250/7902 | loss 2.8987 acc 0.5110
+Stage 1 epoch 6/10 | batch 500/7902 | loss 2.9352 acc 0.5048
+Stage 1 epoch 6/10 | batch 750/7902 | loss 2.9392 acc 0.5102
+Stage 1 epoch 6/10 | batch 1000/7902 | loss 2.9377 acc 0.5125
+Stage 1 epoch 6/10 | batch 1250/7902 | loss 2.9340 acc 0.5129
+Stage 1 epoch 6/10 | batch 1500/7902 | loss 2.9454 acc 0.5102
+Stage 1 epoch 6/10 | batch 1750/7902 | loss 2.9414 acc 0.5115
+Stage 1 epoch 6/10 | batch 2000/7902 | loss 2.9406 acc 0.5124
+Stage 1 epoch 6/10 | batch 2250/7902 | loss 2.9445 acc 0.5129
+Stage 1 epoch 6/10 | batch 2500/7902 | loss 2.9443 acc 0.5137
+Stage 1 epoch 6/10 | batch 2750/7902 | loss 2.9464 acc 0.5125
+Stage 1 epoch 6/10 | batch 3000/7902 | loss 2.9478 acc 0.5125
+Stage 1 epoch 6/10 | batch 3250/7902 | loss 2.9479 acc 0.5124
+Stage 1 epoch 6/10 | batch 3500/7902 | loss 2.9530 acc 0.5112
+Stage 1 epoch 6/10 | batch 3750/7902 | loss 2.9464 acc 0.5136
+Stage 1 epoch 6/10 | batch 4000/7902 | loss 2.9450 acc 0.5146
+Stage 1 epoch 6/10 | batch 4250/7902 | loss 2.9424 acc 0.5151
+Stage 1 epoch 6/10 | batch 4500/7902 | loss 2.9393 acc 0.5162
+Stage 1 epoch 6/10 | batch 4750/7902 | loss 2.9355 acc 0.5172
+Stage 1 epoch 6/10 | batch 5000/7902 | loss 2.9320 acc 0.5187
+Stage 1 epoch 6/10 | batch 5250/7902 | loss 2.9321 acc 0.5181
+Stage 1 epoch 6/10 | batch 5500/7902 | loss 2.9316 acc 0.5179
+Stage 1 epoch 6/10 | batch 5750/7902 | loss 2.9342 acc 0.5169
+Stage 1 epoch 6/10 | batch 6000/7902 | loss 2.9360 acc 0.5170
+Stage 1 epoch 6/10 | batch 6250/7902 | loss 2.9356 acc 0.5173
+Stage 1 epoch 6/10 | batch 6500/7902 | loss 2.9330 acc 0.5180
+Stage 1 epoch 6/10 | batch 6750/7902 | loss 2.9335 acc 0.5175
+Stage 1 epoch 6/10 | batch 7000/7902 | loss 2.9335 acc 0.5175
+Stage 1 epoch 6/10 | batch 7250/7902 | loss 2.9325 acc 0.5180
+Stage 1 epoch 6/10 | batch 7500/7902 | loss 2.9326 acc 0.5182
+Stage 1 epoch 6/10 | batch 7750/7902 | loss 2.9289 acc 0.5189
+Stage 1 epoch 6/10 | batch 7902/7902 | loss 2.9285 acc 0.5189
+Stage 1 validation 6/10 | batch 100/967
+Stage 1 validation 6/10 | batch 200/967
+Stage 1 validation 6/10 | batch 300/967
+Stage 1 validation 6/10 | batch 400/967
+Stage 1 validation 6/10 | batch 500/967
+Stage 1 validation 6/10 | batch 600/967
+Stage 1 validation 6/10 | batch 700/967
+Stage 1 validation 6/10 | batch 800/967
+Stage 1 validation 6/10 | batch 900/967
+Stage 1 validation 6/10 | batch 967/967
+Epoch 6/10 | Train Loss: 2.9285 Acc: 0.5189 | Val Loss: 3.0621 Acc: 0.3517
+Stage 1 epoch 7/10 | batch 250/7902 | loss 2.9168 acc 0.5335
+Stage 1 epoch 7/10 | batch 500/7902 | loss 2.9038 acc 0.5320
+Stage 1 epoch 7/10 | batch 750/7902 | loss 2.9060 acc 0.5320
+Stage 1 epoch 7/10 | batch 1000/7902 | loss 2.9088 acc 0.5291
+Stage 1 epoch 7/10 | batch 1250/7902 | loss 2.8960 acc 0.5302
+Stage 1 epoch 7/10 | batch 1500/7902 | loss 2.8939 acc 0.5336
+Stage 1 epoch 7/10 | batch 1750/7902 | loss 2.9067 acc 0.5314
+Stage 1 epoch 7/10 | batch 2000/7902 | loss 2.9032 acc 0.5319
+Stage 1 epoch 7/10 | batch 2250/7902 | loss 2.9055 acc 0.5311
+Stage 1 epoch 7/10 | batch 2500/7902 | loss 2.9015 acc 0.5312
+Stage 1 epoch 7/10 | batch 2750/7902 | loss 2.8997 acc 0.5320
+Stage 1 epoch 7/10 | batch 3000/7902 | loss 2.8972 acc 0.5319
+Stage 1 epoch 7/10 | batch 3250/7902 | loss 2.8994 acc 0.5310
+Stage 1 epoch 7/10 | batch 3500/7902 | loss 2.8990 acc 0.5312
+Stage 1 epoch 7/10 | batch 3750/7902 | loss 2.8934 acc 0.5326
+Stage 1 epoch 7/10 | batch 4000/7902 | loss 2.8918 acc 0.5333
+Stage 1 epoch 7/10 | batch 4250/7902 | loss 2.8924 acc 0.5330
+Stage 1 epoch 7/10 | batch 4500/7902 | loss 2.8894 acc 0.5335
+Stage 1 epoch 7/10 | batch 4750/7902 | loss 2.8904 acc 0.5336
+Stage 1 epoch 7/10 | batch 5000/7902 | loss 2.8905 acc 0.5332
+Stage 1 epoch 7/10 | batch 5250/7902 | loss 2.8890 acc 0.5336
+Stage 1 epoch 7/10 | batch 5500/7902 | loss 2.8823 acc 0.5350
+Stage 1 epoch 7/10 | batch 5750/7902 | loss 2.8796 acc 0.5359
+Stage 1 epoch 7/10 | batch 6000/7902 | loss 2.8795 acc 0.5360
+Stage 1 epoch 7/10 | batch 6250/7902 | loss 2.8779 acc 0.5363
+Stage 1 epoch 7/10 | batch 6500/7902 | loss 2.8766 acc 0.5366
+Stage 1 epoch 7/10 | batch 6750/7902 | loss 2.8754 acc 0.5367
+Stage 1 epoch 7/10 | batch 7000/7902 | loss 2.8748 acc 0.5371
+Stage 1 epoch 7/10 | batch 7250/7902 | loss 2.8730 acc 0.5376
+Stage 1 epoch 7/10 | batch 7500/7902 | loss 2.8716 acc 0.5376
+Stage 1 epoch 7/10 | batch 7750/7902 | loss 2.8719 acc 0.5374
+Stage 1 epoch 7/10 | batch 7902/7902 | loss 2.8720 acc 0.5373
+Stage 1 validation 7/10 | batch 100/967
+Stage 1 validation 7/10 | batch 200/967
+Stage 1 validation 7/10 | batch 300/967
+Stage 1 validation 7/10 | batch 400/967
+Stage 1 validation 7/10 | batch 500/967
+Stage 1 validation 7/10 | batch 600/967
+Stage 1 validation 7/10 | batch 700/967
+Stage 1 validation 7/10 | batch 800/967
+Stage 1 validation 7/10 | batch 900/967
+Stage 1 validation 7/10 | batch 967/967
+Epoch 7/10 | Train Loss: 2.8720 Acc: 0.5373 | Val Loss: 3.0200 Acc: 0.3688
+Stage 1 epoch 8/10 | batch 250/7902 | loss 2.9139 acc 0.5380
+Stage 1 epoch 8/10 | batch 500/7902 | loss 2.9128 acc 0.5343
+Stage 1 epoch 8/10 | batch 750/7902 | loss 2.8850 acc 0.5410
+Stage 1 epoch 8/10 | batch 1000/7902 | loss 2.8635 acc 0.5427
+Stage 1 epoch 8/10 | batch 1250/7902 | loss 2.8605 acc 0.5426
+Stage 1 epoch 8/10 | batch 1500/7902 | loss 2.8618 acc 0.5410
+Stage 1 epoch 8/10 | batch 1750/7902 | loss 2.8540 acc 0.5426
+Stage 1 epoch 8/10 | batch 2000/7902 | loss 2.8528 acc 0.5421
+Stage 1 epoch 8/10 | batch 2250/7902 | loss 2.8559 acc 0.5407
+Stage 1 epoch 8/10 | batch 2500/7902 | loss 2.8511 acc 0.5429
+Stage 1 epoch 8/10 | batch 2750/7902 | loss 2.8487 acc 0.5439
+Stage 1 epoch 8/10 | batch 3000/7902 | loss 2.8466 acc 0.5437
+Stage 1 epoch 8/10 | batch 3250/7902 | loss 2.8448 acc 0.5443
+Stage 1 epoch 8/10 | batch 3500/7902 | loss 2.8467 acc 0.5440
+Stage 1 epoch 8/10 | batch 3750/7902 | loss 2.8456 acc 0.5449
+Stage 1 epoch 8/10 | batch 4000/7902 | loss 2.8403 acc 0.5461
+Stage 1 epoch 8/10 | batch 4250/7902 | loss 2.8368 acc 0.5471
+Stage 1 epoch 8/10 | batch 4500/7902 | loss 2.8357 acc 0.5472
+Stage 1 epoch 8/10 | batch 4750/7902 | loss 2.8362 acc 0.5467
+Stage 1 epoch 8/10 | batch 5000/7902 | loss 2.8365 acc 0.5468
+Stage 1 epoch 8/10 | batch 5250/7902 | loss 2.8345 acc 0.5466
+Stage 1 epoch 8/10 | batch 5500/7902 | loss 2.8347 acc 0.5466
+Stage 1 epoch 8/10 | batch 5750/7902 | loss 2.8340 acc 0.5470
+Stage 1 epoch 8/10 | batch 6000/7902 | loss 2.8331 acc 0.5472
+Stage 1 epoch 8/10 | batch 6250/7902 | loss 2.8312 acc 0.5478
+Stage 1 epoch 8/10 | batch 6500/7902 | loss 2.8296 acc 0.5483
+Stage 1 epoch 8/10 | batch 6750/7902 | loss 2.8282 acc 0.5490
+Stage 1 epoch 8/10 | batch 7000/7902 | loss 2.8309 acc 0.5488
+Stage 1 epoch 8/10 | batch 7250/7902 | loss 2.8323 acc 0.5489
+Stage 1 epoch 8/10 | batch 7500/7902 | loss 2.8344 acc 0.5483
+Stage 1 epoch 8/10 | batch 7750/7902 | loss 2.8330 acc 0.5484
+Stage 1 epoch 8/10 | batch 7902/7902 | loss 2.8334 acc 0.5487
+Stage 1 validation 8/10 | batch 100/967
+Stage 1 validation 8/10 | batch 200/967
+Stage 1 validation 8/10 | batch 300/967
+Stage 1 validation 8/10 | batch 400/967
+Stage 1 validation 8/10 | batch 500/967
+Stage 1 validation 8/10 | batch 600/967
+Stage 1 validation 8/10 | batch 700/967
+Stage 1 validation 8/10 | batch 800/967
+Stage 1 validation 8/10 | batch 900/967
+Stage 1 validation 8/10 | batch 967/967
+Epoch 8/10 | Train Loss: 2.8334 Acc: 0.5487 | Val Loss: 3.0422 Acc: 0.3662
+Stage 1 epoch 9/10 | batch 250/7902 | loss 2.7704 acc 0.5605
+Stage 1 epoch 9/10 | batch 500/7902 | loss 2.8170 acc 0.5465
+Stage 1 epoch 9/10 | batch 750/7902 | loss 2.8108 acc 0.5523
+Stage 1 epoch 9/10 | batch 1000/7902 | loss 2.7950 acc 0.5584
+Stage 1 epoch 9/10 | batch 1250/7902 | loss 2.7791 acc 0.5613
+Stage 1 epoch 9/10 | batch 1500/7902 | loss 2.7907 acc 0.5593
+Stage 1 epoch 9/10 | batch 1750/7902 | loss 2.7817 acc 0.5594
+Stage 1 epoch 9/10 | batch 2000/7902 | loss 2.7854 acc 0.5592
+Stage 1 epoch 9/10 | batch 2250/7902 | loss 2.7883 acc 0.5588
+Stage 1 epoch 9/10 | batch 2500/7902 | loss 2.8001 acc 0.5560
+Stage 1 epoch 9/10 | batch 2750/7902 | loss 2.8013 acc 0.5553
+Stage 1 epoch 9/10 | batch 3000/7902 | loss 2.8031 acc 0.5552
+Stage 1 epoch 9/10 | batch 3250/7902 | loss 2.8043 acc 0.5548
+Stage 1 epoch 9/10 | batch 3500/7902 | loss 2.8095 acc 0.5533
+Stage 1 epoch 9/10 | batch 3750/7902 | loss 2.8091 acc 0.5543
+Stage 1 epoch 9/10 | batch 4000/7902 | loss 2.8071 acc 0.5546
+Stage 1 epoch 9/10 | batch 4250/7902 | loss 2.8074 acc 0.5543
+Stage 1 epoch 9/10 | batch 4500/7902 | loss 2.8049 acc 0.5551
+Stage 1 epoch 9/10 | batch 4750/7902 | loss 2.8000 acc 0.5557
+Stage 1 epoch 9/10 | batch 5000/7902 | loss 2.7960 acc 0.5566
+Stage 1 epoch 9/10 | batch 5250/7902 | loss 2.7989 acc 0.5564
+Stage 1 epoch 9/10 | batch 5500/7902 | loss 2.8030 acc 0.5554
+Stage 1 epoch 9/10 | batch 5750/7902 | loss 2.8034 acc 0.5555
+Stage 1 epoch 9/10 | batch 6000/7902 | loss 2.8049 acc 0.5552
+Stage 1 epoch 9/10 | batch 6250/7902 | loss 2.8036 acc 0.5553
+Stage 1 epoch 9/10 | batch 6500/7902 | loss 2.8041 acc 0.5553
+Stage 1 epoch 9/10 | batch 6750/7902 | loss 2.8041 acc 0.5551
+Stage 1 epoch 9/10 | batch 7000/7902 | loss 2.8041 acc 0.5552
+Stage 1 epoch 9/10 | batch 7250/7902 | loss 2.8035 acc 0.5554
+Stage 1 epoch 9/10 | batch 7500/7902 | loss 2.8037 acc 0.5551
+Stage 1 epoch 9/10 | batch 7750/7902 | loss 2.8032 acc 0.5555
+Stage 1 epoch 9/10 | batch 7902/7902 | loss 2.8013 acc 0.5562
+Stage 1 validation 9/10 | batch 100/967
+Stage 1 validation 9/10 | batch 200/967
+Stage 1 validation 9/10 | batch 300/967
+Stage 1 validation 9/10 | batch 400/967
+Stage 1 validation 9/10 | batch 500/967
+Stage 1 validation 9/10 | batch 600/967
+Stage 1 validation 9/10 | batch 700/967
+Stage 1 validation 9/10 | batch 800/967
+Stage 1 validation 9/10 | batch 900/967
+Stage 1 validation 9/10 | batch 967/967
+Epoch 9/10 | Train Loss: 2.8013 Acc: 0.5562 | Val Loss: 3.0675 Acc: 0.3573
+Stage 1 epoch 10/10 | batch 250/7902 | loss 2.7873 acc 0.5610
+Stage 1 epoch 10/10 | batch 500/7902 | loss 2.7697 acc 0.5713
+Stage 1 epoch 10/10 | batch 750/7902 | loss 2.7737 acc 0.5643
+Stage 1 epoch 10/10 | batch 1000/7902 | loss 2.7699 acc 0.5625
+Stage 1 epoch 10/10 | batch 1250/7902 | loss 2.7753 acc 0.5602
+Stage 1 epoch 10/10 | batch 1500/7902 | loss 2.7763 acc 0.5627
+Stage 1 epoch 10/10 | batch 1750/7902 | loss 2.7799 acc 0.5619
+Stage 1 epoch 10/10 | batch 2000/7902 | loss 2.7756 acc 0.5631
+Stage 1 epoch 10/10 | batch 2250/7902 | loss 2.7732 acc 0.5631
+Stage 1 epoch 10/10 | batch 2500/7902 | loss 2.7720 acc 0.5640
+Stage 1 epoch 10/10 | batch 2750/7902 | loss 2.7781 acc 0.5624
+Stage 1 epoch 10/10 | batch 3000/7902 | loss 2.7789 acc 0.5631
+Stage 1 epoch 10/10 | batch 3250/7902 | loss 2.7834 acc 0.5638
+Stage 1 epoch 10/10 | batch 3500/7902 | loss 2.7884 acc 0.5625
+Stage 1 epoch 10/10 | batch 3750/7902 | loss 2.7898 acc 0.5623
+Stage 1 epoch 10/10 | batch 4000/7902 | loss 2.7871 acc 0.5636
+Stage 1 epoch 10/10 | batch 4250/7902 | loss 2.7874 acc 0.5638
+Stage 1 epoch 10/10 | batch 4500/7902 | loss 2.7893 acc 0.5631
+Stage 1 epoch 10/10 | batch 4750/7902 | loss 2.7883 acc 0.5636
+Stage 1 epoch 10/10 | batch 5000/7902 | loss 2.7845 acc 0.5646
+Stage 1 epoch 10/10 | batch 5250/7902 | loss 2.7790 acc 0.5661
+Stage 1 epoch 10/10 | batch 5500/7902 | loss 2.7770 acc 0.5664
+Stage 1 epoch 10/10 | batch 5750/7902 | loss 2.7764 acc 0.5660
+Stage 1 epoch 10/10 | batch 6000/7902 | loss 2.7790 acc 0.5654
+Stage 1 epoch 10/10 | batch 6250/7902 | loss 2.7790 acc 0.5651
+Stage 1 epoch 10/10 | batch 6500/7902 | loss 2.7814 acc 0.5639
+Stage 1 epoch 10/10 | batch 6750/7902 | loss 2.7807 acc 0.5640
+Stage 1 epoch 10/10 | batch 7000/7902 | loss 2.7780 acc 0.5648
+Stage 1 epoch 10/10 | batch 7250/7902 | loss 2.7775 acc 0.5647
+Stage 1 epoch 10/10 | batch 7500/7902 | loss 2.7754 acc 0.5653
+Stage 1 epoch 10/10 | batch 7750/7902 | loss 2.7737 acc 0.5658
+Stage 1 epoch 10/10 | batch 7902/7902 | loss 2.7742 acc 0.5656
+Stage 1 validation 10/10 | batch 100/967
+Stage 1 validation 10/10 | batch 200/967
+Stage 1 validation 10/10 | batch 300/967
+Stage 1 validation 10/10 | batch 400/967
+Stage 1 validation 10/10 | batch 500/967
+Stage 1 validation 10/10 | batch 600/967
+Stage 1 validation 10/10 | batch 700/967
+Stage 1 validation 10/10 | batch 800/967
+Stage 1 validation 10/10 | batch 900/967
+Stage 1 validation 10/10 | batch 967/967
+Epoch 10/10 | Train Loss: 2.7742 Acc: 0.5656 | Val Loss: 3.0701 Acc: 0.3591
+Loaded best stage-1 checkpoint (val acc 0.3688)
+Progressive unfreezing: training final 2/5 blocks
+Label mixing: mixup/cutmix (alpha=0.1)
+=== Stage 2: Fine-tuning full model ===
+Stage 2 epoch 1: training final 2/5 blocks
+Stage 2 epoch 1/20 | batch 250/7902 | loss 6.8939 acc~0.0885
+Stage 2 epoch 1/20 | batch 500/7902 | loss 6.0839 acc~0.0985
+Stage 2 epoch 1/20 | batch 750/7902 | loss 5.6542 acc~0.1095
+Stage 2 epoch 1/20 | batch 1000/7902 | loss 5.3934 acc~0.1201
+Stage 2 epoch 1/20 | batch 1250/7902 | loss 5.2358 acc~0.1281
+Stage 2 epoch 1/20 | batch 1500/7902 | loss 5.1060 acc~0.1352
+Stage 2 epoch 1/20 | batch 1750/7902 | loss 5.0078 acc~0.1414
+Stage 2 epoch 1/20 | batch 2000/7902 | loss 4.9260 acc~0.1477
+Stage 2 epoch 1/20 | batch 2250/7902 | loss 4.8553 acc~0.1518
+Stage 2 epoch 1/20 | batch 2500/7902 | loss 4.7945 acc~0.1571
+Stage 2 epoch 1/20 | batch 2750/7902 | loss 4.7396 acc~0.1619
+Stage 2 epoch 1/20 | batch 3000/7902 | loss 4.7017 acc~0.1644
+Stage 2 epoch 1/20 | batch 3250/7902 | loss 4.6561 acc~0.1680
+Stage 2 epoch 1/20 | batch 3500/7902 | loss 4.6155 acc~0.1717
+Stage 2 epoch 1/20 | batch 3750/7902 | loss 4.5727 acc~0.1746
+Stage 2 epoch 1/20 | batch 4000/7902 | loss 4.5471 acc~0.1757
+Stage 2 epoch 1/20 | batch 4250/7902 | loss 4.5271 acc~0.1771
+Stage 2 epoch 1/20 | batch 4500/7902 | loss 4.5024 acc~0.1792
+Stage 2 epoch 1/20 | batch 4750/7902 | loss 4.4809 acc~0.1811
+Stage 2 epoch 1/20 | batch 5000/7902 | loss 4.4621 acc~0.1830
+Stage 2 epoch 1/20 | batch 5250/7902 | loss 4.4444 acc~0.1858
+Stage 2 epoch 1/20 | batch 5500/7902 | loss 4.4276 acc~0.1868
+Stage 2 epoch 1/20 | batch 5750/7902 | loss 4.4093 acc~0.1883
+Stage 2 epoch 1/20 | batch 6000/7902 | loss 4.3906 acc~0.1897
+Stage 2 epoch 1/20 | batch 6250/7902 | loss 4.3776 acc~0.1909
+Stage 2 epoch 1/20 | batch 6500/7902 | loss 4.3661 acc~0.1913
+Stage 2 epoch 1/20 | batch 6750/7902 | loss 4.3543 acc~0.1929
+Stage 2 epoch 1/20 | batch 7000/7902 | loss 4.3451 acc~0.1941
+Stage 2 epoch 1/20 | batch 7250/7902 | loss 4.3328 acc~0.1962
+Stage 2 epoch 1/20 | batch 7500/7902 | loss 4.3228 acc~0.1974
+Stage 2 epoch 1/20 | batch 7750/7902 | loss 4.3129 acc~0.1985
+Stage 2 epoch 1/20 | batch 7902/7902 | loss 4.3051 acc~0.2000
+Stage 2 validation 1/20 | batch 100/967
+Stage 2 validation 1/20 | batch 200/967
+Stage 2 validation 1/20 | batch 300/967
+Stage 2 validation 1/20 | batch 400/967
+Stage 2 validation 1/20 | batch 500/967
+Stage 2 validation 1/20 | batch 600/967
+Stage 2 validation 1/20 | batch 700/967
+Stage 2 validation 1/20 | batch 800/967
+Stage 2 validation 1/20 | batch 900/967
+Stage 2 validation 1/20 | batch 967/967
+Epoch 1/20 | Train Loss: 4.3051 Acc: 0.2000 | Val Loss: 8.1692 Acc: 0.4241
+Stage 2 epoch 2: training final 2/5 blocks
+Stage 2 epoch 2/20 | batch 250/7902 | loss 3.8665 acc~0.2290
+Stage 2 epoch 2/20 | batch 500/7902 | loss 3.9600 acc~0.2233
+Stage 2 epoch 2/20 | batch 750/7902 | loss 3.9602 acc~0.2222
+Stage 2 epoch 2/20 | batch 1000/7902 | loss 3.9465 acc~0.2268
+Stage 2 epoch 2/20 | batch 1250/7902 | loss 3.9329 acc~0.2322
+Stage 2 epoch 2/20 | batch 1500/7902 | loss 3.9201 acc~0.2352
+Stage 2 epoch 2/20 | batch 1750/7902 | loss 3.9247 acc~0.2345
+Stage 2 epoch 2/20 | batch 2000/7902 | loss 3.9296 acc~0.2352
+Stage 2 epoch 2/20 | batch 2250/7902 | loss 3.9235 acc~0.2370
+Stage 2 epoch 2/20 | batch 2500/7902 | loss 3.9256 acc~0.2351
+Stage 2 epoch 2/20 | batch 2750/7902 | loss 3.9325 acc~0.2356
+Stage 2 epoch 2/20 | batch 3000/7902 | loss 3.9331 acc~0.2364
+Stage 2 epoch 2/20 | batch 3250/7902 | loss 3.9387 acc~0.2358
+Stage 2 epoch 2/20 | batch 3500/7902 | loss 3.9353 acc~0.2371
+Stage 2 epoch 2/20 | batch 3750/7902 | loss 3.9358 acc~0.2381
+Stage 2 epoch 2/20 | batch 4000/7902 | loss 3.9404 acc~0.2372
+Stage 2 epoch 2/20 | batch 4250/7902 | loss 3.9434 acc~0.2373
+Stage 2 epoch 2/20 | batch 4500/7902 | loss 3.9401 acc~0.2386
+Stage 2 epoch 2/20 | batch 4750/7902 | loss 3.9298 acc~0.2401
+Stage 2 epoch 2/20 | batch 5000/7902 | loss 3.9269 acc~0.2407
+Stage 2 epoch 2/20 | batch 5250/7902 | loss 3.9180 acc~0.2412
+Stage 2 epoch 2/20 | batch 5500/7902 | loss 3.9127 acc~0.2424
+Stage 2 epoch 2/20 | batch 5750/7902 | loss 3.9077 acc~0.2427
+Stage 2 epoch 2/20 | batch 6000/7902 | loss 3.9015 acc~0.2436
+Stage 2 epoch 2/20 | batch 6250/7902 | loss 3.8982 acc~0.2441
+Stage 2 epoch 2/20 | batch 6500/7902 | loss 3.8933 acc~0.2452
+Stage 2 epoch 2/20 | batch 6750/7902 | loss 3.8903 acc~0.2455
+Stage 2 epoch 2/20 | batch 7000/7902 | loss 3.8869 acc~0.2466
+Stage 2 epoch 2/20 | batch 7250/7902 | loss 3.8825 acc~0.2469
+Stage 2 epoch 2/20 | batch 7500/7902 | loss 3.8784 acc~0.2480
+Stage 2 epoch 2/20 | batch 7750/7902 | loss 3.8782 acc~0.2481
+Stage 2 epoch 2/20 | batch 7902/7902 | loss 3.8793 acc~0.2474
+Stage 2 validation 2/20 | batch 100/967
+Stage 2 validation 2/20 | batch 200/967
+Stage 2 validation 2/20 | batch 300/967
+Stage 2 validation 2/20 | batch 400/967
+Stage 2 validation 2/20 | batch 500/967
+Stage 2 validation 2/20 | batch 600/967
+Stage 2 validation 2/20 | batch 700/967
+Stage 2 validation 2/20 | batch 800/967
+Stage 2 validation 2/20 | batch 900/967
+Stage 2 validation 2/20 | batch 967/967
+Epoch 2/20 | Train Loss: 3.8793 Acc: 0.2474 | Val Loss: 9.4808 Acc: 0.4482
+Stage 2 epoch 3: training final 2/5 blocks
+Stage 2 epoch 3/20 | batch 250/7902 | loss 3.8337 acc~0.2610
+Stage 2 epoch 3/20 | batch 500/7902 | loss 3.8214 acc~0.2542
+Stage 2 epoch 3/20 | batch 750/7902 | loss 3.7939 acc~0.2572
+Stage 2 epoch 3/20 | batch 1000/7902 | loss 3.7734 acc~0.2626
+Stage 2 epoch 3/20 | batch 1250/7902 | loss 3.7462 acc~0.2723
+Stage 2 epoch 3/20 | batch 1500/7902 | loss 3.7422 acc~0.2701
+Stage 2 epoch 3/20 | batch 1750/7902 | loss 3.7394 acc~0.2696
+Stage 2 epoch 3/20 | batch 2000/7902 | loss 3.7465 acc~0.2714
+Stage 2 epoch 3/20 | batch 2250/7902 | loss 3.7441 acc~0.2717
+Stage 2 epoch 3/20 | batch 2500/7902 | loss 3.7401 acc~0.2701
+Stage 2 epoch 3/20 | batch 2750/7902 | loss 3.7303 acc~0.2721
+Stage 2 epoch 3/20 | batch 3000/7902 | loss 3.7356 acc~0.2730
+Stage 2 epoch 3/20 | batch 3250/7902 | loss 3.7315 acc~0.2725
+Stage 2 epoch 3/20 | batch 3500/7902 | loss 3.7325 acc~0.2725
+Stage 2 epoch 3/20 | batch 3750/7902 | loss 3.7311 acc~0.2734
+Stage 2 epoch 3/20 | batch 4000/7902 | loss 3.7197 acc~0.2747
+Stage 2 epoch 3/20 | batch 4250/7902 | loss 3.7184 acc~0.2762
+Stage 2 epoch 3/20 | batch 4500/7902 | loss 3.7221 acc~0.2749
+Stage 2 epoch 3/20 | batch 4750/7902 | loss 3.7119 acc~0.2772
+Stage 2 epoch 3/20 | batch 5000/7902 | loss 3.7076 acc~0.2777
+Stage 2 epoch 3/20 | batch 5250/7902 | loss 3.7099 acc~0.2759
+Stage 2 epoch 3/20 | batch 5500/7902 | loss 3.7129 acc~0.2764
+Stage 2 epoch 3/20 | batch 5750/7902 | loss 3.7127 acc~0.2760
+Stage 2 epoch 3/20 | batch 6000/7902 | loss 3.7130 acc~0.2771
+Stage 2 epoch 3/20 | batch 6250/7902 | loss 3.7100 acc~0.2775
+Stage 2 epoch 3/20 | batch 6500/7902 | loss 3.7098 acc~0.2775
+Stage 2 epoch 3/20 | batch 6750/7902 | loss 3.7108 acc~0.2771
+Stage 2 epoch 3/20 | batch 7000/7902 | loss 3.7112 acc~0.2757
+Stage 2 epoch 3/20 | batch 7250/7902 | loss 3.7086 acc~0.2757
+Stage 2 epoch 3/20 | batch 7500/7902 | loss 3.7096 acc~0.2756
+Stage 2 epoch 3/20 | batch 7750/7902 | loss 3.7074 acc~0.2758
+Stage 2 epoch 3/20 | batch 7902/7902 | loss 3.7061 acc~0.2760
+Stage 2 validation 3/20 | batch 100/967
+Stage 2 validation 3/20 | batch 200/967
+Stage 2 validation 3/20 | batch 300/967
+Stage 2 validation 3/20 | batch 400/967
+Stage 2 validation 3/20 | batch 500/967
+Stage 2 validation 3/20 | batch 600/967
+Stage 2 validation 3/20 | batch 700/967
+Stage 2 validation 3/20 | batch 800/967
+Stage 2 validation 3/20 | batch 900/967
+Stage 2 validation 3/20 | batch 967/967
+Epoch 3/20 | Train Loss: 3.7061 Acc: 0.2760 | Val Loss: 4.4536 Acc: 0.4703
+Stage 2 epoch 4: training final 2/5 blocks
+Stage 2 epoch 4/20 | batch 250/7902 | loss 3.6937 acc~0.3070
+Stage 2 epoch 4/20 | batch 500/7902 | loss 3.6404 acc~0.3013
+Stage 2 epoch 4/20 | batch 750/7902 | loss 3.6419 acc~0.2938
+Stage 2 epoch 4/20 | batch 1000/7902 | loss 3.6346 acc~0.2900
+Stage 2 epoch 4/20 | batch 1250/7902 | loss 3.6401 acc~0.2876
+Stage 2 epoch 4/20 | batch 1500/7902 | loss 3.6393 acc~0.2918
+Stage 2 epoch 4/20 | batch 1750/7902 | loss 3.6395 acc~0.2925
+Stage 2 epoch 4/20 | batch 2000/7902 | loss 3.6312 acc~0.2921
+Stage 2 epoch 4/20 | batch 2250/7902 | loss 3.6121 acc~0.2944
+Stage 2 epoch 4/20 | batch 2500/7902 | loss 3.6149 acc~0.2933
+Stage 2 epoch 4/20 | batch 2750/7902 | loss 3.6032 acc~0.2943
+Stage 2 epoch 4/20 | batch 3000/7902 | loss 3.5999 acc~0.2950
+Stage 2 epoch 4/20 | batch 3250/7902 | loss 3.5978 acc~0.2950
+Stage 2 epoch 4/20 | batch 3500/7902 | loss 3.6071 acc~0.2928
+Stage 2 epoch 4/20 | batch 3750/7902 | loss 3.6062 acc~0.2910
+Stage 2 epoch 4/20 | batch 4000/7902 | loss 3.6089 acc~0.2898
+Stage 2 epoch 4/20 | batch 4250/7902 | loss 3.6160 acc~0.2903
+Stage 2 epoch 4/20 | batch 4500/7902 | loss 3.6196 acc~0.2906
+Stage 2 epoch 4/20 | batch 4750/7902 | loss 3.6166 acc~0.2912
+Stage 2 epoch 4/20 | batch 5000/7902 | loss 3.6162 acc~0.2909
+Stage 2 epoch 4/20 | batch 5250/7902 | loss 3.6160 acc~0.2911
+Stage 2 epoch 4/20 | batch 5500/7902 | loss 3.6129 acc~0.2911
+Stage 2 epoch 4/20 | batch 5750/7902 | loss 3.6077 acc~0.2919
+Stage 2 epoch 4/20 | batch 6000/7902 | loss 3.6062 acc~0.2927
+Stage 2 epoch 4/20 | batch 6250/7902 | loss 3.6021 acc~0.2937
+Stage 2 epoch 4/20 | batch 6500/7902 | loss 3.6011 acc~0.2937
+Stage 2 epoch 4/20 | batch 6750/7902 | loss 3.6021 acc~0.2928
+Stage 2 epoch 4/20 | batch 7000/7902 | loss 3.6063 acc~0.2927
+Stage 2 epoch 4/20 | batch 7250/7902 | loss 3.6077 acc~0.2930
+Stage 2 epoch 4/20 | batch 7500/7902 | loss 3.6041 acc~0.2932
+Stage 2 epoch 4/20 | batch 7750/7902 | loss 3.6004 acc~0.2931
+Stage 2 epoch 4/20 | batch 7902/7902 | loss 3.5991 acc~0.2934
+Stage 2 validation 4/20 | batch 100/967
+Stage 2 validation 4/20 | batch 200/967
+Stage 2 validation 4/20 | batch 300/967
+Stage 2 validation 4/20 | batch 400/967
+Stage 2 validation 4/20 | batch 500/967
+Stage 2 validation 4/20 | batch 600/967
+Stage 2 validation 4/20 | batch 700/967
+Stage 2 validation 4/20 | batch 800/967
+Stage 2 validation 4/20 | batch 900/967
+Stage 2 validation 4/20 | batch 967/967
+Epoch 4/20 | Train Loss: 3.5991 Acc: 0.2934 | Val Loss: 4.0697 Acc: 0.5100
+Stage 2 epoch 5: training final 2/5 blocks
+Stage 2 epoch 5/20 | batch 250/7902 | loss 3.5373 acc~0.2950
+Stage 2 epoch 5/20 | batch 500/7902 | loss 3.5354 acc~0.2910
+Stage 2 epoch 5/20 | batch 750/7902 | loss 3.4882 acc~0.3010
+Stage 2 epoch 5/20 | batch 1000/7902 | loss 3.4860 acc~0.3050
+Stage 2 epoch 5/20 | batch 1250/7902 | loss 3.4906 acc~0.3072
+Stage 2 epoch 5/20 | batch 1500/7902 | loss 3.4943 acc~0.3095
+Stage 2 epoch 5/20 | batch 1750/7902 | loss 3.4891 acc~0.3116
+Stage 2 epoch 5/20 | batch 2000/7902 | loss 3.4872 acc~0.3141
+Stage 2 epoch 5/20 | batch 2250/7902 | loss 3.4878 acc~0.3157
+Stage 2 epoch 5/20 | batch 2500/7902 | loss 3.4759 acc~0.3160
+Stage 2 epoch 5/20 | batch 2750/7902 | loss 3.4819 acc~0.3163
+Stage 2 epoch 5/20 | batch 3000/7902 | loss 3.4904 acc~0.3164
+Stage 2 epoch 5/20 | batch 3250/7902 | loss 3.5073 acc~0.3136
+Stage 2 epoch 5/20 | batch 3500/7902 | loss 3.5214 acc~0.3099
+Stage 2 epoch 5/20 | batch 3750/7902 | loss 3.5269 acc~0.3096
+Stage 2 epoch 5/20 | batch 4000/7902 | loss 3.5271 acc~0.3097
+Stage 2 epoch 5/20 | batch 4250/7902 | loss 3.5332 acc~0.3089
+Stage 2 epoch 5/20 | batch 4500/7902 | loss 3.5368 acc~0.3087
+Stage 2 epoch 5/20 | batch 4750/7902 | loss 3.5369 acc~0.3074
+Stage 2 epoch 5/20 | batch 5000/7902 | loss 3.5366 acc~0.3076
+Stage 2 epoch 5/20 | batch 5250/7902 | loss 3.5314 acc~0.3081
+Stage 2 epoch 5/20 | batch 5500/7902 | loss 3.5321 acc~0.3077
+Stage 2 epoch 5/20 | batch 5750/7902 | loss 3.5317 acc~0.3064
+Stage 2 epoch 5/20 | batch 6000/7902 | loss 3.5293 acc~0.3073
+Stage 2 epoch 5/20 | batch 6250/7902 | loss 3.5275 acc~0.3067
+Stage 2 epoch 5/20 | batch 6500/7902 | loss 3.5263 acc~0.3068
+Stage 2 epoch 5/20 | batch 6750/7902 | loss 3.5261 acc~0.3065
+Stage 2 epoch 5/20 | batch 7000/7902 | loss 3.5233 acc~0.3070
+Stage 2 epoch 5/20 | batch 7250/7902 | loss 3.5193 acc~0.3062
+Stage 2 epoch 5/20 | batch 7500/7902 | loss 3.5189 acc~0.3062
+Stage 2 epoch 5/20 | batch 7750/7902 | loss 3.5151 acc~0.3072
+Stage 2 epoch 5/20 | batch 7902/7902 | loss 3.5132 acc~0.3068
+Stage 2 validation 5/20 | batch 100/967
+Stage 2 validation 5/20 | batch 200/967
+Stage 2 validation 5/20 | batch 300/967
+Stage 2 validation 5/20 | batch 400/967
+Stage 2 validation 5/20 | batch 500/967
+Stage 2 validation 5/20 | batch 600/967
+Stage 2 validation 5/20 | batch 700/967
+Stage 2 validation 5/20 | batch 800/967
+Stage 2 validation 5/20 | batch 900/967
+Stage 2 validation 5/20 | batch 967/967
+Epoch 5/20 | Train Loss: 3.5132 Acc: 0.3068 | Val Loss: 2.2966 Acc: 0.5304
+Stage 2 epoch 6: training final 2/5 blocks
+Stage 2 epoch 6/20 | batch 250/7902 | loss 3.3719 acc~0.3245
+Stage 2 epoch 6/20 | batch 500/7902 | loss 3.3714 acc~0.3347
+Stage 2 epoch 6/20 | batch 750/7902 | loss 3.3966 acc~0.3325
+Stage 2 epoch 6/20 | batch 1000/7902 | loss 3.4112 acc~0.3226
+Stage 2 epoch 6/20 | batch 1250/7902 | loss 3.4265 acc~0.3194
+Stage 2 epoch 6/20 | batch 1500/7902 | loss 3.4333 acc~0.3178
+Stage 2 epoch 6/20 | batch 1750/7902 | loss 3.4166 acc~0.3212
+Stage 2 epoch 6/20 | batch 2000/7902 | loss 3.4162 acc~0.3212
+Stage 2 epoch 6/20 | batch 2250/7902 | loss 3.4147 acc~0.3212
+Stage 2 epoch 6/20 | batch 2500/7902 | loss 3.4099 acc~0.3219
+Stage 2 epoch 6/20 | batch 2750/7902 | loss 3.4129 acc~0.3233
+Stage 2 epoch 6/20 | batch 3000/7902 | loss 3.4062 acc~0.3236
+Stage 2 epoch 6/20 | batch 3250/7902 | loss 3.4080 acc~0.3223
+Stage 2 epoch 6/20 | batch 3500/7902 | loss 3.4036 acc~0.3230
+Stage 2 epoch 6/20 | batch 3750/7902 | loss 3.3989 acc~0.3257
+Stage 2 epoch 6/20 | batch 4000/7902 | loss 3.3972 acc~0.3270
+Stage 2 epoch 6/20 | batch 4250/7902 | loss 3.3945 acc~0.3269
+Stage 2 epoch 6/20 | batch 4500/7902 | loss 3.4032 acc~0.3261
+Stage 2 epoch 6/20 | batch 4750/7902 | loss 3.4101 acc~0.3254
+Stage 2 epoch 6/20 | batch 5000/7902 | loss 3.4145 acc~0.3251
+Stage 2 epoch 6/20 | batch 5250/7902 | loss 3.4162 acc~0.3246
+Stage 2 epoch 6/20 | batch 5500/7902 | loss 3.4149 acc~0.3246
+Stage 2 epoch 6/20 | batch 5750/7902 | loss 3.4153 acc~0.3242
+Stage 2 epoch 6/20 | batch 6000/7902 | loss 3.4163 acc~0.3246
+Stage 2 epoch 6/20 | batch 6250/7902 | loss 3.4170 acc~0.3247
+Stage 2 epoch 6/20 | batch 6500/7902 | loss 3.4139 acc~0.3257
+Stage 2 epoch 6/20 | batch 6750/7902 | loss 3.4071 acc~0.3260
+Stage 2 epoch 6/20 | batch 7000/7902 | loss 3.4052 acc~0.3274
+Stage 2 epoch 6/20 | batch 7250/7902 | loss 3.4033 acc~0.3269
+Stage 2 epoch 6/20 | batch 7500/7902 | loss 3.4000 acc~0.3269
+Stage 2 epoch 6/20 | batch 7750/7902 | loss 3.3952 acc~0.3275
+Stage 2 epoch 6/20 | batch 7902/7902 | loss 3.3968 acc~0.3275
+Stage 2 validation 6/20 | batch 100/967
+Stage 2 validation 6/20 | batch 200/967
+Stage 2 validation 6/20 | batch 300/967
+Stage 2 validation 6/20 | batch 400/967
+Stage 2 validation 6/20 | batch 500/967
+Stage 2 validation 6/20 | batch 600/967
+Stage 2 validation 6/20 | batch 700/967
+Stage 2 validation 6/20 | batch 800/967
+Stage 2 validation 6/20 | batch 900/967
+Stage 2 validation 6/20 | batch 967/967
+Epoch 6/20 | Train Loss: 3.3968 Acc: 0.3275 | Val Loss: 8.6108 Acc: 0.4740
+Stage 2 epoch 7: training final 3/5 blocks
+Stage 2 epoch 7/20 | batch 250/7902 | loss 3.4674 acc~0.3440
+Stage 2 epoch 7/20 | batch 500/7902 | loss 3.4965 acc~0.3287
+Stage 2 epoch 7/20 | batch 750/7902 | loss 3.4861 acc~0.3193
+Stage 2 epoch 7/20 | batch 1000/7902 | loss 3.4719 acc~0.3150
+Stage 2 epoch 7/20 | batch 1250/7902 | loss 3.4865 acc~0.3144
+Stage 2 epoch 7/20 | batch 1500/7902 | loss 3.4943 acc~0.3129
+Stage 2 epoch 7/20 | batch 1750/7902 | loss 3.5043 acc~0.3085
+Stage 2 epoch 7/20 | batch 2000/7902 | loss 3.5026 acc~0.3105
+Stage 2 epoch 7/20 | batch 2250/7902 | loss 3.5142 acc~0.3092
+Stage 2 epoch 7/20 | batch 2500/7902 | loss 3.5224 acc~0.3073
+Stage 2 epoch 7/20 | batch 2750/7902 | loss 3.5121 acc~0.3059
+Stage 2 epoch 7/20 | batch 3000/7902 | loss 3.5187 acc~0.3048
+Stage 2 epoch 7/20 | batch 3250/7902 | loss 3.5228 acc~0.3052
+Stage 2 epoch 7/20 | batch 3500/7902 | loss 3.5256 acc~0.3039
+Stage 2 epoch 7/20 | batch 3750/7902 | loss 3.5278 acc~0.3044
+Stage 2 epoch 7/20 | batch 4000/7902 | loss 3.5279 acc~0.3048
+Stage 2 epoch 7/20 | batch 4250/7902 | loss 3.5208 acc~0.3059
+Stage 2 epoch 7/20 | batch 4500/7902 | loss 3.5115 acc~0.3056
+Stage 2 epoch 7/20 | batch 4750/7902 | loss 3.5086 acc~0.3063
+Stage 2 epoch 7/20 | batch 5000/7902 | loss 3.5033 acc~0.3063
+Stage 2 epoch 7/20 | batch 5250/7902 | loss 3.4998 acc~0.3063
+Stage 2 epoch 7/20 | batch 5500/7902 | loss 3.5001 acc~0.3058
+Stage 2 epoch 7/20 | batch 5750/7902 | loss 3.5047 acc~0.3047
+Stage 2 epoch 7/20 | batch 6000/7902 | loss 3.5037 acc~0.3051
+Stage 2 epoch 7/20 | batch 6250/7902 | loss 3.5061 acc~0.3036
+Stage 2 epoch 7/20 | batch 6500/7902 | loss 3.5086 acc~0.3045
+Stage 2 epoch 7/20 | batch 6750/7902 | loss 3.5092 acc~0.3051
+Stage 2 epoch 7/20 | batch 7000/7902 | loss 3.5081 acc~0.3049
+Stage 2 epoch 7/20 | batch 7250/7902 | loss 3.5057 acc~0.3056
+Stage 2 epoch 7/20 | batch 7500/7902 | loss 3.5042 acc~0.3064
+Stage 2 epoch 7/20 | batch 7750/7902 | loss 3.5009 acc~0.3067
+Stage 2 epoch 7/20 | batch 7902/7902 | loss 3.4964 acc~0.3076
+Stage 2 validation 7/20 | batch 100/967
+Stage 2 validation 7/20 | batch 200/967
+Stage 2 validation 7/20 | batch 300/967
+Stage 2 validation 7/20 | batch 400/967
+Stage 2 validation 7/20 | batch 500/967
+Stage 2 validation 7/20 | batch 600/967
+Stage 2 validation 7/20 | batch 700/967
+Stage 2 validation 7/20 | batch 800/967
+Stage 2 validation 7/20 | batch 900/967
+Stage 2 validation 7/20 | batch 967/967
+Epoch 7/20 | Train Loss: 3.4964 Acc: 0.3076 | Val Loss: 4.5561 Acc: 0.5129
+Stage 2 epoch 8: training final 3/5 blocks
+Stage 2 epoch 8/20 | batch 250/7902 | loss 3.2952 acc~0.3385
+Stage 2 epoch 8/20 | batch 500/7902 | loss 3.2906 acc~0.3337
+Stage 2 epoch 8/20 | batch 750/7902 | loss 3.2625 acc~0.3475
+Stage 2 epoch 8/20 | batch 1000/7902 | loss 3.2772 acc~0.3427
+Stage 2 epoch 8/20 | batch 1250/7902 | loss 3.3079 acc~0.3360
+Stage 2 epoch 8/20 | batch 1500/7902 | loss 3.3292 acc~0.3350
+Stage 2 epoch 8/20 | batch 1750/7902 | loss 3.3272 acc~0.3311
+Stage 2 epoch 8/20 | batch 2000/7902 | loss 3.3328 acc~0.3296
+Stage 2 epoch 8/20 | batch 2250/7902 | loss 3.3365 acc~0.3286
+Stage 2 epoch 8/20 | batch 2500/7902 | loss 3.3392 acc~0.3296
+Stage 2 epoch 8/20 | batch 2750/7902 | loss 3.3441 acc~0.3274
+Stage 2 epoch 8/20 | batch 3000/7902 | loss 3.3537 acc~0.3276
+Stage 2 epoch 8/20 | batch 3250/7902 | loss 3.3546 acc~0.3270
+Stage 2 epoch 8/20 | batch 3500/7902 | loss 3.3673 acc~0.3254
+Stage 2 epoch 8/20 | batch 3750/7902 | loss 3.3683 acc~0.3283
+Stage 2 epoch 8/20 | batch 4000/7902 | loss 3.3626 acc~0.3278
+Stage 2 epoch 8/20 | batch 4250/7902 | loss 3.3653 acc~0.3273
+Stage 2 epoch 8/20 | batch 4500/7902 | loss 3.3639 acc~0.3289
+Stage 2 epoch 8/20 | batch 4750/7902 | loss 3.3604 acc~0.3305
+Stage 2 epoch 8/20 | batch 5000/7902 | loss 3.3581 acc~0.3308
+Stage 2 epoch 8/20 | batch 5250/7902 | loss 3.3589 acc~0.3297
+Stage 2 epoch 8/20 | batch 5500/7902 | loss 3.3550 acc~0.3303
+Stage 2 epoch 8/20 | batch 5750/7902 | loss 3.3506 acc~0.3314
+Stage 2 epoch 8/20 | batch 6000/7902 | loss 3.3443 acc~0.3309
+Stage 2 epoch 8/20 | batch 6250/7902 | loss 3.3435 acc~0.3309
+Stage 2 epoch 8/20 | batch 6500/7902 | loss 3.3372 acc~0.3319
+Stage 2 epoch 8/20 | batch 6750/7902 | loss 3.3311 acc~0.3331
+Stage 2 epoch 8/20 | batch 7000/7902 | loss 3.3269 acc~0.3340
+Stage 2 epoch 8/20 | batch 7250/7902 | loss 3.3215 acc~0.3351
+Stage 2 epoch 8/20 | batch 7500/7902 | loss 3.3172 acc~0.3358
+Stage 2 epoch 8/20 | batch 7750/7902 | loss 3.3111 acc~0.3369
+Stage 2 epoch 8/20 | batch 7902/7902 | loss 3.3109 acc~0.3365
+Stage 2 validation 8/20 | batch 100/967
+Stage 2 validation 8/20 | batch 200/967
+Stage 2 validation 8/20 | batch 300/967
+Stage 2 validation 8/20 | batch 400/967
+Stage 2 validation 8/20 | batch 500/967
+Stage 2 validation 8/20 | batch 600/967
+Stage 2 validation 8/20 | batch 700/967
+Stage 2 validation 8/20 | batch 800/967
+Stage 2 validation 8/20 | batch 900/967
+Stage 2 validation 8/20 | batch 967/967
+Epoch 8/20 | Train Loss: 3.3109 Acc: 0.3365 | Val Loss: 69.1957 Acc: 0.4034
+Stage 2 epoch 9: training final 3/5 blocks
+Stage 2 epoch 9/20 | batch 250/7902 | loss 3.1227 acc~0.3430
+Stage 2 epoch 9/20 | batch 500/7902 | loss 3.1436 acc~0.3590
+Stage 2 epoch 9/20 | batch 750/7902 | loss 3.1341 acc~0.3572
+Stage 2 epoch 9/20 | batch 1000/7902 | loss 3.1476 acc~0.3641
+Stage 2 epoch 9/20 | batch 1250/7902 | loss 3.1469 acc~0.3682
+Stage 2 epoch 9/20 | batch 1500/7902 | loss 3.1467 acc~0.3663
+Stage 2 epoch 9/20 | batch 1750/7902 | loss 3.1439 acc~0.3696
+Stage 2 epoch 9/20 | batch 2000/7902 | loss 3.1531 acc~0.3690
+Stage 2 epoch 9/20 | batch 2250/7902 | loss 3.1494 acc~0.3688
+Stage 2 epoch 9/20 | batch 2500/7902 | loss 3.1705 acc~0.3659
+Stage 2 epoch 9/20 | batch 2750/7902 | loss 3.1797 acc~0.3623
+Stage 2 epoch 9/20 | batch 3000/7902 | loss 3.1845 acc~0.3623
+Stage 2 epoch 9/20 | batch 3250/7902 | loss 3.1889 acc~0.3630
+Stage 2 epoch 9/20 | batch 3500/7902 | loss 3.1883 acc~0.3633
+Stage 2 epoch 9/20 | batch 3750/7902 | loss 3.1809 acc~0.3658
+Stage 2 epoch 9/20 | batch 4000/7902 | loss 3.1783 acc~0.3672
+Stage 2 epoch 9/20 | batch 4250/7902 | loss 3.1829 acc~0.3676
+Stage 2 epoch 9/20 | batch 4500/7902 | loss 3.1815 acc~0.3684
+Stage 2 epoch 9/20 | batch 4750/7902 | loss 3.1764 acc~0.3682
+Stage 2 epoch 9/20 | batch 5000/7902 | loss 3.1673 acc~0.3685
+Stage 2 epoch 9/20 | batch 5250/7902 | loss 3.1647 acc~0.3689
+Stage 2 epoch 9/20 | batch 5500/7902 | loss 3.1717 acc~0.3677
+Stage 2 epoch 9/20 | batch 5750/7902 | loss 3.1716 acc~0.3684
+Stage 2 epoch 9/20 | batch 6000/7902 | loss 3.1716 acc~0.3680
+Stage 2 epoch 9/20 | batch 6250/7902 | loss 3.1702 acc~0.3673
+Stage 2 epoch 9/20 | batch 6500/7902 | loss 3.1622 acc~0.3683
+Stage 2 epoch 9/20 | batch 6750/7902 | loss 3.1593 acc~0.3689
+Stage 2 epoch 9/20 | batch 7000/7902 | loss 3.1576 acc~0.3692
+Stage 2 epoch 9/20 | batch 7250/7902 | loss 3.1520 acc~0.3689
+Stage 2 epoch 9/20 | batch 7500/7902 | loss 3.1485 acc~0.3690
+Stage 2 epoch 9/20 | batch 7750/7902 | loss 3.1533 acc~0.3665
+Stage 2 epoch 9/20 | batch 7902/7902 | loss 3.1555 acc~0.3664
+Stage 2 validation 9/20 | batch 100/967
+Stage 2 validation 9/20 | batch 200/967
+Stage 2 validation 9/20 | batch 300/967
+Stage 2 validation 9/20 | batch 400/967
+Stage 2 validation 9/20 | batch 500/967
+Stage 2 validation 9/20 | batch 600/967
+Stage 2 validation 9/20 | batch 700/967
+Stage 2 validation 9/20 | batch 800/967
+Stage 2 validation 9/20 | batch 900/967
+Stage 2 validation 9/20 | batch 967/967
+Epoch 9/20 | Train Loss: 3.1555 Acc: 0.3664 | Val Loss: 33.7813 Acc: 0.4855
+Stage 2 epoch 10: training final 3/5 blocks
+Stage 2 epoch 10/20 | batch 250/7902 | loss 3.0142 acc~0.3700
+Stage 2 epoch 10/20 | batch 500/7902 | loss 3.0619 acc~0.3573
+Stage 2 epoch 10/20 | batch 750/7902 | loss 3.0300 acc~0.3715
+Stage 2 epoch 10/20 | batch 1000/7902 | loss 3.0369 acc~0.3784
+Stage 2 epoch 10/20 | batch 1250/7902 | loss 3.0343 acc~0.3806
+Stage 2 epoch 10/20 | batch 1500/7902 | loss 3.0385 acc~0.3836
+Stage 2 epoch 10/20 | batch 1750/7902 | loss 3.0469 acc~0.3849
+Stage 2 epoch 10/20 | batch 2000/7902 | loss 3.0628 acc~0.3791
+Stage 2 epoch 10/20 | batch 2250/7902 | loss 3.0648 acc~0.3767
+Stage 2 epoch 10/20 | batch 2500/7902 | loss 3.0720 acc~0.3747
+Stage 2 epoch 10/20 | batch 2750/7902 | loss 3.0840 acc~0.3745
+Stage 2 epoch 10/20 | batch 3000/7902 | loss 3.0974 acc~0.3734
+Stage 2 epoch 10/20 | batch 3250/7902 | loss 3.1030 acc~0.3726
+Stage 2 epoch 10/20 | batch 3500/7902 | loss 3.1012 acc~0.3739
+Stage 2 epoch 10/20 | batch 3750/7902 | loss 3.1024 acc~0.3716
+Stage 2 epoch 10/20 | batch 4000/7902 | loss 3.1020 acc~0.3717
+Stage 2 epoch 10/20 | batch 4250/7902 | loss 3.0963 acc~0.3729
+Stage 2 epoch 10/20 | batch 4500/7902 | loss 3.0972 acc~0.3731
+Stage 2 epoch 10/20 | batch 4750/7902 | loss 3.0937 acc~0.3747
+Stage 2 epoch 10/20 | batch 5000/7902 | loss 3.0888 acc~0.3749
+Stage 2 epoch 10/20 | batch 5250/7902 | loss 3.0936 acc~0.3738
+Stage 2 epoch 10/20 | batch 5500/7902 | loss 3.0900 acc~0.3743
+Stage 2 epoch 10/20 | batch 5750/7902 | loss 3.0871 acc~0.3747
+Stage 2 epoch 10/20 | batch 6000/7902 | loss 3.0849 acc~0.3747
+Stage 2 epoch 10/20 | batch 6250/7902 | loss 3.0833 acc~0.3752
+Stage 2 epoch 10/20 | batch 6500/7902 | loss 3.0806 acc~0.3770
+Stage 2 epoch 10/20 | batch 6750/7902 | loss 3.0736 acc~0.3790
+Stage 2 epoch 10/20 | batch 7000/7902 | loss 3.0729 acc~0.3795
+Stage 2 epoch 10/20 | batch 7250/7902 | loss 3.0682 acc~0.3805
+Stage 2 epoch 10/20 | batch 7500/7902 | loss 3.0678 acc~0.3818
+Stage 2 epoch 10/20 | batch 7750/7902 | loss 3.0652 acc~0.3820
+Stage 2 epoch 10/20 | batch 7902/7902 | loss 3.0625 acc~0.3829
+Stage 2 validation 10/20 | batch 100/967
+Stage 2 validation 10/20 | batch 200/967
+Stage 2 validation 10/20 | batch 300/967
+Stage 2 validation 10/20 | batch 400/967
+Stage 2 validation 10/20 | batch 500/967
+Stage 2 validation 10/20 | batch 600/967
+Stage 2 validation 10/20 | batch 700/967
+Stage 2 validation 10/20 | batch 800/967
+Stage 2 validation 10/20 | batch 900/967
+Stage 2 validation 10/20 | batch 967/967
+Epoch 10/20 | Train Loss: 3.0625 Acc: 0.3829 | Val Loss: 12.4161 Acc: 0.5217
+Stage 2 epoch 11: training final 3/5 blocks
+Stage 2 epoch 11/20 | batch 250/7902 | loss 3.0170 acc~0.3895
+Stage 2 epoch 11/20 | batch 500/7902 | loss 2.9896 acc~0.3857
+Stage 2 epoch 11/20 | batch 750/7902 | loss 2.9844 acc~0.3895
+Stage 2 epoch 11/20 | batch 1000/7902 | loss 2.9746 acc~0.3951
+Stage 2 epoch 11/20 | batch 1250/7902 | loss 2.9531 acc~0.3984
+Stage 2 epoch 11/20 | batch 1500/7902 | loss 2.9475 acc~0.4005
+Stage 2 epoch 11/20 | batch 1750/7902 | loss 2.9510 acc~0.4054
+Stage 2 epoch 11/20 | batch 2000/7902 | loss 2.9478 acc~0.4060
+Stage 2 epoch 11/20 | batch 2250/7902 | loss 2.9434 acc~0.4080
+Stage 2 epoch 11/20 | batch 2500/7902 | loss 2.9427 acc~0.4113
+Stage 2 epoch 11/20 | batch 2750/7902 | loss 2.9348 acc~0.4115
+Stage 2 epoch 11/20 | batch 3000/7902 | loss 2.9474 acc~0.4094
+Stage 2 epoch 11/20 | batch 3250/7902 | loss 2.9461 acc~0.4112
+Stage 2 epoch 11/20 | batch 3500/7902 | loss 2.9489 acc~0.4115
+Stage 2 epoch 11/20 | batch 3750/7902 | loss 2.9465 acc~0.4135
+Stage 2 epoch 11/20 | batch 4000/7902 | loss 2.9396 acc~0.4126
+Stage 2 epoch 11/20 | batch 4250/7902 | loss 2.9398 acc~0.4114
+Stage 2 epoch 11/20 | batch 4500/7902 | loss 2.9342 acc~0.4113
+Stage 2 epoch 11/20 | batch 4750/7902 | loss 2.9364 acc~0.4111
+Stage 2 epoch 11/20 | batch 5000/7902 | loss 2.9337 acc~0.4122
+Stage 2 epoch 11/20 | batch 5250/7902 | loss 2.9329 acc~0.4128
+Stage 2 epoch 11/20 | batch 5500/7902 | loss 2.9280 acc~0.4132
+Stage 2 epoch 11/20 | batch 5750/7902 | loss 2.9239 acc~0.4136
+Stage 2 epoch 11/20 | batch 6000/7902 | loss 2.9183 acc~0.4138
+Stage 2 epoch 11/20 | batch 6250/7902 | loss 2.9139 acc~0.4147
+Stage 2 epoch 11/20 | batch 6500/7902 | loss 2.9109 acc~0.4152
+Stage 2 epoch 11/20 | batch 6750/7902 | loss 2.9183 acc~0.4146
+Stage 2 epoch 11/20 | batch 7000/7902 | loss 2.9218 acc~0.4138
+Stage 2 epoch 11/20 | batch 7250/7902 | loss 2.9197 acc~0.4135
+Stage 2 epoch 11/20 | batch 7500/7902 | loss 2.9196 acc~0.4133
+Stage 2 epoch 11/20 | batch 7750/7902 | loss 2.9207 acc~0.4120
+Stage 2 epoch 11/20 | batch 7902/7902 | loss 2.9208 acc~0.4128
+Stage 2 validation 11/20 | batch 100/967
+Stage 2 validation 11/20 | batch 200/967
+Stage 2 validation 11/20 | batch 300/967
+Stage 2 validation 11/20 | batch 400/967
+Stage 2 validation 11/20 | batch 500/967
+Stage 2 validation 11/20 | batch 600/967
+Stage 2 validation 11/20 | batch 700/967
+Stage 2 validation 11/20 | batch 800/967
+Stage 2 validation 11/20 | batch 900/967
+Stage 2 validation 11/20 | batch 967/967
+Epoch 11/20 | Train Loss: 2.9208 Acc: 0.4128 | Val Loss: 4.7693 Acc: 0.5658
+Stage 2 epoch 12: training final 3/5 blocks
+Stage 2 epoch 12/20 | batch 250/7902 | loss 2.8796 acc~0.4340
+Stage 2 epoch 12/20 | batch 500/7902 | loss 2.8830 acc~0.4343
+Stage 2 epoch 12/20 | batch 750/7902 | loss 2.9014 acc~0.4257
+Stage 2 epoch 12/20 | batch 1000/7902 | loss 2.8931 acc~0.4208
+Stage 2 epoch 12/20 | batch 1250/7902 | loss 2.8592 acc~0.4243
+Stage 2 epoch 12/20 | batch 1500/7902 | loss 2.8593 acc~0.4268
+Stage 2 epoch 12/20 | batch 1750/7902 | loss 2.8565 acc~0.4273
+Stage 2 epoch 12/20 | batch 2000/7902 | loss 2.8523 acc~0.4278
+Stage 2 epoch 12/20 | batch 2250/7902 | loss 2.8512 acc~0.4284
+Stage 2 epoch 12/20 | batch 2500/7902 | loss 2.8510 acc~0.4285
+Stage 2 epoch 12/20 | batch 2750/7902 | loss 2.8606 acc~0.4264
+Stage 2 epoch 12/20 | batch 3000/7902 | loss 2.8471 acc~0.4287
+Stage 2 epoch 12/20 | batch 3250/7902 | loss 2.8486 acc~0.4286
+Stage 2 epoch 12/20 | batch 3500/7902 | loss 2.8466 acc~0.4275
+Stage 2 epoch 12/20 | batch 3750/7902 | loss 2.8405 acc~0.4283
+Stage 2 epoch 12/20 | batch 4000/7902 | loss 2.8307 acc~0.4286
+Stage 2 epoch 12/20 | batch 4250/7902 | loss 2.8319 acc~0.4293
+Stage 2 epoch 12/20 | batch 4500/7902 | loss 2.8293 acc~0.4304
+Stage 2 epoch 12/20 | batch 4750/7902 | loss 2.8257 acc~0.4312
+Stage 2 epoch 12/20 | batch 5000/7902 | loss 2.8264 acc~0.4297
+Stage 2 epoch 12/20 | batch 5250/7902 | loss 2.8271 acc~0.4297
+Stage 2 epoch 12/20 | batch 5500/7902 | loss 2.8242 acc~0.4298
+Stage 2 epoch 12/20 | batch 5750/7902 | loss 2.8226 acc~0.4305
+Stage 2 epoch 12/20 | batch 6000/7902 | loss 2.8225 acc~0.4295
+Stage 2 epoch 12/20 | batch 6250/7902 | loss 2.8214 acc~0.4290
+Stage 2 epoch 12/20 | batch 6500/7902 | loss 2.8201 acc~0.4299
+Stage 2 epoch 12/20 | batch 6750/7902 | loss 2.8206 acc~0.4294
+Stage 2 epoch 12/20 | batch 7000/7902 | loss 2.8212 acc~0.4301
+Stage 2 epoch 12/20 | batch 7250/7902 | loss 2.8188 acc~0.4308
+Stage 2 epoch 12/20 | batch 7500/7902 | loss 2.8198 acc~0.4306
+Stage 2 epoch 12/20 | batch 7750/7902 | loss 2.8133 acc~0.4323
+Stage 2 epoch 12/20 | batch 7902/7902 | loss 2.8151 acc~0.4318
+Stage 2 validation 12/20 | batch 100/967
+Stage 2 validation 12/20 | batch 200/967
+Stage 2 validation 12/20 | batch 300/967
+Stage 2 validation 12/20 | batch 400/967
+Stage 2 validation 12/20 | batch 500/967
+Stage 2 validation 12/20 | batch 600/967
+Stage 2 validation 12/20 | batch 700/967
+Stage 2 validation 12/20 | batch 800/967
+Stage 2 validation 12/20 | batch 900/967
+Stage 2 validation 12/20 | batch 967/967
+Epoch 12/20 | Train Loss: 2.8151 Acc: 0.4318 | Val Loss: 16.9289 Acc: 0.5180
+Stage 2 epoch 13: training final 5/5 blocks
+Stage 2 epoch 13/20 | batch 250/7902 | loss 2.7983 acc~0.4445
+Stage 2 epoch 13/20 | batch 500/7902 | loss 2.8428 acc~0.4283
+Stage 2 epoch 13/20 | batch 750/7902 | loss 2.8568 acc~0.4250
+Stage 2 epoch 13/20 | batch 1000/7902 | loss 2.8571 acc~0.4329
+Stage 2 epoch 13/20 | batch 1250/7902 | loss 2.8378 acc~0.4335
+Stage 2 epoch 13/20 | batch 1500/7902 | loss 2.8287 acc~0.4310
+Stage 2 epoch 13/20 | batch 1750/7902 | loss 2.8189 acc~0.4331
+Stage 2 epoch 13/20 | batch 2000/7902 | loss 2.8191 acc~0.4362
+Stage 2 epoch 13/20 | batch 2250/7902 | loss 2.8213 acc~0.4356
+Stage 2 epoch 13/20 | batch 2500/7902 | loss 2.8165 acc~0.4395
+Stage 2 epoch 13/20 | batch 2750/7902 | loss 2.8174 acc~0.4373
+Stage 2 epoch 13/20 | batch 3000/7902 | loss 2.8103 acc~0.4372
+Stage 2 epoch 13/20 | batch 3250/7902 | loss 2.8038 acc~0.4376
+Stage 2 epoch 13/20 | batch 3500/7902 | loss 2.8031 acc~0.4372
+Stage 2 epoch 13/20 | batch 3750/7902 | loss 2.8042 acc~0.4363
+Stage 2 epoch 13/20 | batch 4000/7902 | loss 2.7957 acc~0.4369
+Stage 2 epoch 13/20 | batch 4250/7902 | loss 2.7972 acc~0.4388
+Stage 2 epoch 13/20 | batch 4500/7902 | loss 2.7907 acc~0.4396
+Stage 2 epoch 13/20 | batch 4750/7902 | loss 2.7883 acc~0.4397
+Stage 2 epoch 13/20 | batch 5000/7902 | loss 2.7828 acc~0.4400
+Stage 2 epoch 13/20 | batch 5250/7902 | loss 2.7822 acc~0.4388
+Stage 2 epoch 13/20 | batch 5500/7902 | loss 2.7775 acc~0.4391
+Stage 2 epoch 13/20 | batch 5750/7902 | loss 2.7798 acc~0.4392
+Stage 2 epoch 13/20 | batch 6000/7902 | loss 2.7785 acc~0.4395
+Stage 2 epoch 13/20 | batch 6250/7902 | loss 2.7769 acc~0.4401
+Stage 2 epoch 13/20 | batch 6500/7902 | loss 2.7771 acc~0.4402
+Stage 2 epoch 13/20 | batch 6750/7902 | loss 2.7738 acc~0.4413
+Stage 2 epoch 13/20 | batch 7000/7902 | loss 2.7715 acc~0.4426
+Stage 2 epoch 13/20 | batch 7250/7902 | loss 2.7726 acc~0.4429
+Stage 2 epoch 13/20 | batch 7500/7902 | loss 2.7675 acc~0.4422
+Stage 2 epoch 13/20 | batch 7750/7902 | loss 2.7641 acc~0.4437
+Stage 2 epoch 13/20 | batch 7902/7902 | loss 2.7647 acc~0.4443
+Stage 2 validation 13/20 | batch 100/967
+Stage 2 validation 13/20 | batch 200/967
+Stage 2 validation 13/20 | batch 300/967
+Stage 2 validation 13/20 | batch 400/967
+Stage 2 validation 13/20 | batch 500/967
+Stage 2 validation 13/20 | batch 600/967
+Stage 2 validation 13/20 | batch 700/967
+Stage 2 validation 13/20 | batch 800/967
+Stage 2 validation 13/20 | batch 900/967
+Stage 2 validation 13/20 | batch 967/967
+Epoch 13/20 | Train Loss: 2.7647 Acc: 0.4443 | Val Loss: 16.9370 Acc: 0.5933
+Stage 2 epoch 14: training final 5/5 blocks
+Stage 2 epoch 14/20 | batch 250/7902 | loss 2.7388 acc~0.4310
+Stage 2 epoch 14/20 | batch 500/7902 | loss 2.6911 acc~0.4587
+Stage 2 epoch 14/20 | batch 750/7902 | loss 2.7169 acc~0.4528
+Stage 2 epoch 14/20 | batch 1000/7902 | loss 2.7417 acc~0.4447
+Stage 2 epoch 14/20 | batch 1250/7902 | loss 2.7433 acc~0.4438
+Stage 2 epoch 14/20 | batch 1500/7902 | loss 2.7365 acc~0.4493
+Stage 2 epoch 14/20 | batch 1750/7902 | loss 2.7347 acc~0.4436
+Stage 2 epoch 14/20 | batch 2000/7902 | loss 2.7408 acc~0.4438
+Stage 2 epoch 14/20 | batch 2250/7902 | loss 2.7318 acc~0.4427
+Stage 2 epoch 14/20 | batch 2500/7902 | loss 2.7203 acc~0.4467
+Stage 2 epoch 14/20 | batch 2750/7902 | loss 2.7159 acc~0.4504
+Stage 2 epoch 14/20 | batch 3000/7902 | loss 2.7132 acc~0.4500
+Stage 2 epoch 14/20 | batch 3250/7902 | loss 2.7096 acc~0.4512
+Stage 2 epoch 14/20 | batch 3500/7902 | loss 2.7041 acc~0.4532
+Stage 2 epoch 14/20 | batch 3750/7902 | loss 2.6923 acc~0.4541
+Stage 2 epoch 14/20 | batch 4000/7902 | loss 2.6969 acc~0.4526
+Stage 2 epoch 14/20 | batch 4250/7902 | loss 2.6974 acc~0.4538
+Stage 2 epoch 14/20 | batch 4500/7902 | loss 2.6937 acc~0.4554
+Stage 2 epoch 14/20 | batch 4750/7902 | loss 2.6967 acc~0.4550
+Stage 2 epoch 14/20 | batch 5000/7902 | loss 2.7015 acc~0.4509
+Stage 2 epoch 14/20 | batch 5250/7902 | loss 2.7024 acc~0.4500
+Stage 2 epoch 14/20 | batch 5500/7902 | loss 2.6962 acc~0.4514
+Stage 2 epoch 14/20 | batch 5750/7902 | loss 2.6914 acc~0.4531
+Stage 2 epoch 14/20 | batch 6000/7902 | loss 2.6933 acc~0.4526
+Stage 2 epoch 14/20 | batch 6250/7902 | loss 2.6858 acc~0.4531
+Stage 2 epoch 14/20 | batch 6500/7902 | loss 2.6871 acc~0.4517
+Stage 2 epoch 14/20 | batch 6750/7902 | loss 2.6878 acc~0.4525
+Stage 2 epoch 14/20 | batch 7000/7902 | loss 2.6880 acc~0.4521
+Stage 2 epoch 14/20 | batch 7250/7902 | loss 2.6838 acc~0.4533
+Stage 2 epoch 14/20 | batch 7500/7902 | loss 2.6828 acc~0.4528
+Stage 2 epoch 14/20 | batch 7750/7902 | loss 2.6810 acc~0.4533
+Stage 2 epoch 14/20 | batch 7902/7902 | loss 2.6792 acc~0.4534
+Stage 2 validation 14/20 | batch 100/967
+Stage 2 validation 14/20 | batch 200/967
+Stage 2 validation 14/20 | batch 300/967
+Stage 2 validation 14/20 | batch 400/967
+Stage 2 validation 14/20 | batch 500/967
+Stage 2 validation 14/20 | batch 600/967
+Stage 2 validation 14/20 | batch 700/967
+Stage 2 validation 14/20 | batch 800/967
+Stage 2 validation 14/20 | batch 900/967
+Stage 2 validation 14/20 | batch 967/967
+Epoch 14/20 | Train Loss: 2.6792 Acc: 0.4534 | Val Loss: 2.4823 Acc: 0.6468
+Stage 2 epoch 15: training final 5/5 blocks
+Stage 2 epoch 15/20 | batch 250/7902 | loss 2.4810 acc~0.5110
+Stage 2 epoch 15/20 | batch 500/7902 | loss 2.5512 acc~0.4973
+Stage 2 epoch 15/20 | batch 750/7902 | loss 2.5431 acc~0.5042
+Stage 2 epoch 15/20 | batch 1000/7902 | loss 2.5488 acc~0.5002
+Stage 2 epoch 15/20 | batch 1250/7902 | loss 2.5642 acc~0.4990
+Stage 2 epoch 15/20 | batch 1500/7902 | loss 2.5661 acc~0.4954
+Stage 2 epoch 15/20 | batch 1750/7902 | loss 2.5756 acc~0.4944
+Stage 2 epoch 15/20 | batch 2000/7902 | loss 2.5710 acc~0.4946
+Stage 2 epoch 15/20 | batch 2250/7902 | loss 2.5762 acc~0.4932
+Stage 2 epoch 15/20 | batch 2500/7902 | loss 2.5766 acc~0.4913
+Stage 2 epoch 15/20 | batch 2750/7902 | loss 2.5803 acc~0.4878
+Stage 2 epoch 15/20 | batch 3000/7902 | loss 2.5910 acc~0.4813
+Stage 2 epoch 15/20 | batch 3250/7902 | loss 2.5933 acc~0.4771
+Stage 2 epoch 15/20 | batch 3500/7902 | loss 2.5897 acc~0.4775
+Stage 2 epoch 15/20 | batch 3750/7902 | loss 2.5827 acc~0.4767
+Stage 2 epoch 15/20 | batch 4000/7902 | loss 2.5829 acc~0.4768
+Stage 2 epoch 15/20 | batch 4250/7902 | loss 2.5815 acc~0.4788
+Stage 2 epoch 15/20 | batch 4500/7902 | loss 2.5776 acc~0.4781
+Stage 2 epoch 15/20 | batch 4750/7902 | loss 2.5707 acc~0.4804
+Stage 2 epoch 15/20 | batch 5000/7902 | loss 2.5720 acc~0.4792
+Stage 2 epoch 15/20 | batch 5250/7902 | loss 2.5670 acc~0.4806
+Stage 2 epoch 15/20 | batch 5500/7902 | loss 2.5673 acc~0.4805
+Stage 2 epoch 15/20 | batch 5750/7902 | loss 2.5663 acc~0.4815
+Stage 2 epoch 15/20 | batch 6000/7902 | loss 2.5665 acc~0.4810
+Stage 2 epoch 15/20 | batch 6250/7902 | loss 2.5602 acc~0.4819
+Stage 2 epoch 15/20 | batch 6500/7902 | loss 2.5625 acc~0.4815
+Stage 2 epoch 15/20 | batch 6750/7902 | loss 2.5614 acc~0.4812
+Stage 2 epoch 15/20 | batch 7000/7902 | loss 2.5585 acc~0.4817
+Stage 2 epoch 15/20 | batch 7250/7902 | loss 2.5534 acc~0.4824
+Stage 2 epoch 15/20 | batch 7500/7902 | loss 2.5535 acc~0.4821
+Stage 2 epoch 15/20 | batch 7750/7902 | loss 2.5549 acc~0.4806
+Stage 2 epoch 15/20 | batch 7902/7902 | loss 2.5547 acc~0.4803
+Stage 2 validation 15/20 | batch 100/967
+Stage 2 validation 15/20 | batch 200/967
+Stage 2 validation 15/20 | batch 300/967
+Stage 2 validation 15/20 | batch 400/967
+Stage 2 validation 15/20 | batch 500/967
+Stage 2 validation 15/20 | batch 600/967
+Stage 2 validation 15/20 | batch 700/967
+Stage 2 validation 15/20 | batch 800/967
+Stage 2 validation 15/20 | batch 900/967
+Stage 2 validation 15/20 | batch 967/967
+Epoch 15/20 | Train Loss: 2.5547 Acc: 0.4803 | Val Loss: 7.5835 Acc: 0.6383
+Stage 2 epoch 16: training final 5/5 blocks
+Stage 2 epoch 16/20 | batch 250/7902 | loss 2.5475 acc~0.4945
+Stage 2 epoch 16/20 | batch 500/7902 | loss 2.5560 acc~0.4853
+Stage 2 epoch 16/20 | batch 750/7902 | loss 2.5835 acc~0.4740
+Stage 2 epoch 16/20 | batch 1000/7902 | loss 2.6003 acc~0.4635
+Stage 2 epoch 16/20 | batch 1250/7902 | loss 2.5702 acc~0.4737
+Stage 2 epoch 16/20 | batch 1500/7902 | loss 2.5668 acc~0.4730
+Stage 2 epoch 16/20 | batch 1750/7902 | loss 2.5507 acc~0.4751
+Stage 2 epoch 16/20 | batch 2000/7902 | loss 2.5634 acc~0.4742
+Stage 2 epoch 16/20 | batch 2250/7902 | loss 2.5544 acc~0.4751
+Stage 2 epoch 16/20 | batch 2500/7902 | loss 2.5463 acc~0.4783
+Stage 2 epoch 16/20 | batch 2750/7902 | loss 2.5390 acc~0.4808
+Stage 2 epoch 16/20 | batch 3000/7902 | loss 2.5462 acc~0.4829
+Stage 2 epoch 16/20 | batch 3250/7902 | loss 2.5433 acc~0.4811
+Stage 2 epoch 16/20 | batch 3500/7902 | loss 2.5466 acc~0.4809
+Stage 2 epoch 16/20 | batch 3750/7902 | loss 2.5443 acc~0.4804
+Stage 2 epoch 16/20 | batch 4000/7902 | loss 2.5329 acc~0.4816
+Stage 2 epoch 16/20 | batch 4250/7902 | loss 2.5303 acc~0.4822
+Stage 2 epoch 16/20 | batch 4500/7902 | loss 2.5303 acc~0.4835
+Stage 2 epoch 16/20 | batch 4750/7902 | loss 2.5319 acc~0.4845
+Stage 2 epoch 16/20 | batch 5000/7902 | loss 2.5296 acc~0.4842
+Stage 2 epoch 16/20 | batch 5250/7902 | loss 2.5251 acc~0.4848
+Stage 2 epoch 16/20 | batch 5500/7902 | loss 2.5257 acc~0.4843
+Stage 2 epoch 16/20 | batch 5750/7902 | loss 2.5209 acc~0.4843
+Stage 2 epoch 16/20 | batch 6000/7902 | loss 2.5252 acc~0.4840
+Stage 2 epoch 16/20 | batch 6250/7902 | loss 2.5230 acc~0.4845
+Stage 2 epoch 16/20 | batch 6500/7902 | loss 2.5236 acc~0.4841
+Stage 2 epoch 16/20 | batch 6750/7902 | loss 2.5284 acc~0.4851
+Stage 2 epoch 16/20 | batch 7000/7902 | loss 2.5262 acc~0.4863
+Stage 2 epoch 16/20 | batch 7250/7902 | loss 2.5299 acc~0.4862
+Stage 2 epoch 16/20 | batch 7500/7902 | loss 2.5243 acc~0.4871
+Stage 2 epoch 16/20 | batch 7750/7902 | loss 2.5253 acc~0.4877
+Stage 2 epoch 16/20 | batch 7902/7902 | loss 2.5230 acc~0.4884
+Stage 2 validation 16/20 | batch 100/967
+Stage 2 validation 16/20 | batch 200/967
+Stage 2 validation 16/20 | batch 300/967
+Stage 2 validation 16/20 | batch 400/967
+Stage 2 validation 16/20 | batch 500/967
+Stage 2 validation 16/20 | batch 600/967
+Stage 2 validation 16/20 | batch 700/967
+Stage 2 validation 16/20 | batch 800/967
+Stage 2 validation 16/20 | batch 900/967
+Stage 2 validation 16/20 | batch 967/967
+Epoch 16/20 | Train Loss: 2.5230 Acc: 0.4884 | Val Loss: 5.5720 Acc: 0.6555
+Stage 2 epoch 17: training final 5/5 blocks
+Stage 2 epoch 17/20 | batch 250/7902 | loss 2.4790 acc~0.4855
+Stage 2 epoch 17/20 | batch 500/7902 | loss 2.4723 acc~0.4718
+Stage 2 epoch 17/20 | batch 750/7902 | loss 2.5041 acc~0.4690
+Stage 2 epoch 17/20 | batch 1000/7902 | loss 2.4765 acc~0.4874
+Stage 2 epoch 17/20 | batch 1250/7902 | loss 2.4599 acc~0.4968
+Stage 2 epoch 17/20 | batch 1500/7902 | loss 2.4528 acc~0.4973
+Stage 2 epoch 17/20 | batch 1750/7902 | loss 2.4428 acc~0.4981
+Stage 2 epoch 17/20 | batch 2000/7902 | loss 2.4369 acc~0.5012
+Stage 2 epoch 17/20 | batch 2250/7902 | loss 2.4306 acc~0.5036
+Stage 2 epoch 17/20 | batch 2500/7902 | loss 2.4315 acc~0.5041
+Stage 2 epoch 17/20 | batch 2750/7902 | loss 2.4257 acc~0.5040
+Stage 2 epoch 17/20 | batch 3000/7902 | loss 2.4293 acc~0.5051
+Stage 2 epoch 17/20 | batch 3250/7902 | loss 2.4256 acc~0.5053
+Stage 2 epoch 17/20 | batch 3500/7902 | loss 2.4243 acc~0.5059
+Stage 2 epoch 17/20 | batch 3750/7902 | loss 2.4304 acc~0.5067
+Stage 2 epoch 17/20 | batch 4000/7902 | loss 2.4378 acc~0.5052
+Stage 2 epoch 17/20 | batch 4250/7902 | loss 2.4368 acc~0.5040
+Stage 2 epoch 17/20 | batch 4500/7902 | loss 2.4420 acc~0.5017
+Stage 2 epoch 17/20 | batch 4750/7902 | loss 2.4419 acc~0.5007
+Stage 2 epoch 17/20 | batch 5000/7902 | loss 2.4451 acc~0.5020
+Stage 2 epoch 17/20 | batch 5250/7902 | loss 2.4544 acc~0.5013
+Stage 2 epoch 17/20 | batch 5500/7902 | loss 2.4533 acc~0.5013
+Stage 2 epoch 17/20 | batch 5750/7902 | loss 2.4552 acc~0.5006
+Stage 2 epoch 17/20 | batch 6000/7902 | loss 2.4512 acc~0.5001
+Stage 2 epoch 17/20 | batch 6250/7902 | loss 2.4482 acc~0.4998
+Stage 2 epoch 17/20 | batch 6500/7902 | loss 2.4459 acc~0.5011
+Stage 2 epoch 17/20 | batch 6750/7902 | loss 2.4431 acc~0.5008
+Stage 2 epoch 17/20 | batch 7000/7902 | loss 2.4419 acc~0.5004
+Stage 2 epoch 17/20 | batch 7250/7902 | loss 2.4433 acc~0.5014
+Stage 2 epoch 17/20 | batch 7500/7902 | loss 2.4419 acc~0.5022
+Stage 2 epoch 17/20 | batch 7750/7902 | loss 2.4384 acc~0.5034
+Stage 2 epoch 17/20 | batch 7902/7902 | loss 2.4375 acc~0.5031
+Stage 2 validation 17/20 | batch 100/967
+Stage 2 validation 17/20 | batch 200/967
+Stage 2 validation 17/20 | batch 300/967
+Stage 2 validation 17/20 | batch 400/967
+Stage 2 validation 17/20 | batch 500/967
+Stage 2 validation 17/20 | batch 600/967
+Stage 2 validation 17/20 | batch 700/967
+Stage 2 validation 17/20 | batch 800/967
+Stage 2 validation 17/20 | batch 900/967
+Stage 2 validation 17/20 | batch 967/967
+Epoch 17/20 | Train Loss: 2.4375 Acc: 0.5031 | Val Loss: 4.0988 Acc: 0.6786
+Stage 2 epoch 18: training final 5/5 blocks
+Stage 2 epoch 18/20 | batch 250/7902 | loss 2.3781 acc~0.5070
+Stage 2 epoch 18/20 | batch 500/7902 | loss 2.4133 acc~0.5020
+Stage 2 epoch 18/20 | batch 750/7902 | loss 2.3950 acc~0.5093
+Stage 2 epoch 18/20 | batch 1000/7902 | loss 2.4187 acc~0.5046
+Stage 2 epoch 18/20 | batch 1250/7902 | loss 2.4140 acc~0.5111
+Stage 2 epoch 18/20 | batch 1500/7902 | loss 2.4289 acc~0.5102
+Stage 2 epoch 18/20 | batch 1750/7902 | loss 2.4235 acc~0.5076
+Stage 2 epoch 18/20 | batch 2000/7902 | loss 2.4252 acc~0.5101
+Stage 2 epoch 18/20 | batch 2250/7902 | loss 2.4319 acc~0.5068
+Stage 2 epoch 18/20 | batch 2500/7902 | loss 2.4312 acc~0.5101
+Stage 2 epoch 18/20 | batch 2750/7902 | loss 2.4232 acc~0.5086
+Stage 2 epoch 18/20 | batch 3000/7902 | loss 2.4205 acc~0.5078
+Stage 2 epoch 18/20 | batch 3250/7902 | loss 2.4088 acc~0.5077
+Stage 2 epoch 18/20 | batch 3500/7902 | loss 2.4093 acc~0.5081
+Stage 2 epoch 18/20 | batch 3750/7902 | loss 2.4027 acc~0.5090
+Stage 2 epoch 18/20 | batch 4000/7902 | loss 2.4110 acc~0.5079
+Stage 2 epoch 18/20 | batch 4250/7902 | loss 2.4138 acc~0.5077
+Stage 2 epoch 18/20 | batch 4500/7902 | loss 2.4104 acc~0.5087
+Stage 2 epoch 18/20 | batch 4750/7902 | loss 2.4090 acc~0.5088
+Stage 2 epoch 18/20 | batch 5000/7902 | loss 2.4136 acc~0.5091
+Stage 2 epoch 18/20 | batch 5250/7902 | loss 2.4188 acc~0.5106
+Stage 2 epoch 18/20 | batch 5500/7902 | loss 2.4151 acc~0.5102
+Stage 2 epoch 18/20 | batch 5750/7902 | loss 2.4164 acc~0.5107
+Stage 2 epoch 18/20 | batch 6000/7902 | loss 2.4180 acc~0.5092
+Stage 2 epoch 18/20 | batch 6250/7902 | loss 2.4163 acc~0.5093
+Stage 2 epoch 18/20 | batch 6500/7902 | loss 2.4173 acc~0.5097
+Stage 2 epoch 18/20 | batch 6750/7902 | loss 2.4143 acc~0.5098
+Stage 2 epoch 18/20 | batch 7000/7902 | loss 2.4132 acc~0.5107
+Stage 2 epoch 18/20 | batch 7250/7902 | loss 2.4163 acc~0.5104
+Stage 2 epoch 18/20 | batch 7500/7902 | loss 2.4161 acc~0.5111
+Stage 2 epoch 18/20 | batch 7750/7902 | loss 2.4193 acc~0.5096
+Stage 2 epoch 18/20 | batch 7902/7902 | loss 2.4197 acc~0.5103
+Stage 2 validation 18/20 | batch 100/967
+Stage 2 validation 18/20 | batch 200/967
+Stage 2 validation 18/20 | batch 300/967
+Stage 2 validation 18/20 | batch 400/967
+Stage 2 validation 18/20 | batch 500/967
+Stage 2 validation 18/20 | batch 600/967
+Stage 2 validation 18/20 | batch 700/967
+Stage 2 validation 18/20 | batch 800/967
+Stage 2 validation 18/20 | batch 900/967
+Stage 2 validation 18/20 | batch 967/967
+Epoch 18/20 | Train Loss: 2.4197 Acc: 0.5103 | Val Loss: 3.7153 Acc: 0.6732
+Stage 2 epoch 19: training final 5/5 blocks
+Stage 2 epoch 19/20 | batch 250/7902 | loss 2.3593 acc~0.5115
+Stage 2 epoch 19/20 | batch 500/7902 | loss 2.3928 acc~0.4973
+Stage 2 epoch 19/20 | batch 750/7902 | loss 2.4383 acc~0.4925
+Stage 2 epoch 19/20 | batch 1000/7902 | loss 2.4530 acc~0.4883
+Stage 2 epoch 19/20 | batch 1250/7902 | loss 2.4494 acc~0.4838
+Stage 2 epoch 19/20 | batch 1500/7902 | loss 2.4447 acc~0.4894
+Stage 2 epoch 19/20 | batch 1750/7902 | loss 2.4278 acc~0.4944
+Stage 2 epoch 19/20 | batch 2000/7902 | loss 2.4245 acc~0.4964
+Stage 2 epoch 19/20 | batch 2250/7902 | loss 2.4121 acc~0.4977
+Stage 2 epoch 19/20 | batch 2500/7902 | loss 2.4012 acc~0.4980
+Stage 2 epoch 19/20 | batch 2750/7902 | loss 2.3999 acc~0.5012
+Stage 2 epoch 19/20 | batch 3000/7902 | loss 2.3961 acc~0.5033
+Stage 2 epoch 19/20 | batch 3250/7902 | loss 2.3990 acc~0.5040
+Stage 2 epoch 19/20 | batch 3500/7902 | loss 2.4026 acc~0.5050
+Stage 2 epoch 19/20 | batch 3750/7902 | loss 2.4022 acc~0.5058
+Stage 2 epoch 19/20 | batch 4000/7902 | loss 2.3986 acc~0.5076
+Stage 2 epoch 19/20 | batch 4250/7902 | loss 2.3959 acc~0.5074
+Stage 2 epoch 19/20 | batch 4500/7902 | loss 2.4001 acc~0.5076
+Stage 2 epoch 19/20 | batch 4750/7902 | loss 2.4049 acc~0.5087
+Stage 2 epoch 19/20 | batch 5000/7902 | loss 2.4063 acc~0.5086
+Stage 2 epoch 19/20 | batch 5250/7902 | loss 2.4032 acc~0.5087
+Stage 2 epoch 19/20 | batch 5500/7902 | loss 2.4028 acc~0.5093
+Stage 2 epoch 19/20 | batch 5750/7902 | loss 2.3970 acc~0.5104
+Stage 2 epoch 19/20 | batch 6000/7902 | loss 2.3971 acc~0.5104
+Stage 2 epoch 19/20 | batch 6250/7902 | loss 2.3916 acc~0.5129
+Stage 2 epoch 19/20 | batch 6500/7902 | loss 2.3912 acc~0.5130
+Stage 2 epoch 19/20 | batch 6750/7902 | loss 2.3901 acc~0.5131
+Stage 2 epoch 19/20 | batch 7000/7902 | loss 2.3891 acc~0.5128
+Stage 2 epoch 19/20 | batch 7250/7902 | loss 2.3852 acc~0.5136
+Stage 2 epoch 19/20 | batch 7500/7902 | loss 2.3830 acc~0.5135
+Stage 2 epoch 19/20 | batch 7750/7902 | loss 2.3841 acc~0.5131
+Stage 2 epoch 19/20 | batch 7902/7902 | loss 2.3825 acc~0.5137
+Stage 2 validation 19/20 | batch 100/967
+Stage 2 validation 19/20 | batch 200/967
+Stage 2 validation 19/20 | batch 300/967
+Stage 2 validation 19/20 | batch 400/967
+Stage 2 validation 19/20 | batch 500/967
+Stage 2 validation 19/20 | batch 600/967
+Stage 2 validation 19/20 | batch 700/967
+Stage 2 validation 19/20 | batch 800/967
+Stage 2 validation 19/20 | batch 900/967
+Stage 2 validation 19/20 | batch 967/967
+Epoch 19/20 | Train Loss: 2.3825 Acc: 0.5137 | Val Loss: 5.2976 Acc: 0.6739
+Stage 2 epoch 20: training final 5/5 blocks
+Stage 2 epoch 20/20 | batch 250/7902 | loss 2.3317 acc~0.5285
+Stage 2 epoch 20/20 | batch 500/7902 | loss 2.4064 acc~0.5080
+Stage 2 epoch 20/20 | batch 750/7902 | loss 2.4159 acc~0.5078
+Stage 2 epoch 20/20 | batch 1000/7902 | loss 2.3841 acc~0.5171
+Stage 2 epoch 20/20 | batch 1250/7902 | loss 2.3923 acc~0.5071
+Stage 2 epoch 20/20 | batch 1500/7902 | loss 2.4032 acc~0.5045
+Stage 2 epoch 20/20 | batch 1750/7902 | loss 2.4082 acc~0.5026
+Stage 2 epoch 20/20 | batch 2000/7902 | loss 2.4137 acc~0.5064
+Stage 2 epoch 20/20 | batch 2250/7902 | loss 2.4105 acc~0.5052
+Stage 2 epoch 20/20 | batch 2500/7902 | loss 2.4049 acc~0.5074
+Stage 2 epoch 20/20 | batch 2750/7902 | loss 2.3902 acc~0.5121
+Stage 2 epoch 20/20 | batch 3000/7902 | loss 2.4045 acc~0.5122
+Stage 2 epoch 20/20 | batch 3250/7902 | loss 2.4115 acc~0.5115
+Stage 2 epoch 20/20 | batch 3500/7902 | loss 2.4046 acc~0.5138
+Stage 2 epoch 20/20 | batch 3750/7902 | loss 2.3972 acc~0.5162
+Stage 2 epoch 20/20 | batch 4000/7902 | loss 2.3916 acc~0.5163
+Stage 2 epoch 20/20 | batch 4250/7902 | loss 2.3932 acc~0.5157
+Stage 2 epoch 20/20 | batch 4500/7902 | loss 2.3895 acc~0.5158
+Stage 2 epoch 20/20 | batch 4750/7902 | loss 2.3877 acc~0.5156
+Stage 2 epoch 20/20 | batch 5000/7902 | loss 2.3827 acc~0.5157
+Stage 2 epoch 20/20 | batch 5250/7902 | loss 2.3866 acc~0.5154
+Stage 2 epoch 20/20 | batch 5500/7902 | loss 2.3851 acc~0.5154
+Stage 2 epoch 20/20 | batch 5750/7902 | loss 2.3860 acc~0.5157
+Stage 2 epoch 20/20 | batch 6000/7902 | loss 2.3815 acc~0.5161
+Stage 2 epoch 20/20 | batch 6250/7902 | loss 2.3838 acc~0.5145
+Stage 2 epoch 20/20 | batch 6500/7902 | loss 2.3805 acc~0.5142
+Stage 2 epoch 20/20 | batch 6750/7902 | loss 2.3822 acc~0.5124
+Stage 2 epoch 20/20 | batch 7000/7902 | loss 2.3805 acc~0.5111
+Stage 2 epoch 20/20 | batch 7250/7902 | loss 2.3757 acc~0.5117
+Stage 2 epoch 20/20 | batch 7500/7902 | loss 2.3737 acc~0.5118
+Stage 2 epoch 20/20 | batch 7750/7902 | loss 2.3751 acc~0.5102
+Stage 2 epoch 20/20 | batch 7902/7902 | loss 2.3733 acc~0.5106
+Stage 2 validation 20/20 | batch 100/967
+Stage 2 validation 20/20 | batch 200/967
+Stage 2 validation 20/20 | batch 300/967
+Stage 2 validation 20/20 | batch 400/967
+Stage 2 validation 20/20 | batch 500/967
+Stage 2 validation 20/20 | batch 600/967
+Stage 2 validation 20/20 | batch 700/967
+Stage 2 validation 20/20 | batch 800/967
+Stage 2 validation 20/20 | batch 900/967
+Stage 2 validation 20/20 | batch 967/967
+Epoch 20/20 | Train Loss: 2.3733 Acc: 0.5106 | Val Loss: 4.0464 Acc: 0.6849
+Best validation accuracy: 0.6849
+C:\Users\cpoco\Thalamus\Thalamus\scripts\fish_classifier_train.py:881: DeprecationWarning: You are using the legacy TorchScript-based ONNX export. Starting in PyTorch 2.9, the new torch.export-based ONNX exporter has become the default. Learn more about the new export logic: https://docs.pytorch.org/docs/stable/onnx_export.html. For exporting control flow: https://pytorch.org/tutorials/beginner/onnx/export_control_flow_model_to_onnx_tutorial.html
+  torch.onnx.export(
+Exported to C:\Users\cpoco\Thalamus\Thalamus\models_v4\mobilenetv4_conv_medium_448_mixup\fish_classifier.onnx
+Test | batch 100/1064
+Test | batch 200/1064
+Test | batch 300/1064
+Test | batch 400/1064
+Test | batch 500/1064
+Test | batch 600/1064
+Test | batch 700/1064
+Test | batch 800/1064
+Test | batch 900/1064
+Test | batch 1000/1064
+Test | batch 1064/1064
+
+Test set (8505 images, 380/380 species present):
+  top-1 0.6782 | top-5 0.8480 | macro 0.6777
+Wrote test metrics to C:\Users\cpoco\Thalamus\Thalamus\models_v4\mobilenetv4_conv_medium_448_mixup\test_metrics.json

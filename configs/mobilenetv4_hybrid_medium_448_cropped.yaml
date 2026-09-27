@@ -1,0 +1,61 @@
+# MobileNetV4-Hybrid-Medium at 448px, light recipe, on DETECTOR-CROPPED data.
+#
+# Detect->crop->classify experiment on the accuracy-ceiling backbone. Identical
+# to mobilenetv4_hybrid_medium_448_light.yaml (the 0.758 top-1 baseline) except
+# for output_dir; the only real variable is fish crops vs whole frames.
+#
+#     python scripts/fish_classifier_train.py --config configs/mobilenetv4_hybrid_medium_448_cropped.yaml \
+#         --data-dir D:\Thalamus\data\split_capped_cropped
+#
+# Baseline to beat: whole-frame hybrid_medium@448 = 0.758 / 0.904 / 0.757.
+# hybrid's MQA attention blocks remain the harder case to quantise for the phone;
+# this measures the cropped-data ceiling, conv_medium stays the shipping pick.
+# DEPLOY CONTRACT: app must run the same detector + crop before the classifier.
+
+# ---- Model ----
+model_name: mobilenetv4_hybrid_medium
+
+num_classes: null
+
+img_size: 448
+resize_mode: stretch
+
+# ---- Data ----
+data_dir: data
+num_workers: 2
+
+# ---- Optimisation ----
+batch_size: 8
+seed: 42
+
+lr_head: 0.001
+epochs_head: 10
+
+lr_finetune: 0.0001
+epochs_finetune: 20
+
+progressive_unfreeze: true
+
+# ---- Regularisation (light) ----
+label_smoothing: 0.1
+weight_decay: 0.05
+balanced_sampler: true
+
+augmentation:
+  random_resized_crop: true
+  rrc_scale: [0.65, 1.0]
+  coarse_dropout: false
+  val_center_crop: true         # MIRROR THIS IN THE APP'S PREPROCESSING
+
+mixup:
+  alpha: 0.0
+  mixup: false
+  cutmix: false
+
+# ---- Output ----
+output_dir: models_v4/mobilenetv4_hybrid_medium_448_cropped
+stage1_checkpoint: best_model_stage1.pth
+final_checkpoint: best_model_final.pth
+onnx_filename: fish_classifier.onnx
+
+onnx_opset: 18

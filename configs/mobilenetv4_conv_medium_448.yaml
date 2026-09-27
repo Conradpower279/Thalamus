@@ -1,0 +1,66 @@
+# MobileNetV4-Conv-Medium at 448px, LIGHT recipe.
+#
+# Part of the 448px backbone COMPARISON set - identical to the other 448 configs
+# except model_name, output_dir and batch_size. Compare test_metrics.json
+# (top-1 / top-5 / macro) across runs.
+#
+#     python scripts/fish_classifier_train.py --config configs/mobilenetv4_conv_medium_448.yaml \
+#         --data-dir D:\Thalamus\data\split_capped
+#
+# Recipe is the LIGHT one that learned (see mobilenetv4_light224). MixUp/CutMix
+# and CoarseDropout stay OFF - see the 'classifier over-regularization' note.
+#
+# BACKBONE NOTE: mobilenetv4_conv_medium is a mid-size conv backbone (no
+# attention/SE), so it converts cleanly to TFLite - arguably the best
+# accuracy/phone tradeoff of the set. Heavier than the small variants, so it uses
+# a smaller batch at 448.
+
+# ---- Model ----
+model_name: mobilenetv4_conv_medium
+
+num_classes: null
+
+img_size: 448
+resize_mode: stretch
+
+# ---- Data ----
+data_dir: data
+num_workers: 2
+
+# ---- Optimisation ----
+# Heavier backbone at 448 - batch 8 to fit the 4GB GPU (matches what hybrid_medium
+# needed at 448). Raise if you have more VRAM.
+batch_size: 8
+seed: 42
+
+lr_head: 0.001
+epochs_head: 10
+
+lr_finetune: 0.0001
+epochs_finetune: 20
+
+progressive_unfreeze: true
+
+# ---- Regularisation (light - the recipe that learned) ----
+label_smoothing: 0.1
+weight_decay: 0.05
+balanced_sampler: true
+
+augmentation:
+  random_resized_crop: true
+  rrc_scale: [0.65, 1.0]
+  coarse_dropout: false
+  val_center_crop: true         # MIRROR THIS IN THE APP'S PREPROCESSING
+
+mixup:
+  alpha: 0.0
+  mixup: false
+  cutmix: false
+
+# ---- Output ----
+output_dir: models_v4/mobilenetv4_conv_medium_448
+stage1_checkpoint: best_model_stage1.pth
+final_checkpoint: best_model_final.pth
+onnx_filename: fish_classifier.onnx
+
+onnx_opset: 18

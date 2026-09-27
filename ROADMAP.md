@@ -11,17 +11,32 @@ is:
 
 - [x] Training pipeline: MobileNet via timm, two-stage transfer learning,
       underwater-oriented augmentation, ONNX export
-- [ ] Settle the backbone: MobileNetV3-Small vs MobileNetV4-Conv-Small, compared
-      on real fish images rather than ImageNet ranking (both configs ship; see
-      `scripts/benchmark_backbones.py`)
-- [x] Repository structure, config, split utility, TFLite export, tests, CI
-- [ ] A real dataset, with group-aware splits that do not leak between train
-      and val
-- [ ] Class-imbalance handling and per-class metrics, so rare species are
-      actually measured rather than averaged away
+- [x] A real dataset — built from the iNaturalist Open Dataset (Florida
+      ray-finned fish, ~380 species after capping) via
+      `scripts/download_florida_fish.py` and `scripts/cap_species.py`
+- [x] Group-aware splits that do not leak between train and val — filenames
+      carry the observation UUID, and both `split_data.py` and `cap_species.py`
+      keep whole observations inside one split
+- [x] Regularisation stack (config-gated): random-resized-crop, CoarseDropout,
+      label smoothing, weight decay, MixUp/CutMix, and a class-balanced sampler.
+      Lesson learned: add levers one at a time — the full stack underfit
+- [x] Class-imbalance handling (weighted sampler) and per-class metrics
+      (macro accuracy reported alongside top-1/top-5)
+- [x] Held-out test evaluation — the `test/` split is scored at the end and
+      written to `test_metrics.json` (top-1/top-5/macro)
+- [~] Settle the backbone: comparing MobileNetV3-Small, V4-Conv-Small,
+      V4-Conv-Medium and V4-Hybrid-Medium at 224 and 448 on the real set, same
+      light recipe (`scripts/run_448_sweep.py`, `scripts/benchmark_backbones.py`).
+      Best held-out so far: hybrid_medium @224 = 0.662 top-1 / 0.848 top-5
+- [x] Fish detector (started early, normally phase 2): single-class YOLO
+      localiser to crop fish before classification —
+      `scripts/autolabel_fish.py` + `scripts/yolo_train.py`, first run
+      mAP50 ≈ 0.88. Species detection with per-species boxes remains phase 2
 - [ ] Open-set handling — a calibrated confidence threshold, validated against
       real negative footage (kelp, sand, debris, untrained species), so the app
       can decline to guess
+- [ ] Select checkpoints on macro (not validation top-1), so training optimises
+      for rare species rather than just the common ones
 - [ ] Quantized TFLite model with measured post-quantization accuracy
 - [ ] Flutter app: camera stream, background-isolate inference, sighting log
 - [ ] On-device latency and battery measurements under real dive conditions
@@ -59,7 +74,11 @@ Depth sensing to recover real-world scale, which a single camera cannot provide.
 ### 2.2 Size estimation
 
 - Upgrade from whole-image classification to **detection** (bounding box or
-  segmentation mask) — a classifier alone gives no extent to measure
+  segmentation mask) — a classifier alone gives no extent to measure. A
+  single-class "fish" detector already exists from phase 1
+  (`scripts/yolo_train.py`); phase 2 needs it to also give the extent to measure
+  from, and likely per-species or oriented boxes rather than one axis-aligned
+  "fish" box
 - Convert box extent plus distance into length, using camera intrinsics and an
   underwater-refraction correction
 - Prefer an oriented box or a mask over an axis-aligned box: a fish at an angle
@@ -168,8 +187,10 @@ For a dedicated dive-housing device rather than a phone.
 
 ## Open questions
 
-- Where does the fish detector come from — retrain from scratch, or fine-tune an
-  existing marine detection model?
+- The single-class fish detector is bootstrapped from auto-labels (YOLO-World
+  prompted with "fish" + whole-image fallback). For phase 2, is that box quality
+  good enough to measure from, or does size estimation need hand-labelled /
+  oriented boxes and a segmentation mask?
 - Is phone LiDAR accurate enough underwater for legally meaningful measurement,
   or is dedicated hardware mandatory for the compliance variant?
 - What is the confidence threshold above which a size estimate may be shown at
