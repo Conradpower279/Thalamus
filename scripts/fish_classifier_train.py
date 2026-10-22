@@ -504,22 +504,28 @@ def build_dataloaders(config, seed=None):
     return train_dataset, val_dataset, train_loader, val_loader
 
 
-def build_test_loader(config, classes):
+def build_test_loader(config, classes, force_no_center_crop=False):
     """A loader over <data_dir>/test, or None when there is no test split.
 
     Uses the deterministic val-side transforms (no augmentation) and reuses the
     training class list, so label indices line up with the trained model. Absent
     or empty test/ returns None so older datasets and the baseline configs still
     run - the test evaluation is simply skipped.
+
+    ``force_no_center_crop`` overrides the config to use a plain resize instead
+    of the resize-then-centre-crop, for the centre-crop A/B comparison.
     """
     data_dir = resolve_path(config["data_dir"])
     test_dir = data_dir / "test"
     if not test_dir.is_dir():
         return None
 
+    aug = dict(config.get("augmentation") or {})
+    if force_no_center_crop:
+        aug["val_center_crop"] = False
     _, val_transform = build_transforms(
         config["img_size"], config.get("resize_mode", "stretch"),
-        aug=config.get("augmentation"),
+        aug=aug,
     )
     try:
         test_dataset = FishDataset(test_dir, transform=val_transform, classes=classes)
@@ -537,13 +543,107 @@ def build_test_loader(config, classes):
     )
 
 
+def _genus(species_name):
+    """The genus half of a 'Genus_species' directory name (before the first _)."""
+    return species_name.split("_", 1)[0]
+
+
+def write_error_analysis(per_image, samples, classes, output_dir, tag=""):
+    """Write the per-image predictions, confusion pairs and worst-class ranking.
+
+    Three CSVs (``tag`` distinguishes center-crop vs plain-resize runs):
+
+      predictions{tag}.csv   one row per test image: path, true, predicted,
+                             confidence, correct, in_top5, same_genus. This is
+                             the foundation - it lets you open the actual failing
+                             images and is what every other view is built from.
+      confused_pairs{tag}.csv  most-confused (true -> predicted) species pairs,
+                             descending. A 380x380 matrix is unreadable; the
+                             pairs list is the insight. Includes same_genus so
+                             you can see how many errors are within-genus (a
+                             forgivable confusion between two Haemulon) versus
+                             across-family (snapper vs eel).
+      worst_classes{tag}.csv  per-class accuracy worst-first, with image counts,
+                             to see whether failures concentrate in rare species.
+
+    Returns a small summary dict (within-genus error fraction, etc.) for the log.
+    """
+    import csv
+    from collections import Counter, defaultdict
+
+    output_dir = Path(output_dir)
+    n = len(per_image)
+
+    # ---- predictions.csv ----
+    errors = 0
+    within_genus_errors = 0
+    with open(output_dir / f"predictions{tag}.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["path", "true", "predicted", "confidence", "correct",
+                    "in_top5", "same_genus"])
+        for (true_idx, pred_idx, conf, in_top5), (path, _lbl) in zip(per_image, samples):
+            true_name, pred_name = classes[true_idx], classes[pred_idx]
+            correct = true_idx == pred_idx
+            same_genus = _genus(true_name) == _genus(pred_name)
+            if not correct:
+                errors += 1
+                if same_genus:
+                    within_genus_errors += 1
+            w.writerow([path, true_name, pred_name, f"{conf:.4f}",
+                        int(correct), int(in_top5), int(same_genus)])
+
+    # ---- confused_pairs.csv ----
+    pair_counts = Counter()
+    for true_idx, pred_idx, _c, _t5 in per_image:
+        if true_idx != pred_idx:
+            pair_counts[(true_idx, pred_idx)] += 1
+    with open(output_dir / f"confused_pairs{tag}.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["true", "predicted", "count", "same_genus"])
+        for (true_idx, pred_idx), count in pair_counts.most_common():
+            tn, pn = classes[true_idx], classes[pred_idx]
+            w.writerow([tn, pn, count, int(_genus(tn) == _genus(pn))])
+
+    # ---- worst_classes.csv ----
+    totals = defaultdict(int)
+    corrects = defaultdict(int)
+    for true_idx, pred_idx, _c, _t5 in per_image:
+        totals[true_idx] += 1
+        if true_idx == pred_idx:
+            corrects[true_idx] += 1
+    rows = []
+    for idx, tot in totals.items():
+        rows.append((classes[idx], corrects[idx] / tot, corrects[idx], tot))
+    rows.sort(key=lambda r: (r[1], -r[3]))   # worst accuracy first
+    with open(output_dir / f"worst_classes{tag}.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["species", "accuracy", "correct", "total"])
+        for name, acc, cor, tot in rows:
+            w.writerow([name, f"{acc:.4f}", cor, tot])
+
+    within_frac = within_genus_errors / errors if errors else 0.0
+    print(
+        f"  Error analysis{tag or ''}: {errors}/{n} wrong; "
+        f"{within_genus_errors} ({within_frac*100:.0f}%) are within-genus. "
+        f"Wrote predictions{tag}.csv, confused_pairs{tag}.csv, "
+        f"worst_classes{tag}.csv to {output_dir}"
+    )
+    return {"errors": errors, "within_genus_errors": within_genus_errors,
+            "within_genus_error_frac": within_frac}
+
+
 def run_test_evaluation(model, config, device, classes, output_dir):
-    """Evaluate ``model`` on the test split and write test_metrics.json.
+    """Evaluate ``model`` on the test split, write metrics + error analysis.
 
     The honest number: run once, at the end, on data never used for tuning or
     checkpoint selection. ``model`` is expected to already hold the exported
-    best weights (export_onnx reloads them). Skipped cleanly with a note when
-    there is no test/ split.
+    best weights (export_onnx reloads them). Skipped cleanly when no test/ split.
+
+    When ``augmentation.val_center_crop`` is on, this also re-evaluates with a
+    PLAIN RESIZE (no centre-crop) and writes a second set of error files tagged
+    ``_nocrop``, so you can compare which images the centre-crop flips from
+    correct to wrong - the specific failure mode where an off-centre or elongated
+    fish has its identifying features clipped off.
     """
     test_loader = build_test_loader(config, classes)
     if test_loader is None:
@@ -554,7 +654,9 @@ def run_test_evaluation(model, config, device, classes, output_dir):
         )
         return None
 
-    metrics = evaluate_test(model, test_loader, device, classes, progress_label="Test")
+    metrics, per_image = evaluate_test(
+        model, test_loader, device, classes, progress_label="Test"
+    )
     print(
         f"\nTest set ({metrics['test_samples']} images, "
         f"{metrics['classes_present']}/{len(classes)} species present):\n"
@@ -565,7 +667,61 @@ def run_test_evaluation(model, config, device, classes, output_dir):
     with open(metrics_path, "w") as f:
         json.dump(metrics, f, indent=2)
     print(f"Wrote test metrics to {metrics_path}")
-    return metrics
+
+    write_error_analysis(per_image, test_loader.dataset.samples, classes, output_dir)
+
+    # ---- Centre-crop A/B: re-evaluate without the centre-crop ----
+    # Only meaningful when the model's preprocessing uses a centre-crop. Compares
+    # the same images under a plain resize to expose crop-induced failures.
+    aug = config.get("augmentation") or {}
+    uses_center_crop = aug.get("val_center_crop", aug.get("random_resized_crop", False))
+    if uses_center_crop:
+        nocrop_loader = build_test_loader(config, classes, force_no_center_crop=True)
+        if nocrop_loader is not None:
+            print("\nCentre-crop A/B: re-evaluating the test set with a plain "
+                  "resize (no centre-crop) ...")
+            nc_metrics, nc_per_image = evaluate_test(
+                model, nocrop_loader, device, classes, progress_label="Test (no-crop)"
+            )
+            print(
+                f"  no-crop top-1 {nc_metrics['top1']:.4f} "
+                f"(center-crop {metrics['top1']:.4f}, "
+                f"delta {nc_metrics['top1'] - metrics['top1']:+.4f})"
+            )
+            with open(Path(output_dir) / "test_metrics_nocrop.json", "w") as f:
+                json.dump(nc_metrics, f, indent=2)
+            write_error_analysis(
+                nc_per_image, nocrop_loader.dataset.samples, classes, output_dir,
+                tag="_nocrop",
+            )
+            _write_crop_flips(per_image, nc_per_image,
+                              test_loader.dataset.samples, classes, output_dir)
+
+
+def _write_crop_flips(cc_per_image, nc_per_image, samples, classes, output_dir):
+    """List images the centre-crop flips vs a plain resize (correct<->wrong).
+
+    The direct evidence for 'is the centre-crop corrupting validation images'.
+    Rows where cc_correct=0 and nc_correct=1 are images the centre-crop broke.
+    """
+    import csv
+    flips = []
+    for (ct, cp, _cc, _ct5), (nt, npd, _nc, _nt5), (path, _lbl) in zip(
+        cc_per_image, nc_per_image, samples
+    ):
+        cc_ok, nc_ok = ct == cp, nt == npd
+        if cc_ok != nc_ok:
+            flips.append((path, classes[ct],
+                          classes[cp], classes[npd], int(cc_ok), int(nc_ok)))
+    broke = sum(1 for r in flips if r[4] == 0 and r[5] == 1)
+    fixed = sum(1 for r in flips if r[4] == 1 and r[5] == 0)
+    with open(Path(output_dir) / "crop_flips.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["path", "true", "centercrop_pred", "nocrop_pred",
+                    "centercrop_correct", "nocrop_correct"])
+        w.writerows(flips)
+    print(f"  Centre-crop flips: {broke} images broken by the crop, {fixed} "
+          f"fixed by it (net {fixed - broke:+d}). Wrote crop_flips.csv")
 
 
 def write_class_index(classes, path):
@@ -583,7 +739,24 @@ def write_class_index(classes, path):
 
 
 # ============ MODEL ============
+# Sentinel model name that selects the from-scratch MobileNetV3-Small
+# implementation (repro/mobilenetv3/model.py) instead of a timm backbone. This
+# is the Milestone I reproduction architecture, trained from random init since
+# no pretrained weights exist for the custom class.
+SCRATCH_MODEL_NAME = "scratch_mobilenetv3_small"
+
+
 def build_model(config, device):
+    if config["model_name"] == SCRATCH_MODEL_NAME:
+        repro_dir = REPO_ROOT / "repro" / "mobilenetv3"
+        if str(repro_dir) not in sys.path:
+            sys.path.insert(0, str(repro_dir))
+        from model import build_model as build_scratch_mobilenetv3
+
+        return build_scratch_mobilenetv3(
+            num_classes=config["num_classes"],
+        ).to(device)
+
     return timm.create_model(
         config["model_name"],
         pretrained=True,
@@ -784,29 +957,45 @@ def evaluate_test(model, loader, device, classes, progress_label=None):
     Unlike validation, this runs once at the very end on data never used for
     tuning or model selection, so it is the honest estimate of real-world
     accuracy - the whole reason the split exists.
+
+    Also collects every prediction (true label, top-1 prediction, confidence,
+    and whether the truth made the top-5) in ``per_image``, in loader order. The
+    loader must be unshuffled so these line up with ``dataset.samples`` for the
+    file paths - which is what lets the caller write a confusion matrix and open
+    the actual failing images. Error analysis is the whole point: at an ~80%
+    ceiling, *where* the 20% fails says more than the headline number.
     """
     model.eval()
     correct1 = correct5 = total = 0
     num_classes = len(classes)
     per_class_correct = np.zeros(num_classes, dtype=np.int64)
     per_class_total = np.zeros(num_classes, dtype=np.int64)
+    # (true_idx, pred_idx, confidence, in_top5) per image, in loader order.
+    per_image = []
 
     k = min(5, num_classes)
     with torch.no_grad():
         for batch_index, (images, labels) in enumerate(loader, start=1):
             images, labels = images.to(device), labels.to(device)
             outputs = model(images)
+            probs = torch.softmax(outputs, dim=1)
 
             top1 = outputs.argmax(1)
             correct1 += (top1 == labels).sum().item()
             topk = outputs.topk(k, dim=1).indices
-            correct5 += (topk == labels.unsqueeze(1)).any(dim=1).sum().item()
+            in_top5 = (topk == labels.unsqueeze(1)).any(dim=1)
+            correct5 += in_top5.sum().item()
             total += labels.size(0)
 
-            for label, pred in zip(labels.cpu().numpy(), top1.cpu().numpy()):
+            conf = probs.gather(1, top1.unsqueeze(1)).squeeze(1)
+            for label, pred, c, t5 in zip(
+                labels.cpu().numpy(), top1.cpu().numpy(),
+                conf.cpu().numpy(), in_top5.cpu().numpy(),
+            ):
                 per_class_total[label] += 1
                 if label == pred:
                     per_class_correct[label] += 1
+                per_image.append((int(label), int(pred), float(c), bool(t5)))
 
             if progress_label and (
                 batch_index % 100 == 0 or batch_index == len(loader)
@@ -821,13 +1010,14 @@ def evaluate_test(model, loader, device, classes, progress_label=None):
     per_class_acc[present] = per_class_correct[present] / per_class_total[present]
     macro = float(per_class_acc[present].mean()) if present.any() else 0.0
 
-    return {
+    metrics = {
         "test_samples": int(total),
         "classes_present": int(present.sum()),
         "top1": correct1 / total if total else 0.0,
         "top5": correct5 / total if total else 0.0,
         "macro": macro,
     }
+    return metrics, per_image
 
 
 # ============ CHECKPOINTS ============
@@ -948,8 +1138,16 @@ def main(argv=None):
         print(f"Label smoothing: {label_smoothing}")
 
     # ---- Stage 1: train head only ----
+    # The two-stage recipe (freeze backbone, train head, then fine-tune) only
+    # makes sense for a pretrained backbone. The from-scratch MobileNetV3 starts
+    # from random init - there are no meaningful features to freeze - and it has
+    # no timm get_classifier()/freeze API. So skip stage 1 for it and let stage 2
+    # train the whole network from scratch.
+    is_scratch = config["model_name"] == SCRATCH_MODEL_NAME
     best_val_acc = -1.0
-    if args.finetune_only:
+    if is_scratch:
+        print("=== Scratch model: skipping stage 1, training whole network ===")
+    elif args.finetune_only:
         if not stage1_path.exists():
             raise FileNotFoundError(
                 f"--finetune-only requires an existing {stage1_path}"
@@ -990,14 +1188,18 @@ def main(argv=None):
 
     # ---- Stage 2: fine-tune whole model ----
     # Resume from the best head-only weights rather than whichever epoch stage 1
-    # happened to stop on.
-    if stage1_path.exists():
+    # happened to stop on. The scratch model never wrote a stage-1 checkpoint, so
+    # skip the load (and ignore any stale one left by a previous timm run).
+    if stage1_path.exists() and not is_scratch:
         model.load_state_dict(
             torch.load(stage1_path, map_location=device, weights_only=True)
         )
         print(f"Loaded best stage-1 checkpoint (val acc {best_val_acc:.4f})")
 
-    progressive = config.get("progressive_unfreeze", False)
+    # Progressive unfreezing walks a timm block stack (model.blocks); the
+    # from-scratch model has no such attribute and is fully trainable from random
+    # init, so it always takes the plain full-network path.
+    progressive = config.get("progressive_unfreeze", False) and not is_scratch
     if progressive:
         active, total_blocks = unfreeze_backbone_tail(model, 1 / 3)
         print(f"Progressive unfreezing: training final {active}/{total_blocks} blocks")

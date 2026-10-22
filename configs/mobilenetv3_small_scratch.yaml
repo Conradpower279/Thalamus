@@ -1,0 +1,74 @@
+# MobileNetV3-Small FROM SCRATCH (Milestone I reproduction) on fish data.
+#
+# Uses the from-scratch implementation in repro/mobilenetv3/model.py instead of a
+# timm backbone, selected by the sentinel model_name below. This is the paper
+# reproduction architecture (Howard et al., arXiv:1905.02244, Table 2), trained
+# from RANDOM INIT - there are no pretrained weights for the custom class.
+#
+#     python scripts/fish_classifier_train.py --config configs/mobilenetv3_small_scratch.yaml \
+#         --data-dir D:\Thalamus\data\split_capped
+#
+# Comparison framing: run this alongside configs/mobilenetv3_small_448.yaml
+# (timm mobilenetv3_small_100, ImageNet-pretrained, same architecture). The gap
+# between the two isolates the value of ImageNet pretraining vs the architecture
+# itself - a clean, honest Milestone I result.
+#
+# Because the backbone starts random, the two-stage freeze recipe does not apply:
+# the trainer skips stage 1 and trains the whole network in stage 2. No pretrained
+# features means it needs more epochs than a fine-tuned run to reach its ceiling.
+
+# ---- Model ----
+model_name: scratch_mobilenetv3_small
+
+num_classes: null
+
+# 224 (the paper's native resolution) rather than 448: a from-scratch, random-init
+# net gains little from 448's 4x compute, and 224 trains far faster on the 4GB GPU.
+img_size: 224
+resize_mode: stretch
+
+# ---- Data ----
+data_dir: data
+num_workers: 2
+
+# V3-small is tiny; 224px fits a comfortable batch on the 4GB laptop GPU.
+batch_size: 32
+seed: 42
+
+# Stage 1 is skipped for the scratch model (see trainer), so these are unused -
+# left here for config symmetry with the pretrained sibling.
+lr_head: 0.001
+epochs_head: 0
+
+# Random init needs a higher LR and more epochs than fine-tuning. AdamW at 1e-3
+# with cosine decay is a robust from-scratch default.
+lr_finetune: 0.001
+epochs_finetune: 60
+
+# Forced off for the scratch model regardless (no timm block stack to walk).
+progressive_unfreeze: false
+
+# ---- Regularisation (light - the recipe that learned; see over-regularization note) ----
+label_smoothing: 0.1
+weight_decay: 0.05
+balanced_sampler: true
+
+augmentation:
+  random_resized_crop: true
+  rrc_scale: [0.65, 1.0]
+  coarse_dropout: false
+  val_center_crop: true
+
+# MixUp/CutMix OFF for the cold-start run; revisit only if it overfits.
+mixup:
+  alpha: 0.0
+  mixup: false
+  cutmix: false
+
+# ---- Output ----
+output_dir: models_v4/mobilenetv3_small_scratch
+stage1_checkpoint: best_model_stage1.pth
+final_checkpoint: best_model_final.pth
+onnx_filename: fish_classifier.onnx
+
+onnx_opset: 18
