@@ -1,0 +1,81 @@
+# MobileNetV4-Conv-Medium at 448px, LIGHT recipe + BACKGROUND RANDOMIZATION.
+#
+# Controlled A/B against configs/mobilenetv4_conv_medium_448.yaml (the baseline,
+# test top-1 0.732). IDENTICAL in every training respect - same backbone, 448px,
+# init, optimiser, schedule, light regularisation - except the one lever under
+# test: background_randomization. Any difference in test top-1 is attributable to
+# it alone (the one-lever-at-a-time rule from the over-regularisation lesson).
+#
+#     python scripts/fish_classifier_train.py --config configs/mobilenetv4_conv_medium_448_bgrand.yaml \
+#         --data-dir D:\Thalamus\data\split_capped
+#
+# IDEA: iNaturalist fish photos carry spurious background cues (water colour, a
+# hand, coral) that the overfitting baseline leans on. For images that have a
+# precomputed SAM2 mask (scripts/precompute_masks.py), this pastes the fish onto
+# a random solid colour with probability p, forcing the model onto fish features.
+#
+# COVERAGE CAVEAT: only ~28% of train images have a mask (the skip-when-ambiguous
+# polarity policy dropped the rest). Masked images get randomised at rate p; the
+# other ~72% train on their original unchanged. So this is a PARTIAL treatment -
+# read a weak effect as "only touched ~28% of data", not "does not work".
+#
+# EVAL: val/test use RAW images (no mask_dir on those splits), matching how the
+# phone runs inference. The hypothesis is that bg-randomised training raises
+# accuracy on unmodified test images.
+
+# ---- Model ----
+model_name: mobilenetv4_conv_medium
+
+num_classes: null
+
+img_size: 448
+resize_mode: stretch
+
+# ---- Data ----
+data_dir: data
+num_workers: 2
+
+# ---- Optimisation ----
+batch_size: 8
+seed: 42
+
+lr_head: 0.001
+epochs_head: 10
+
+lr_finetune: 0.0001
+epochs_finetune: 20
+
+progressive_unfreeze: true
+
+# ---- Regularisation (light - identical to the baseline) ----
+label_smoothing: 0.1
+weight_decay: 0.05
+balanced_sampler: true
+
+augmentation:
+  random_resized_crop: true
+  rrc_scale: [0.65, 1.0]
+  coarse_dropout: false
+  val_center_crop: true         # MIRROR THIS IN THE APP'S PREPROCESSING
+
+mixup:
+  alpha: 0.0
+  mixup: false
+  cutmix: false
+
+# ---- Background randomization (the ONE lever under test) ----
+# enabled: paste the fish onto a random solid colour for masked train images.
+# mask_dir: root of precomputed masks (mirrors train/<species>/<file>.png).
+# p: fraction of MASKED images randomised per epoch (0.5 = half; rest stay real).
+background_randomization:
+  enabled: true
+  mask_dir: D:\Thalamus\data\masks
+  p: 0.5
+
+# ---- Output ----
+output_dir: models_v4/mobilenetv4_conv_medium_448_bgrand
+stage1_checkpoint: best_model_stage1.pth
+final_checkpoint: best_model_final.pth
+onnx_filename: fish_classifier.onnx
+
+onnx_opset: 18

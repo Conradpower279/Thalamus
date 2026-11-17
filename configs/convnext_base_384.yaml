@@ -1,0 +1,75 @@
+# ConvNeXt-Base (ImageNet-21k) at 384px - CEILING-REFERENCE run (Colab T4).
+#
+# This is NOT a phone/edge candidate. It answers one question: how much of the
+# ~0.76 top-1 wall is the mobile-size constraint vs. a genuine data limit? The
+# mobile sweep topped out at hybrid_medium_448 (0.758, ~11M params, IN-1k). This
+# steps capacity AND pretraining up hard - ~88M params, ImageNet-21k pretrained,
+# fine-tuned at 384px - on the SAME 380-class split and the SAME two-stage light
+# recipe. A big jump means the phone constraint was the ceiling; a small jump
+# means the data (inter-species similarity, ~300 imgs/species) is the real wall.
+#
+# Runs on a Colab T4 (16GB), not the 4GB laptop. Via the existing notebook:
+#     notebooks/fish_classifier_colab.ipynb -> cell "Configure":
+#     CONFIG_PATH = 'configs/convnext_base_384.yaml'
+# then the Train cell runs it unchanged.
+#
+# BACKBONE: convnext_base.fb_in22k_ft_in1k_384 - the 21k-pretrained,
+# 384-fine-tuned ConvNeXt-Base. Pure convolutions (no attention), so it also
+# stays a plausible larger-than-phone deployment candidate, unlike a ViT.
+
+# ---- Model ----
+model_name: convnext_base.fb_in22k_ft_in1k_384
+
+num_classes: null
+
+img_size: 384
+resize_mode: stretch
+
+# ---- Data ----
+data_dir: data
+num_workers: 2
+
+# ---- Optimisation ----
+# T4 has 16GB (vs the 4GB laptop), so a real batch fits at 384 for an ~88M model.
+# 16 is a safe start; raise to 24/32 if VRAM allows, drop to 8 if it OOMs.
+batch_size: 16
+seed: 42
+
+lr_head: 0.001
+epochs_head: 10
+
+# Large pretrained backbones fine-tune best at a lower LR than the mobile nets;
+# 5e-5 (vs the mobile 1e-4) is a standard ConvNeXt fine-tune rate and avoids
+# washing out the rich 21k features in stage 2.
+lr_finetune: 0.00005
+epochs_finetune: 20
+
+progressive_unfreeze: true
+
+# ---- Regularisation (light - identical policy to the mobile baseline) ----
+# Kept the same as hybrid_medium_448_light so the comparison stays one-variable
+# (backbone+resolution). An ~88M model on ~300 imgs/species can overfit the thin
+# classes; if the train/val gap blows up, the lever to add is data or augment,
+# not a different recipe (per the over-regularisation lesson).
+label_smoothing: 0.1
+weight_decay: 0.05
+balanced_sampler: true
+
+augmentation:
+  random_resized_crop: true
+  rrc_scale: [0.65, 1.0]
+  coarse_dropout: false
+  val_center_crop: true
+
+mixup:
+  alpha: 0.0
+  mixup: false
+  cutmix: false
+
+# ---- Output ----
+output_dir: models_v4/convnext_base_384
+stage1_checkpoint: best_model_stage1.pth
+final_checkpoint: best_model_final.pth
+onnx_filename: fish_classifier.onnx
+
+onnx_opset: 18

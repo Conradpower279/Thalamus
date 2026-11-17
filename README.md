@@ -334,9 +334,12 @@ Honest held-out test numbers, light recipe unless noted:
 | `mobilenetv4_conv_medium_448` | conv_medium | 448 | 0.739 | 0.886 | 0.739 | ✅ plain conv |
 | `mobilenetv4_hybrid_medium_light224` | hybrid_medium | 224 | 0.662 | 0.848 | 0.661 | attention blocks |
 | `mobilenetv4_conv_small_448` | conv_small | 448 | 0.661 | 0.833 | 0.659 | ✅ plain conv |
-| `mobilenetv3_small_448` | mobilenetv3_small | 448 | 0.636 | 0.822 | 0.634 | ✅ plain conv |
+| `mobilenetv3_small_448` | mobilenetv3_small (ImageNet-pretrained) | 448 | 0.636 | 0.822 | 0.634 | ✅ plain conv |
+| `mobilenetv3_small_scratch` | **MobileNetV3-Small from scratch** (random init) | 224 | 0.374 | 0.623 | 0.383 | ✅ plain conv |
 | `mobilenetv4_conv_medium_448_mixup` | conv_medium | 448 | 0.678 | 0.848 | 0.678 | ✅ plain conv |
 | `mobilenetv4_hybrid_medium_448_mixup` | hybrid_medium | 448 | 0.618 | 0.821 | 0.636 | attention blocks |
+| `mobilenetv4_conv_medium_448_bgrand` | conv_medium | 448 | 0.671 | 0.833 | 0.668 | ✅ plain conv (bg-random) |
+| `mobilenetv4_conv_medium_448_cropped` | conv_medium | 448 | 0.648 | 0.807 | 0.646 | ✅ plain conv (fish crops) |
 
 Findings:
 
@@ -360,6 +363,51 @@ Findings:
   the constraint being data rather than overfitting. **The next lever is more
   data per species, not more regularisation.** The light recipe is at this
   dataset's ceiling.
+
+- **Removing background hurt — context is a feature, not a confound.** Two
+  independent attempts to strip or suppress the background both made the model
+  *worse*, on the same conv_medium @ 448 backbone, split and recipe (one lever
+  each):
+    - **Fish crops** (`mobilenetv4_conv_medium_448_cropped`): train and test on
+      detector-cropped fish instead of whole frames. Built with
+      `scripts/crop_dataset.py` (97% cropped, 3% whole-image fallback); the
+      cropped dataset is `split_capped_cropped`. Result **0.648** top-1, **−8.5
+      pts** vs the 0.739 baseline. The `_nocrop` eval (0.645) confirms it is not a
+      crop-at-eval artifact.
+    - **Background randomization** (`mobilenetv4_conv_medium_448_bgrand`): for
+      train images with a precomputed SAM2 mask (`scripts/precompute_masks.py`,
+      box-prompted, skip-when-ambiguous polarity; ~28% coverage), paste the fish
+      onto a random solid colour with p=0.5 (`scripts/fish_classifier_train.py`
+      `background_randomization` block). Eval on raw images. Result **0.671**
+      top-1, **−6.1 pts**.
+  In both, the error anatomy moved the same way: *same-genus* and *soft* (top-5-
+  recoverable) errors **dropped** (22.7%→16-19%, 57.1%→45-49%) while total errors
+  and wrong-prediction confidence **rose** (0.351→0.44-0.47). The easy wins and
+  near-misses were destroyed and replaced with confident random errors. The
+  reading: on iNaturalist fish, habitat **context is informative** (reef fish on
+  reef, freshwater fish in ponds) and the model legitimately uses it on a test set
+  drawn from the same distribution — so stripping it removes real signal. This
+  refutes the intuitive "overfitting to spurious background" hypothesis for this
+  data. *Caveat:* the eventual underwater use case is a different distribution
+  where open-water background carries far less species signal, so cropping may
+  behave differently there — untestable without underwater data.
+
+- **From-scratch MobileNetV3-Small reproduction (Milestone I).** The
+  `scratch_mobilenetv3_small` run uses a from-scratch implementation of the paper
+  architecture (`repro/mobilenetv3/`, `torch.nn` only, no timm/torchvision model
+  code) trained from random init on the same 380-class set. It reaches **top-1
+  0.374 / top-5 0.623 / macro 0.383** vs the ImageNet-pretrained
+  `mobilenetv3_small_448` at **0.636 / 0.822 / 0.634** — the *same architecture*,
+  *same test split*. The ~26-point top-1 gap is the measured value of ImageNet
+  pretraining, since the from-scratch net has no transferred features and only
+  ~300 images/species (many near the 50-image floor) to learn from; its large
+  train/val gap (train acc 0.65 vs val 0.38) confirms it is data-limited, not
+  under-trained. The architecture itself is a faithful reproduction:
+  `repro/mobilenetv3/verify_architecture.py` confirms the parameter count matches
+  torchvision's reference `mobilenet_v3_small` **exactly** (2,542,856) and matches
+  the paper's Table 2/3. *Remaining caveat:* the pretrained sibling ran at 448px
+  vs 224px here, so resolution still differs — pretraining is the dominant but not
+  the only variable in the gap.
 
 (Do not compare these against the older ~0.73 *validation* figure from an earlier
 different split — these are held-out test numbers.)

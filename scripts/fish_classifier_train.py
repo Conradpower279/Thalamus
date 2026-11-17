@@ -318,6 +318,29 @@ def build_transforms(img_size, resize_mode="stretch", aug=None):
 
 
 # ============ DATASET ============
+def random_background_composite(image_rgb, mask, rng):
+    """Paste the masked fish onto a random solid colour; return a new image.
+
+    ``mask`` is a bool/0-255 HxW array, True/255 where the fish is. Everywhere
+    else is filled with one flat colour drawn per call: black, mid-gray, or a
+    random RGB. Compositing on solid colours teaches the classifier that the
+    background carries no species information, so it leans on the fish itself -
+    without needing a segmenter at inference (the raw image is used there).
+    """
+    fish = mask.astype(bool) if mask.dtype != bool else mask
+    choice = rng.random()
+    if choice < 0.34:
+        colour = (0, 0, 0)                      # black
+    elif choice < 0.67:
+        colour = (128, 128, 128)                # mid-gray
+    else:
+        colour = tuple(int(rng.integers(0, 256)) for _ in range(3))  # random RGB
+    out = np.empty_like(image_rgb)
+    out[:] = colour
+    out[fish] = image_rgb[fish]
+    return out
+
+
 class FishDataset(Dataset):
     """An ImageFolder-style dataset over <root_dir>/<species_name>/<image>.
 
@@ -327,11 +350,25 @@ class FishDataset(Dataset):
     ``classes`` to impose an existing mapping - the validation split must reuse
     the training split's list, otherwise a species missing from one side shifts
     every index after it and silently mislabels the data.
+
+    When ``mask_dir`` is given, background randomization is enabled: for each
+    image that has a precomputed mask (scripts/precompute_masks.py, mirrored
+    layout under mask_dir), with probability ``bg_random_p`` the fish is pasted
+    onto a random solid colour before the transform. Images without a mask, and
+    the (1 - bg_random_p) fraction, pass through unchanged - so this is a no-op
+    on the ~72% of images that have no mask, and must only ever decorate the
+    TRAIN split (val/test use raw images, matching inference).
     """
 
-    def __init__(self, root_dir, transform=None, classes=None):
+    def __init__(self, root_dir, transform=None, classes=None,
+                 mask_dir=None, bg_random_p=0.0, seed=None):
         self.root_dir = Path(root_dir)
         self.transform = transform
+        self.mask_dir = Path(mask_dir) if mask_dir else None
+        self.bg_random_p = bg_random_p
+        # Per-dataset RNG so background choices are reproducible from the seed and
+        # independent of global torch/numpy state.
+        self._rng = np.random.default_rng(seed)
 
         if not self.root_dir.is_dir():
             raise FileNotFoundError(
@@ -391,6 +428,22 @@ class FishDataset(Dataset):
                 "<data_dir>' to list every unreadable file in the dataset."
             )
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+        # Background randomization (train only): if this image has a precomputed
+        # mask and the per-sample draw falls under bg_random_p, paste the fish
+        # onto a random solid colour. Absent mask -> unchanged (the common case).
+        if self.mask_dir is not None and self.bg_random_p > 0:
+            if self._rng.random() < self.bg_random_p:
+                rel = Path(img_path).relative_to(self.root_dir).with_suffix(".png")
+                mask_path = self.mask_dir / rel
+                if mask_path.is_file():
+                    mask = cv2.imread(str(mask_path), cv2.IMREAD_GRAYSCALE)
+                    # Only composite when the mask lines up with the image; a
+                    # size mismatch means a stale/corrupt mask, so skip it.
+                    if mask is not None and mask.shape[:2] == image.shape[:2]:
+                        image = random_background_composite(
+                            image, mask > 127, self._rng)
+
         if self.transform:
             image = self.transform(image=image)["image"]
         return image, label
@@ -436,9 +489,22 @@ def build_dataloaders(config, seed=None):
         aug=config.get("augmentation"),
     )
 
-    train_dataset = FishDataset(data_dir / "train", transform=train_transform)
+    # Background randomization (train split only). Off unless the config has a
+    # 'background_randomization' block with enabled: true. val/test never use it
+    # - inference runs on raw images, so the eval splits must too.
+    bg = config.get("background_randomization") or {}
+    bg_mask_dir = resolve_path(bg["mask_dir"]) if bg.get("enabled") and bg.get("mask_dir") else None
+    bg_p = float(bg.get("p", 0.5)) if bg_mask_dir else 0.0
+    if bg_mask_dir:
+        print(f"Background randomization ON: masks={bg_mask_dir}, p={bg_p}")
+
+    train_dataset = FishDataset(
+        data_dir / "train", transform=train_transform,
+        mask_dir=bg_mask_dir, bg_random_p=bg_p, seed=seed,
+    )
     # Reusing the training class list keeps the label mapping aligned across
-    # splits even if a rare species has no validation images.
+    # splits even if a rare species has no validation images. No mask_dir here:
+    # the val split is always raw, matching inference.
     val_dataset = FishDataset(
         data_dir / "val", transform=val_transform, classes=train_dataset.classes
     )
