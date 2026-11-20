@@ -244,7 +244,33 @@ def build_val_resize(img_size, resize_mode, center_crop):
     return pre + [A.CenterCrop(height=img_size, width=img_size)]
 
 
-def build_transforms(img_size, resize_mode="stretch", aug=None):
+# ImageNet statistics - the default, and what every MobileNetV3/V4 and ConvNeXt
+# backbone here was pretrained with. NOT universal: some backbones (e.g. the
+# cvnets MobileViT family) were pretrained with mean=0, std=1 (plain 0-1 scaling).
+# Feeding ImageNet-normalised pixels to such a model gives garbage features and a
+# loss stuck ABOVE random. normalization_stats() reads the right values from the
+# backbone's own pretrained_cfg so the pipeline always matches the weights.
+IMAGENET_MEAN = (0.485, 0.456, 0.406)
+IMAGENET_STD = (0.229, 0.224, 0.225)
+
+
+def normalization_stats(model_name):
+    """(mean, std) the given timm backbone was pretrained with.
+
+    Falls back to ImageNet stats for the from-scratch model (no pretrained_cfg)
+    or if the lookup fails for any reason.
+    """
+    if model_name == SCRATCH_MODEL_NAME:
+        return IMAGENET_MEAN, IMAGENET_STD
+    try:
+        cfg = timm.get_pretrained_cfg(model_name).to_dict()
+        return tuple(cfg["mean"]), tuple(cfg["std"])
+    except Exception:
+        return IMAGENET_MEAN, IMAGENET_STD
+
+
+def build_transforms(img_size, resize_mode="stretch", aug=None,
+                     mean=IMAGENET_MEAN, std=IMAGENET_STD):
     """Return the (train, val) augmentation pipelines.
 
     The train-side augmentations target underwater conditions specifically:
@@ -303,14 +329,14 @@ def build_transforms(img_size, resize_mode="stretch", aug=None):
             fill=0, p=0.3,
         ))
     train_ops += [
-        A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        A.Normalize(mean=mean, std=std),
         ToTensorV2(),
     ]
     train_transform = A.Compose(train_ops)
 
     val_resize = build_val_resize(img_size, resize_mode, val_center_crop)
     val_transform = A.Compose(val_resize + [
-        A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        A.Normalize(mean=mean, std=std),
         ToTensorV2(),
     ])
 
@@ -484,9 +510,11 @@ def build_sampler(train_dataset, seed=None):
 def build_dataloaders(config, seed=None):
     """Build the train/val datasets and loaders, and fill in num_classes."""
     data_dir = resolve_path(config["data_dir"])
+    mean, std = normalization_stats(config["model_name"])
+    print(f"Input normalization for {config['model_name']}: mean={mean}, std={std}")
     train_transform, val_transform = build_transforms(
         config["img_size"], config.get("resize_mode", "stretch"),
-        aug=config.get("augmentation"),
+        aug=config.get("augmentation"), mean=mean, std=std,
     )
 
     # Background randomization (train split only). Off unless the config has a
@@ -589,9 +617,10 @@ def build_test_loader(config, classes, force_no_center_crop=False):
     aug = dict(config.get("augmentation") or {})
     if force_no_center_crop:
         aug["val_center_crop"] = False
+    mean, std = normalization_stats(config["model_name"])
     _, val_transform = build_transforms(
         config["img_size"], config.get("resize_mode", "stretch"),
-        aug=aug,
+        aug=aug, mean=mean, std=std,
     )
     try:
         test_dataset = FishDataset(test_dir, transform=val_transform, classes=classes)
@@ -858,19 +887,39 @@ def unfreeze_all(model):
 
 
 def unfreeze_backbone_tail(model, fraction):
-    """Train the head plus the final ``fraction`` of a timm block stack."""
+    """Train the head plus the final ``fraction`` of the backbone's block stack.
+
+    timm backbones expose their block stack under different attribute names:
+    MobileNetV4/ConvNeXt use ``blocks``; ByobNet-family models (e.g. MobileViT)
+    use ``stages``. We find whichever exists. If neither does, we fall back to
+    unfreezing everything (a full fine-tune) rather than crashing - safe, just
+    less selective than progressive unfreezing.
+    """
     freeze_backbone(model)
-    blocks = list(model.blocks.children())
-    first = max(0, len(blocks) - max(1, round(len(blocks) * fraction)))
-    for block in blocks[first:]:
+
+    stack = None
+    for attr in ("blocks", "stages"):
+        module = getattr(model, attr, None)
+        if module is not None:
+            stack = list(module.children())
+            break
+    if not stack:
+        # Unknown layout - full fine-tune instead of partial.
+        unfreeze_all(model)
+        return -1, -1
+
+    first = max(0, len(stack) - max(1, round(len(stack) * fraction)))
+    for block in stack[first:]:
         for param in block.parameters():
             param.requires_grad = True
-    for name in ("conv_head", "norm_head"):
+    # Unfreeze whatever post-stack head modules this backbone has (names vary:
+    # conv_head/norm_head on timm convnets, final_conv on ByobNet/MobileViT).
+    for name in ("conv_head", "norm_head", "final_conv"):
         module = getattr(model, name, None)
         if module is not None:
             for param in module.parameters():
                 param.requires_grad = True
-    return len(blocks) - first, len(blocks)
+    return len(stack) - first, len(stack)
 
 
 # ============ MIXUP / CUTMIX ============
@@ -1268,7 +1317,11 @@ def main(argv=None):
     progressive = config.get("progressive_unfreeze", False) and not is_scratch
     if progressive:
         active, total_blocks = unfreeze_backbone_tail(model, 1 / 3)
-        print(f"Progressive unfreezing: training final {active}/{total_blocks} blocks")
+        if total_blocks < 0:
+            print("Progressive unfreezing: unknown block layout for "
+                  f"{config['model_name']} - fell back to full fine-tune.")
+        else:
+            print(f"Progressive unfreezing: training final {active}/{total_blocks} blocks")
     else:
         unfreeze_all(model)
     optimizer = torch.optim.AdamW(
