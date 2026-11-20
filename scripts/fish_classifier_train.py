@@ -124,6 +124,13 @@ def parse_args(argv=None):
         "--finetune-only", action="store_true",
         help="Resume stage 2 from an existing stage-1 checkpoint.",
     )
+    parser.add_argument(
+        "--resume", action="store_true",
+        help="Resume an interrupted run from its per-epoch stage-2 checkpoint "
+             "(<output_dir>/resume_state.pth), continuing from the last completed "
+             "epoch with the optimizer/scheduler restored. If that file is absent "
+             "(e.g. the run died during stage 1) training starts normally.",
+    )
     return parser.parse_args(argv)
 
 
@@ -1226,6 +1233,9 @@ def main(argv=None):
     stage1_path = output_dir / config["stage1_checkpoint"]
     final_path = output_dir / config["final_checkpoint"]
     onnx_path = output_dir / config["onnx_filename"]
+    # Full-state checkpoint written after every stage-2 epoch, so --resume can
+    # continue an interrupted run from the last completed epoch (not epoch 0).
+    resume_path = output_dir / "resume_state.pth"
 
     # ---- Load data ----
     train_dataset, _, train_loader, val_loader = build_dataloaders(config, seed=seed)
@@ -1260,7 +1270,10 @@ def main(argv=None):
     # train the whole network from scratch.
     is_scratch = config["model_name"] == SCRATCH_MODEL_NAME
     best_val_acc = -1.0
-    if is_scratch:
+    resuming = args.resume and resume_path.exists()
+    if resuming:
+        print(f"=== Resuming: found {resume_path.name}, skipping stage 1 ===")
+    elif is_scratch:
         print("=== Scratch model: skipping stage 1, training whole network ===")
     elif args.finetune_only:
         if not stage1_path.exists():
@@ -1305,7 +1318,7 @@ def main(argv=None):
     # Resume from the best head-only weights rather than whichever epoch stage 1
     # happened to stop on. The scratch model never wrote a stage-1 checkpoint, so
     # skip the load (and ignore any stale one left by a previous timm run).
-    if stage1_path.exists() and not is_scratch:
+    if stage1_path.exists() and not is_scratch and not resuming:
         model.load_state_dict(
             torch.load(stage1_path, map_location=device, weights_only=True)
         )
@@ -1333,6 +1346,19 @@ def main(argv=None):
         optimizer, T_max=config["epochs_finetune"]
     )
 
+    # Resume: restore model/optimizer/scheduler and pick up after the last
+    # completed epoch. Done here so optimizer/scheduler objects already exist.
+    start_epoch = 0
+    if resuming:
+        ckpt = torch.load(resume_path, map_location=device, weights_only=False)
+        model.load_state_dict(ckpt["model"])
+        optimizer.load_state_dict(ckpt["optimizer"])
+        scheduler.load_state_dict(ckpt["scheduler"])
+        start_epoch = ckpt["epoch"] + 1
+        best_val_acc = ckpt["best_val_acc"]
+        print(f"Resumed at stage-2 epoch {start_epoch + 1}/{config['epochs_finetune']} "
+              f"(best val acc so far {best_val_acc:.4f})")
+
     # MixUp/CutMix regularise stage 2 only: stage 1 fits just the head on a
     # frozen backbone, where mixing the inputs works against a clean head fit.
     mixup_cfg = config.get("mixup", {}) or {}
@@ -1346,7 +1372,7 @@ def main(argv=None):
         print(f"Label mixing: {'/'.join(kinds)} (alpha={mixup.alpha})")
 
     print("=== Stage 2: Fine-tuning full model ===")
-    for epoch in range(config["epochs_finetune"]):
+    for epoch in range(start_epoch, config["epochs_finetune"]):
         if progressive:
             # Expand from the final third to two thirds, then the whole network.
             fraction = min(1.0, (epoch // max(1, config["epochs_finetune"] // 3) + 1) / 3)
@@ -1372,6 +1398,17 @@ def main(argv=None):
         if val_acc > best_val_acc:
             best_val_acc = val_acc
             torch.save(model.state_dict(), final_path)
+
+        # Full-state resume checkpoint, written every epoch so an interrupted run
+        # (--resume) continues from here instead of restarting. Saved after the
+        # best-checkpoint update so best_val_acc is current.
+        torch.save({
+            "epoch": epoch,
+            "model": model.state_dict(),
+            "optimizer": optimizer.state_dict(),
+            "scheduler": scheduler.state_dict(),
+            "best_val_acc": best_val_acc,
+        }, resume_path)
 
     print(f"Best validation accuracy: {best_val_acc:.4f}")
 
