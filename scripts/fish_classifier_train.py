@@ -1244,10 +1244,18 @@ def main(argv=None):
     model = build_model(config, device)
 
     if args.export_only:
-        export_onnx(
-            model, onnx_path, config["img_size"], config["onnx_opset"], device,
-            checkpoint_path=ensure_final_checkpoint(stage1_path, final_path),
-        )
+        # Load the best weights into `model` first, so test evaluation runs on
+        # them even if ONNX export fails (export is optional; the test metrics
+        # are the deliverable). export_onnx also reloads, but we do it here so
+        # the two steps are independent.
+        ckpt = ensure_final_checkpoint(stage1_path, final_path)
+        model.load_state_dict(torch.load(ckpt, map_location=device, weights_only=True))
+        try:
+            export_onnx(model, onnx_path, config["img_size"], config["onnx_opset"], device)
+        except Exception as exc:
+            print(f"\nWARNING: ONNX export failed ({type(exc).__name__}: {exc}).\n"
+                  "Continuing to test evaluation - the model and metrics are "
+                  "unaffected; only the .onnx file was not written.")
         run_test_evaluation(model, config, device, train_dataset.classes, output_dir)
         return
 
@@ -1425,12 +1433,18 @@ def main(argv=None):
     print(f"Best validation accuracy: {best_val_acc:.4f}")
 
     # ---- Export to ONNX (next step: export/export_tflite.py) ----
-    # This reloads the best checkpoint into `model` and puts it in eval mode, so
-    # the test evaluation below runs on exactly the exported weights.
-    export_onnx(
-        model, onnx_path, config["img_size"], config["onnx_opset"], device,
-        checkpoint_path=ensure_final_checkpoint(stage1_path, final_path),
-    )
+    # Load best weights into `model` first so test evaluation runs on them even
+    # if ONNX export fails (export is optional; the held-out test metrics are the
+    # deliverable, and a missing onnx package must not lose the whole run).
+    ckpt = ensure_final_checkpoint(stage1_path, final_path)
+    model.load_state_dict(torch.load(ckpt, map_location=device, weights_only=True))
+    try:
+        export_onnx(model, onnx_path, config["img_size"], config["onnx_opset"], device)
+    except Exception as exc:
+        print(f"\nWARNING: ONNX export failed ({type(exc).__name__}: {exc}).\n"
+              "Continuing to test evaluation - model/metrics unaffected; only the "
+              ".onnx file was not written. Install onnx and re-run --export-only "
+              "later if you need the ONNX graph.")
 
     # ---- Held-out test evaluation ----
     run_test_evaluation(model, config, device, train_dataset.classes, output_dir)
