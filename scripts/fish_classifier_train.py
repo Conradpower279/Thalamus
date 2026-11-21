@@ -277,8 +277,11 @@ def normalization_stats(model_name):
 
 
 def build_transforms(img_size, resize_mode="stretch", aug=None,
-                     mean=IMAGENET_MEAN, std=IMAGENET_STD):
+                     mean=IMAGENET_MEAN, std=IMAGENET_STD, strength=1.0):
     """Return the (train, val) augmentation pipelines.
+
+    ``strength`` scales the train-side augmentation intensity (1.0 = the tuned
+    baseline). Values >1 are used for targeted augmentation of rare classes.
 
     The train-side augmentations target underwater conditions specifically:
     blur for turbidity, CLAHE and brightness/contrast jitter for the loss of
@@ -315,13 +318,24 @@ def build_transforms(img_size, resize_mode="stretch", aug=None,
     else:
         train_resize = build_resize(img_size, resize_mode)
 
+    # ``strength`` (default 1.0) scales the SAME proven ops up for targeted
+    # augmentation of rare classes - heavier jitter/blur/rotation and higher
+    # probabilities, capped so they stay sane. It deliberately reuses the
+    # existing underwater-tuned pipeline rather than adding new op types, since
+    # aggressive/novel augmentation has consistently hurt this dataset; the only
+    # lever is "more of the safe thing, for the starved classes".
+    s = strength
     train_ops = train_resize + [
-        A.RandomBrightnessContrast(brightness_limit=0.3, contrast_limit=0.3, p=0.7),
-        A.HueSaturationValue(hue_shift_limit=15, sat_shift_limit=30, p=0.5),
-        A.GaussianBlur(blur_limit=(3, 7), p=0.3),  # simulates murky water
-        A.Rotate(limit=25, p=0.5),
+        A.RandomBrightnessContrast(
+            brightness_limit=min(0.5, 0.3 * s), contrast_limit=min(0.5, 0.3 * s),
+            p=min(0.9, 0.7 * s)),
+        A.HueSaturationValue(
+            hue_shift_limit=int(min(25, 15 * s)), sat_shift_limit=int(min(45, 30 * s)),
+            p=min(0.8, 0.5 * s)),
+        A.GaussianBlur(blur_limit=(3, 7), p=min(0.5, 0.3 * s)),  # murky water
+        A.Rotate(limit=int(min(35, 25 * s)), p=min(0.7, 0.5 * s)),
         A.HorizontalFlip(p=0.5),
-        A.CLAHE(p=0.2),  # helps with underwater contrast
+        A.CLAHE(p=min(0.4, 0.2 * s)),  # underwater contrast
     ]
     if use_coarse_dropout:
         # Light: a few small holes. Sized as a fraction of img_size so it scales
@@ -394,9 +408,15 @@ class FishDataset(Dataset):
     """
 
     def __init__(self, root_dir, transform=None, classes=None,
-                 mask_dir=None, bg_random_p=0.0, seed=None):
+                 mask_dir=None, bg_random_p=0.0, seed=None,
+                 heavy_transform=None, heavy_classes=None):
         self.root_dir = Path(root_dir)
         self.transform = transform
+        # Targeted augmentation: images whose class is in ``heavy_classes`` get
+        # ``heavy_transform`` (a higher-strength version of the same pipeline)
+        # instead of the normal ``transform``. Both None -> uniform augmentation.
+        self.heavy_transform = heavy_transform
+        self.heavy_classes = set(heavy_classes) if heavy_classes else set()
         self.mask_dir = Path(mask_dir) if mask_dir else None
         self.bg_random_p = bg_random_p
         # Per-dataset RNG so background choices are reproducible from the seed and
@@ -427,6 +447,9 @@ class FishDataset(Dataset):
                 )
 
         self.class_to_idx = {c: i for i, c in enumerate(self.classes)}
+        # Label indices that should receive the heavy transform (rare classes).
+        self._heavy_idx = {self.class_to_idx[c] for c in self.heavy_classes
+                           if c in self.class_to_idx}
 
         self.samples = []
         for cls in self.classes:
@@ -477,8 +500,12 @@ class FishDataset(Dataset):
                         image = random_background_composite(
                             image, mask > 127, self._rng)
 
-        if self.transform:
-            image = self.transform(image=image)["image"]
+        # Targeted augmentation: rare-class samples get the heavier transform.
+        transform = self.transform
+        if self.heavy_transform is not None and label in self._heavy_idx:
+            transform = self.heavy_transform
+        if transform:
+            image = transform(image=image)["image"]
         return image, label
 
 
@@ -537,6 +564,28 @@ def build_dataloaders(config, seed=None):
         data_dir / "train", transform=train_transform,
         mask_dir=bg_mask_dir, bg_random_p=bg_p, seed=seed,
     )
+
+    # Targeted augmentation (train split only): classes with fewer than
+    # 'max_count' train images get a higher-strength version of the SAME
+    # pipeline. Off unless the config has a 'targeted_augmentation' block with
+    # enabled: true. Motivated by the worst classes being the data-starved ones.
+    ta = config.get("targeted_augmentation") or {}
+    if ta.get("enabled"):
+        max_count = int(ta.get("max_count", 60))
+        strength = float(ta.get("strength", 1.5))
+        counts = np.bincount([lbl for _, lbl in train_dataset.samples],
+                             minlength=len(train_dataset.classes))
+        rare = [train_dataset.classes[i] for i, n in enumerate(counts)
+                if 0 < n < max_count]
+        heavy_transform, _ = build_transforms(
+            config["img_size"], config.get("resize_mode", "stretch"),
+            aug=config.get("augmentation"), mean=mean, std=std, strength=strength,
+        )
+        train_dataset.heavy_transform = heavy_transform
+        train_dataset.heavy_classes = set(rare)
+        train_dataset._heavy_idx = {train_dataset.class_to_idx[c] for c in rare}
+        print(f"Targeted augmentation ON: {len(rare)} rare classes "
+              f"(<{max_count} imgs) at strength {strength}")
     # Reusing the training class list keeps the label mapping aligned across
     # splits even if a rare species has no validation images. No mask_dir here:
     # the val split is always raw, matching inference.

@@ -1,0 +1,80 @@
+# MobileNetV4-Hybrid-Medium @ 448px, light recipe + TARGETED AUGMENTATION.
+#
+# Controlled A/B against configs/mobilenetv4_hybrid_medium_448_light.yaml (test
+# top-1 0.758). IDENTICAL training setup except ONE lever: rare classes (fewer
+# than 'max_count' train images) receive a higher-strength version of the SAME
+# underwater-tuned augmentation pipeline; common classes are unchanged.
+#
+#     python scripts/fish_classifier_train.py --config configs/mobilenetv4_hybrid_medium_448_targetaug.yaml \
+#         --data-dir D:\Thalamus\data\split_capped
+#
+# RATIONALE (combines Ben Tamou et al.'s targeted-augmentation idea with this
+# project's own finding that the worst classes are the data-starved ones): the
+# ~53 classes with <60 train images dominate the error list, and blanket heavy
+# augmentation has repeatedly HURT this dataset (MixUp, cropping, bg-randomize
+# all lost points) because it over-regularises the healthy majority. Targeting
+# the heavy augmentation ONLY at the starved classes aims to help the tail
+# without touching what already works.
+#
+# Reuses the proven ops (brightness/contrast, hue/sat, blur, rotate, flip, CLAHE)
+# at higher probability/limits (strength), NOT new op types - aggressive/novel
+# augmentation is exactly what failed before.
+
+# ---- Model ----
+model_name: mobilenetv4_hybrid_medium
+
+num_classes: null
+
+img_size: 448
+resize_mode: stretch
+
+# ---- Data ----
+data_dir: data
+num_workers: 2
+
+# ---- Optimisation (identical to the baseline) ----
+batch_size: 8
+seed: 42
+
+lr_head: 0.001
+epochs_head: 10
+
+lr_finetune: 0.0001
+epochs_finetune: 20
+
+progressive_unfreeze: true
+
+# ---- Regularisation (light - identical to the baseline) ----
+label_smoothing: 0.1
+weight_decay: 0.05
+balanced_sampler: true
+
+augmentation:
+  random_resized_crop: true
+  rrc_scale: [0.65, 1.0]
+  coarse_dropout: false
+  val_center_crop: true
+
+mixup:
+  alpha: 0.0
+  mixup: false
+  cutmix: false
+
+# ---- Targeted augmentation (the ONE lever under test) ----
+# enabled: rare classes get the heavy transform.
+# max_count: a class with fewer than this many TRAIN images is "rare" (53 classes
+#            fall under 60 in split_capped).
+# strength: multiplier on the augmentation probabilities/limits for rare classes
+#           (1.0 = baseline; 1.5 = ~50% heavier, capped so values stay sane).
+targeted_augmentation:
+  enabled: true
+  max_count: 60
+  strength: 1.5
+
+# ---- Output ----
+output_dir: models_v4/mobilenetv4_hybrid_medium_448_targetaug
+stage1_checkpoint: best_model_stage1.pth
+final_checkpoint: best_model_final.pth
+onnx_filename: fish_classifier.onnx
+
+onnx_opset: 18
