@@ -1271,8 +1271,20 @@ def main(argv=None):
     is_scratch = config["model_name"] == SCRATCH_MODEL_NAME
     best_val_acc = -1.0
     resuming = args.resume and resume_path.exists()
+    if args.resume and not resuming:
+        # --resume was requested but no checkpoint was found at the expected
+        # path. This is almost always an --output-dir mismatch (the checkpoint
+        # lives under a different folder). Warn loudly rather than silently
+        # restarting from scratch, which looks identical to a first run.
+        print("=" * 70)
+        print(f"WARNING: --resume set but NO checkpoint at:\n    {resume_path}")
+        print("Starting FRESH from epoch 1. If you meant to resume, stop now and")
+        print("re-run with --output-dir pointing at the folder that HAS")
+        print("resume_state.pth (check your Drive path for a typo/mismatch).")
+        print("=" * 70)
     if resuming:
-        print(f"=== Resuming: found {resume_path.name}, skipping stage 1 ===")
+        print(f"=== Resuming: found {resume_path} ===")
+        print(f"    (skipping stage 1, continuing stage 2)")
     elif is_scratch:
         print("=== Scratch model: skipping stage 1, training whole network ===")
     elif args.finetune_only:
